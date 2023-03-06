@@ -1,4 +1,8 @@
 ﻿#include <QJsonObject>
+#include <QJsonDocument>
+#include <QFile>
+#include <QFileDialog>
+#include <QDebug>
 
 #include "schemetranslator.h"
 
@@ -8,47 +12,49 @@ SchemeTranslator::SchemeTranslator(QObject *parent)
 
 }
 
-void SchemeTranslator::writeToJsonFile(Scheme scheme)
+void SchemeTranslator::writeToJsonFile(Scheme scheme,QString& filePath)
 {
-    QJsonObject modelDataValue;
-    {
-        int count = scheme.preset.modelData.loops.size();
-        for (int i = 0; i < count; ++i)
-        {
-            QString key = "loop"+QString::number(i);
-            //modelDataValue.insert(key,)
-        }
-    }
+   if(filePath.isEmpty())
+   {
+       return;
+   }
+   QJsonObject schemeObject = scheme.toJson();
+   QJsonDocument schemeDoc(schemeObject);
+   QByteArray jsonData = schemeDoc.toJson();
 
-    QJsonObject testTypeValue;
-    {
-
-    }
-
-    QJsonObject presetValue;
-    {
-        presetValue.insert("name",scheme.preset.name);
-        presetValue.insert("unit",scheme.preset.unit);
-        presetValue.insert("auto_switch",scheme.preset.switchMode);
-        presetValue.insert("ed_volt",scheme.preset.ratedVoltage);
-        presetValue.insert("ed_curr",scheme.preset.ratedCurrent);
-        presetValue.insert("model_data",modelDataValue);
-    }
-
-    QJsonObject schemeValue;
-    {
-        schemeValue.insert("name",scheme.name);
-        schemeValue.insert("user",scheme.user);
-        schemeValue.insert("create_date",scheme.createDate.toString());
-        schemeValue.insert("update_date",scheme.updateDate.toString());
-        schemeValue.insert("description",scheme.description);
-        schemeValue.insert("version",scheme.version);
-        schemeValue.insert("pre_set",presetValue);
-        schemeValue.insert("test_type",testTypeValue);
-    }
+   QFile file(filePath);
+   if(!file.open(QIODevice::WriteOnly))
+   {
+       qDebug()<<tr("Open json file failed!Message from:SchemeTranslator::writeToJsonFile(Scheme scheme)");
+       return;
+   }
+   file.write(jsonData);
+   file.close();
+   emit sigReturnJsonData(jsonData);
 }
 
 void SchemeTranslator::readFromJsonFile(QString& filePath)
 {
+    QFile file(filePath);
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        qDebug()<<tr("Open json file failed!Message from:SchemeTranslator::readFromJsonFile(QString& filePath)");
+        return;
+    }
 
+    QByteArray fileData = file.readAll();
+    file.close();
+    QJsonParseError jsonError;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(fileData,&jsonError);
+    if(jsonError.error!=QJsonParseError::NoError)
+    {
+        qDebug()<<tr("Json file error.Message from:SchemeTranslator::readFromJsonFile(QString& filePath)");
+        return;
+    }
+
+    if(jsonDoc.isObject())
+    {
+       Scheme scheme;
+       scheme.fromJson(jsonDoc.object());
+    }
 }

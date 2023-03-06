@@ -11,11 +11,11 @@ public:
     explicit SchemeTranslator(QObject *parent = nullptr);
 
 signals:
-    void sigReturnScheme(Scheme scheme);
+    void sigReturnScheme(Scheme schemeValue);
     void sigReturnJsonData(QByteArray jsonData);
 
 public slots:
-    void writeToJsonFile(Scheme scheme);
+    void writeToJsonFile(Scheme scheme,QString& filePath);
     void readFromJsonFile(QString& filePath);
 };
 

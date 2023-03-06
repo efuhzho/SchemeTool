@@ -1,0 +1,2250 @@
+{
+    "scheme": {
+        "create_date": "2022-10-20",
+        "decription": "测试样例参考《QGDW 1899-2013交流采样测量装置校验规范.pdf》",
+        "name": "测试方案00123",
+        "pre_set": {
+            "auto_switch": "auto",
+            "ed_curr": "5",
+            "ed_volt": "220",
+            "model_data": {
+                "loop0": {
+                    "state0": {
+                        "Ia": {
+                            "ang": "0",
+                            "dc": "0",
+                            "freq": "50",
+                            "mag": "100"
+                        },
+                        "Ib": {
+                            "ang": "240",
+                            "dc": "0",
+                            "freq": "50",
+                            "mag": "100"
+                        },
+                        "Ic": {
+                            "ang": "120",
+                            "dc": "0",
+                            "freq": "50",
+                            "mag": "100"
+                        },
+                        "Ua": {
+                            "ang": "0",
+                            "dc": "0",
+                            "freq": "50",
+                            "mag": "100"
+                        },
+                        "Ub": {
+                            "ang": "240",
+                            "dc": "0",
+                            "freq": "50",
+                            "mag": "100"
+                        },
+                        "Uc": {
+                            "ang": "120",
+                            "dc": "0",
+                            "freq": "50",
+                            "mag": "100"
+                        }
+                    }
+                }
+            },
+            "name": "联机预设值",
+            "unit": "%"
+        },
+        "test_type": {
+            "id": "iid_baseMeasureError",
+            "name": "稳态准确度测试",
+            "subtype": [
+                {
+                    "id": "volt_base_err",
+                    "item": [
+                        {
+                            "id": "volt_base_err_0",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "0%Un",
+                            "unit": "%",
+                            "var": "0"
+                        },
+                        {
+                            "id": "volt_base_err_40",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "40"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "40"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "40"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "40%Un",
+                            "unit": "%",
+                            "var": "40"
+                        },
+                        {
+                            "id": "volt_base_err_80",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "80%Un",
+                            "unit": "%",
+                            "var": "80"
+                        },
+                        {
+                            "id": "volt_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "100%Un",
+                            "unit": "%",
+                            "var": "100"
+                        },
+                        {
+                            "id": "volt_base_err_120",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "120%Un",
+                            "unit": "%",
+                            "var": "120"
+                        }
+                    ],
+                    "name": "电压校验",
+                    "type": "base"
+                },
+                {
+                    "id": "current_base_err",
+                    "item": [
+                        {
+                            "id": "current_base_err_0",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "0%In",
+                            "unit": "%",
+                            "var": "0"
+                        },
+                        {
+                            "id": "current_base_err_20",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "20"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "20"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "20"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "20%In",
+                            "unit": "%",
+                            "var": "20"
+                        },
+                        {
+                            "id": "current_base_err_40",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "40"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "40"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "40"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "40%In",
+                            "unit": "%",
+                            "var": "40"
+                        },
+                        {
+                            "id": "current_base_err_60",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "60"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "60"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "60"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "60%In",
+                            "unit": "%",
+                            "var": "60"
+                        },
+                        {
+                            "id": "current_base_err_80",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "80%In",
+                            "unit": "%",
+                            "var": "80"
+                        },
+                        {
+                            "id": "current_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "100%In",
+                            "unit": "%",
+                            "var": "100"
+                        },
+                        {
+                            "id": "current_base_err_120",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "120%In",
+                            "unit": "%",
+                            "var": "120"
+                        }
+                    ],
+                    "name": "电流校验",
+                    "type": "base"
+                },
+                {
+                    "id": "freq_base_err",
+                    "item": [
+                        {
+                            "id": "freq_base_err_49",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "49",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "49",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "49",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "49Hz",
+                            "unit": "Hz",
+                            "var": "49"
+                        },
+                        {
+                            "id": "freq_base_err_495",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "49.5",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "49.5",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "49.5",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "49.5Hz",
+                            "unit": "Hz",
+                            "var": "49.5"
+                        },
+                        {
+                            "id": "freq_base_err_50",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "50Hz",
+                            "unit": "Hz",
+                            "var": "50"
+                        },
+                        {
+                            "id": "freq_base_err_505",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50.5",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50.5",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50.5",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "50.5Hz",
+                            "unit": "Hz",
+                            "var": "50.5"
+                        },
+                        {
+                            "id": "freq_base_err_51",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "51",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "51",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "51",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "51Hz",
+                            "unit": "Hz",
+                            "var": "51"
+                        }
+                    ],
+                    "name": "频率校验",
+                    "type": "base"
+                },
+                {
+                    "id": "power_factor_base_err",
+                    "item": [
+                        {
+                            "id": "power_factor_base_err_1",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "PF=1",
+                            "unit": "",
+                            "var": "1"
+                        },
+                        {
+                            "id": "power_factor_base_err_0866L",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "30",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "270",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "150",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "PF=0.866(L)",
+                            "unit": "",
+                            "var": "0.866L"
+                        },
+                        {
+                            "id": "power_factor_base_err_05L",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "60",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "300",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "180",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "PF=0.5(L)",
+                            "unit": "",
+                            "var": "0.5L"
+                        },
+                        {
+                            "id": "power_factor_base_err_05C",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "300",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "180",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "60",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "PF=0.5(C)",
+                            "unit": "",
+                            "var": "0.5C"
+                        },
+                        {
+                            "id": "power_factor_base_err_0866C",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "330",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "210",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "90",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "PF=0.866(C)",
+                            "unit": "",
+                            "var": "0.866C"
+                        }
+                    ],
+                    "name": "功率因数校验",
+                    "type": "base"
+                },
+                {
+                    "id": "power_base_err",
+                    "item": [
+                        {
+                            "id": "power_factor_base_err_0",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "0%电流",
+                            "unit": "%",
+                            "var": "0"
+                        },
+                        {
+                            "id": "power_factor_base_err_20",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "20"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "20"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "20"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "20%电流",
+                            "unit": "%",
+                            "var": "20"
+                        },
+                        {
+                            "id": "power_factor_base_err_40",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "40"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "40"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "40"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "40%电流",
+                            "unit": "%",
+                            "var": "40"
+                        },
+                        {
+                            "id": "power_factor_base_err_50",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "50"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "50"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "50"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "50%电流",
+                            "unit": "%",
+                            "var": "50"
+                        },
+                        {
+                            "id": "power_factor_base_err_60",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "60"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "60"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "60"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "60%电流",
+                            "unit": "%",
+                            "var": "60"
+                        },
+                        {
+                            "id": "power_factor_base_err_80",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "80%电流",
+                            "unit": "%",
+                            "var": "80"
+                        },
+                        {
+                            "id": "power_factor_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "100%电流",
+                            "unit": "%",
+                            "var": "100"
+                        },
+                        {
+                            "id": "power_factor_base_err_120",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "120%电流",
+                            "unit": "%",
+                            "var": "120"
+                        }
+                    ],
+                    "name": "功率校验",
+                    "type": "base"
+                },
+                {
+                    "id": "power_influence_by_pf",
+                    "item": [
+                        {
+                            "id": "power_factor_base_err_50",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "60",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "300",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "180",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "PF=0.5(L)",
+                            "unit": "%",
+                            "var": "50"
+                        },
+                        {
+                            "id": "power_factor_base_err_50",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "300",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "180",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "60",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "PF=0.5(C)",
+                            "unit": "%",
+                            "var": "50"
+                        }
+                    ],
+                    "name": "功率因数影响功率",
+                    "type": "influent"
+                },
+                {
+                    "id": "volt_influent_err_by_freq",
+                    "item": [
+                        {
+                            "id": "volt_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "45",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "45",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "45",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "45Hz影响电压",
+                            "unit": "%",
+                            "var": "100"
+                        },
+                        {
+                            "id": "volt_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "55",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "55",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "55",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "55Hz影响电压",
+                            "unit": "%",
+                            "var": "100"
+                        }
+                    ],
+                    "name": "频率影响电压",
+                    "type": "influent"
+                },
+                {
+                    "id": "curr_influent_err_by_freq",
+                    "item": [
+                        {
+                            "id": "current_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "45",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "45",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "45",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "45",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "45",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "45",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "45Hz影响电流",
+                            "unit": "%",
+                            "var": "100"
+                        },
+                        {
+                            "id": "current_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "55",
+                                            "mag": "100"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "55",
+                                            "mag": "100"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "55",
+                                            "mag": "100"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "55",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "55",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "55",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "55Hz影响电流",
+                            "unit": "%",
+                            "var": "100"
+                        }
+                    ],
+                    "name": "频率影响电流",
+                    "type": "influent"
+                },
+                {
+                    "id": "power_influent_err_by_volt",
+                    "item": [
+                        {
+                            "id": "power_factor_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "80%电压影响功率",
+                            "unit": "%",
+                            "var": "100"
+                        },
+                        {
+                            "id": "power_factor_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "120"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "120%电压影响功率",
+                            "unit": "%",
+                            "var": "100"
+                        }
+                    ],
+                    "name": "电压影响功率",
+                    "type": "influent"
+                },
+                {
+                    "id": "power_influent_err_by_current",
+                    "item": [
+                        {
+                            "id": "power_factor_base_err_50",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "0"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "75"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "75"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "A相断流影响功率",
+                            "unit": "%",
+                            "var": "50"
+                        }
+                    ],
+                    "name": "电流影响功率",
+                    "type": "influent"
+                },
+                {
+                    "id": "volt_influent_err_by_harm",
+                    "item": [
+                        {
+                            "id": "volt_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "2,3,5,7次电压谐波",
+                            "unit": "%",
+                            "var": "100"
+                        }
+                    ],
+                    "name": "谐波分量影响电压",
+                    "type": "influent"
+                },
+                {
+                    "id": "curr_influent_err_by_harm",
+                    "item": [
+                        {
+                            "id": "current_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "80"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "80"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "80"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "2,3,5,7次谐波",
+                            "unit": "%",
+                            "var": "100"
+                        }
+                    ],
+                    "name": "谐波分量影响电流",
+                    "type": "influent"
+                },
+                {
+                    "id": "power_influent_err_by_harm",
+                    "item": [
+                        {
+                            "id": "power_factor_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "80"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "2,3,5,7次电压谐波",
+                            "unit": "%",
+                            "var": "100"
+                        },
+                        {
+                            "id": "power_factor_base_err_100",
+                            "model_data": {
+                                "loop0": {
+                                    "state0": {
+                                        "Ia": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "80"
+                                        },
+                                        "Ib": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "80"
+                                        },
+                                        "Ic": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "harm": [
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "2"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "3"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "5"
+                                                },
+                                                {
+                                                    "ang": "0",
+                                                    "mag": "10",
+                                                    "no": "7"
+                                                }
+                                            ],
+                                            "mag": "80"
+                                        },
+                                        "Ua": {
+                                            "ang": "0",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Ub": {
+                                            "ang": "240",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        },
+                                        "Uc": {
+                                            "ang": "120",
+                                            "dc": "0",
+                                            "freq": "50",
+                                            "mag": "100"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": "2,3,5,7次电流谐波",
+                            "unit": "%",
+                            "var": "100"
+                        }
+                    ],
+                    "name": "谐波分量影响功率",
+                    "type": "influent"
+                }
+            ]
+        },
+        "update_data": "2022-11-17",
+        "user": "刘刚",
+        "version": "1.v1.0.1 优化model_data 数据结构,减少嵌套层次,支持多个回路，多状态; 2.a):v1.0.2 增加pre_set预设值节点;b):取消影响量项目中的ref属性，将其修改为id属性"
+    }
+}
