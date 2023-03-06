@@ -15,7 +15,7 @@ signals:
     void sigReturnJsonData(QByteArray jsonData);
 
 public slots:
-    void writeToJsonFile(Scheme scheme);
+    void writeToJsonFile(Scheme scheme,QString& filePath);
     void readFromJsonFile(QString& filePath);
 };
 
