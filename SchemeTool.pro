@@ -10,10 +10,15 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    src/schemetranslator.cpp \
+    src/schemetreewidget.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    src/schemeDefine.h \
+    src/schemetranslator.h \
+    src/schemetreewidget.h
 
 FORMS += \
     mainwindow.ui
