@@ -19,11 +19,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     QString savepath = QFileDialog::getSaveFileName( );
     st->writeToJsonFile( schemeObj, savepath );
-    
-    qDebug()<< schemeObj.value.name;
-    qDebug( ) << schemeObj.value.testType.subTypes[0].name;
-    qDebug( ) << schemeObj.value.createDate;
-
 }
 
 MainWindow::~MainWindow()
