@@ -7,7 +7,7 @@
 #include <QJsonArray>
 
 typedef struct phaseData
-{    
+{
     double mag ;
     double ang ;
     double freq ;
