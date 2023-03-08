@@ -11,13 +11,13 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    src/schemetranslator.cpp \
+    src/schemeConvertor.cpp \
     src/schemetreewidget.cpp
 
 HEADERS += \
     mainwindow.h \
+    src/schemeConvertor.h \
     src/schemeDefine.h \
-    src/schemetranslator.h \
     src/schemetreewidget.h
 
 FORMS += \
@@ -27,3 +27,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    icons.qrc
