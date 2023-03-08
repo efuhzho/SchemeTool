@@ -15,7 +15,6 @@ typedef struct phaseData
 
     void fromJson(QJsonObject phaseDataValue)
     {
-        qDebug()<<phaseDataValue["mag"].isDouble();
         mag = phaseDataValue["mag"].toDouble();
         ang = phaseDataValue["ang"].toDouble();
         freq = phaseDataValue["freq"].toDouble();
@@ -127,10 +126,10 @@ typedef struct modelData
     void fromJson(QJsonObject modelDataValue)
     {
         QStringList loopKeys = modelDataValue.keys();
-        ModelDataValue loop;
 
         for (int i = 0; i < loopKeys.size(); ++i)
-        {
+        {            
+            ModelDataValue loop;
             QString key = loopKeys[i];
             QJsonValue value = modelDataValue[key];
             if(value.isObject())

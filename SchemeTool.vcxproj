@@ -120,20 +120,7 @@
     <ResourceCompile>
       <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
-    <QtMoc>
-      <CompilerFlavor>msvc</CompilerFlavor>
-      <Include>./$(Configuration)/moc_predefs.h</Include>
-      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <DynamicSource>output</DynamicSource>
-      <QtMocDir>$(Configuration)</QtMocDir>
-      <QtMocFileName>moc_%(Filename).cpp</QtMocFileName>
-    </QtMoc>
-    <QtUic>
-      <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
-      <QtUicDir>$(ProjectDir)</QtUicDir>
-      <QtUicFileName>ui_%(Filename).h</QtUicFileName>
-    </QtUic>
-  </ItemDefinitionGroup>
+  <QtMoc><CompilerFlavor>msvc</CompilerFlavor><Include>./$(Configuration)/moc_predefs.h</Include><ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription><DynamicSource>output</DynamicSource><QtMocDir>$(Configuration)</QtMocDir><QtMocFileName>moc_%(Filename).cpp</QtMocFileName></QtMoc><QtRcc><InitFuncName>icons</InitFuncName><Compression>default</Compression><ExecutionDescription>Rcc'ing %(Identity)...</ExecutionDescription><QtRccDir>$(Configuration)</QtRccDir><QtRccFileName>qrc_%(Filename).cpp</QtRccFileName></QtRcc><QtUic><ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription><QtUicDir>$(ProjectDir)</QtUicDir><QtUicFileName>ui_%(Filename).h</QtUicFileName></QtUic></ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>.;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -174,32 +161,27 @@
     <ResourceCompile>
       <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
-    <QtMoc>
-      <CompilerFlavor>msvc</CompilerFlavor>
-      <Include>./$(Configuration)/moc_predefs.h</Include>
-      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <DynamicSource>output</DynamicSource>
-      <QtMocDir>$(Configuration)</QtMocDir>
-      <QtMocFileName>moc_%(Filename).cpp</QtMocFileName>
-    </QtMoc>
-    <QtUic>
-      <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
-      <QtUicDir>$(ProjectDir)</QtUicDir>
-      <QtUicFileName>ui_%(Filename).h</QtUicFileName>
-    </QtUic>
-  </ItemDefinitionGroup>
+  <QtMoc><CompilerFlavor>msvc</CompilerFlavor><Include>./$(Configuration)/moc_predefs.h</Include><ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription><DynamicSource>output</DynamicSource><QtMocDir>$(Configuration)</QtMocDir><QtMocFileName>moc_%(Filename).cpp</QtMocFileName></QtMoc><QtRcc><InitFuncName>icons</InitFuncName><Compression>default</Compression><ExecutionDescription>Rcc'ing %(Identity)...</ExecutionDescription><QtRccDir>$(Configuration)</QtRccDir><QtRccFileName>qrc_%(Filename).cpp</QtRccFileName></QtRcc><QtUic><ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription><QtUicDir>$(ProjectDir)</QtUicDir><QtUicFileName>ui_%(Filename).h</QtUicFileName></QtUic></ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="src\schemetranslator.cpp" />
+    <ClCompile Include="src\schemeConvertor.cpp" />
     <ClCompile Include="src\schemetreewidget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwindow.h">
     </QtMoc>
-    <ClInclude Include="src\schemeDefine.h" />
-    <QtMoc Include="src\schemetranslator.h">
+    <QtMoc Include="src\schemeConvertor.h">
+      
+      
+      
+      
+      
+      
+      
+      
     </QtMoc>
+    <ClInclude Include="src\schemeDefine.h" />
     <QtMoc Include="src\schemetreewidget.h">
     </QtMoc>
   </ItemGroup>
@@ -220,14 +202,31 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_predefs.h;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CustomBuild>
+    
+    
+    
+    
+    
+    
+    
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainwindow.ui">
     </QtUic>
   </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
-    <Import Project="$(QtMsBuild)\qt.targets" />
-  </ImportGroup>
+  <ItemGroup>
+    <QtRcc Include="icons.qrc">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </QtRcc>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" /><ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')"><Import Project="$(QtMsBuild)\qt.targets" /></ImportGroup>
   <ImportGroup Label="ExtensionTargets" />
 </Project>
