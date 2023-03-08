@@ -11,14 +11,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect( st, &SchemeTranslator::sigReturnScheme, this, &MainWindow::receiveScheme );
+//    connect( st, &SchemeTranslator::sigReturnScheme, this, &MainWindow::receiveScheme );
 
-    QString filePath = QFileDialog::getOpenFileName();
-    qDebug()<<filePath;
-    st->readFromJsonFile(filePath);
+//    QString filePath = QFileDialog::getOpenFileName();
+//    qDebug()<<filePath;
+//    st->readFromJsonFile(filePath);
 
-    QString savepath = QFileDialog::getSaveFileName( );
-    st->writeToJsonFile( schemeObj, savepath );
+//    QString savepath = QFileDialog::getSaveFileName( );
+//    st->writeToJsonFile( schemeObj, savepath );
 }
 
 MainWindow::~MainWindow()
