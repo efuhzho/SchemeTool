@@ -12,7 +12,7 @@ public:
 
 signals:
     void sigReturnScheme(Scheme scheme);
-    void sigReturnJsonData(QByteArray jsonData);
+    void sigReturnJsonData(QJsonObject jsonObject);
 
 public slots:
     void writeToJsonFile(Scheme scheme,QString filePath);

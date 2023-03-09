@@ -29,9 +29,9 @@ signals:
 private slots:
     void onFileChanged(QString filePath);
 
-    //when receive scheme convertor signals
+    //when received SchemeConvertor's signals
     void onReturnScheme(Scheme scheme);
-    void onReturnJsonData(QByteArray jsonData);
+    void onReturnJsonData(QJsonObject jsonObject);
 
     //when customer clicked buttons
     void onActionLoad();
@@ -41,8 +41,8 @@ private slots:
     //when treewidget item selected
     void onTreeItemClicked(QTreeWidgetItem *item, int column);
 
-    //members
-private:
+
+private://members
     Ui::MainWindow *ui;
 
     Scheme m_scheme;
@@ -50,15 +50,15 @@ private:
     SchemeConvertor* m_schemeConvertor{new SchemeConvertor(this)} ;
     SchemeTreeWidget* m_schemeTree{new SchemeTreeWidget};
 
-    //ui elements
-private:
+
+private://ui elements
     QAction* m_actionNew {new QAction(tr("New Scheme"))};
     QAction* m_actionLoad{new QAction(tr("Load"))};
     QAction* m_actionDump {new QAction(tr("Dump"))};
     QLabel* m_lableFilePath{new QLabel(tr("Haven't load any scheme file."))};
     QLineEdit* test{new QLineEdit};
-    //inits
-private:
+
+private://inits
     void initWindow();
     void createToolbars();
     void createStatusBar();

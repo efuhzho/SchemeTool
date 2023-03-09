@@ -45,23 +45,45 @@ void SchemeTreeWidget::initConnection( )
     connect(treeWidget,&QTreeWidget::itemClicked,this,&SchemeTreeWidget::onItemClicked);
 }
 
-void SchemeTreeWidget::parseJsonRoot(QByteArray jsonArray )
+void SchemeTreeWidget::setJsonData(QString jsonFilePath)
+{   
+    QFile jsonfile(jsonFilePath);
+    if(! jsonfile.open(QIODevice::ReadOnly))
+    {
+        return;
+    }
+    QByteArray jsonBytes = jsonfile.readAll();
+    jsonfile.close();
+    setJsonData(jsonBytes);
+}
+
+void SchemeTreeWidget::setJsonData(QByteArray jsonBytes )
 {
-    treeWidget->clear( );
     QJsonParseError jsonError;
-    QJsonDocument document = QJsonDocument::fromJson( jsonArray, &jsonError );
+    QJsonDocument document = QJsonDocument::fromJson( jsonBytes, &jsonError );
     if ( document.isNull( ) || jsonError.error != QJsonParseError::NoError )
     {
         return;
     }
-    QJsonObject scheme = document.object( );
-    QJsonObject schemeValue = scheme[m_schemeKey].toObject();
-    QString schemeName = schemeValue[m_keyword].toString();
+    setJsonData(document);
+}
 
-    QTreeWidgetItem* itemRoot = new QTreeWidgetItem( treeWidget,QStringList(schemeName));
+void SchemeTreeWidget::setJsonData(QJsonDocument jsonDoc)
+{
+    QJsonObject scheme = jsonDoc.object();
+    setJsonData(scheme);
+}
+
+void SchemeTreeWidget::setJsonData(QJsonObject jsonObject)
+{
+    treeWidget->clear( );
+    QJsonObject schemeValue = jsonObject[m_schemeKey].toObject();
+    QString objectName = schemeValue[m_keyword].toString();
+
+    QTreeWidgetItem* itemRoot = new QTreeWidgetItem( treeWidget,QStringList(objectName));
     itemRoot->setData(0,Qt::UserRole,schemeValue);
     treeWidget->addTopLevelItem( itemRoot );
-    parseObject(scheme,itemRoot);
+    parseObject(schemeValue,itemRoot);
 }
 
 void SchemeTreeWidget::parseObject(const QJsonObject& obj, QTreeWidgetItem* parentNode )
@@ -175,10 +197,7 @@ void SchemeTreeWidget::treeItemChanged(QTreeWidgetItem *item, int column)
                 item->child(i)->setCheckState(0,Qt::Checked);
             }
         }
-        else
-        {
-            updateParentItem(item);
-        }
+        updateParentItem(item);
     }
     else if (item->checkState(column) == Qt::Unchecked)
     {
@@ -190,10 +209,11 @@ void SchemeTreeWidget::treeItemChanged(QTreeWidgetItem *item, int column)
                 item->child(i)->setCheckState(0,Qt::Unchecked);
             }
         }
-        else
-        {
-            updateParentItem(item);
-        }
+        updateParentItem(item);
+    }
+    else
+    {
+        updateParentItem(item);
     }
 }
 void SchemeTreeWidget::updateParentItem(QTreeWidgetItem *item)
@@ -205,6 +225,7 @@ void SchemeTreeWidget::updateParentItem(QTreeWidgetItem *item)
     }
     //选中的子节点个数
     int selectedCount = 0;
+    int unSelectedCount = 0;
     int childCount = parent->childCount();
     for (int i = 0; i < childCount; i++)
     {
@@ -213,21 +234,25 @@ void SchemeTreeWidget::updateParentItem(QTreeWidgetItem *item)
         {
             selectedCount++;
         }
+        else if (childItem->checkState(0) == Qt::Unchecked)
+        {
+            unSelectedCount ++;
+        }
     }
-    if (selectedCount <= 0)
+    if (unSelectedCount == childCount)
     {
-        //未选中状态
+        //子项全未选
         parent->setCheckState(0, Qt::Unchecked);
-    }
-    else if (selectedCount > 0 && selectedCount < childCount)
-    {
-        //部分选中状态
-        parent->setCheckState(0, Qt::PartiallyChecked);
     }
     else if (selectedCount == childCount)
     {
-        //选中状态
+        //子项全选中
         parent->setCheckState(0, Qt::Checked);
+    }
+    else
+    {
+        //部分选中状态
+        parent->setCheckState(0, Qt::PartiallyChecked);
     }
 }
 

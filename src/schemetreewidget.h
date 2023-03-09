@@ -18,7 +18,10 @@ public:
     void initWidget( );
     void initConnection( );
 
-    void parseJsonRoot( QByteArray jsonArray );
+    void setJsonData(QString jsonFilePath);
+    void setJsonData( QByteArray jsonBytes );
+    void setJsonData(QJsonDocument jsonDoc);
+    void setJsonData(QJsonObject jsonObject);
     void parseObject( const QJsonObject& obj, QTreeWidgetItem* parentNode );
     void parseArray( const QJsonArray& arr, QTreeWidgetItem* parentNode );
 
