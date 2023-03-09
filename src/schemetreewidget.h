@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <QWidget>
 #include <QTreeWidget>
@@ -9,7 +9,7 @@
 
 class SchemeTreeWidget  : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     SchemeTreeWidget(QWidget *parent = nullptr );
@@ -18,21 +18,24 @@ public:
     void initWidget( );
     void initConnection( );
 
-    // ½âÎöjson²¢½«Ö¸¶¨×Ö¶ÎÌí¼Óµ½Ê÷½Úµã
     void parseJsonRoot( QByteArray jsonArray );
-    void parseObject( const QJsonObject& obj, QTreeWidgetItem* itemNode );
-    void parseArray( const QJsonArray& arr, QTreeWidgetItem* itemNode );
+    void parseObject( const QJsonObject& obj, QTreeWidgetItem* parentNode );
+    void parseArray( const QJsonArray& arr, QTreeWidgetItem* parentNode );
 
-    // Ê÷½Úµã²éÕÒ¹¦ÄÜ
     void findItem( const QString& text );
     void parentExpand( QTreeWidgetItem* item );
+signals:
+    void sigItemClicked(QTreeWidgetItem *item, int column);
 
 private:
     void treeItemChanged(QTreeWidgetItem *item, int column);
     void updateParentItem(QTreeWidgetItem *item);
+    void onItemClicked(QTreeWidgetItem *item, int column);
 
 private:
     QLineEdit* lineEdit;
     QTreeWidget* treeWidget;
-    QVBoxLayout* vLayout;  
+    QVBoxLayout* vLayout;
+    QString m_schemeKey{"scheme"};
+    QString m_keyword{"name"};
 };

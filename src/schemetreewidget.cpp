@@ -28,6 +28,7 @@ void SchemeTreeWidget::initWidget( )
 {
     vLayout = new QVBoxLayout( this );
     vLayout->setMargin(0);
+    vLayout->setSpacing(2);
     lineEdit = new QLineEdit( );
     lineEdit->setPlaceholderText( tr( "Search here..." ) );
     treeWidget = new QTreeWidget( );
@@ -41,92 +42,65 @@ void SchemeTreeWidget::initConnection( )
 {
     connect( lineEdit, &QLineEdit::textChanged, this, &SchemeTreeWidget::findItem );
     connect(treeWidget,&QTreeWidget::itemChanged,this,&SchemeTreeWidget::treeItemChanged);
+    connect(treeWidget,&QTreeWidget::itemClicked,this,&SchemeTreeWidget::onItemClicked);
 }
 
 void SchemeTreeWidget::parseJsonRoot(QByteArray jsonArray )
 {
     treeWidget->clear( );
     QJsonParseError jsonError;
-    QJsonObject jsonObject;
     QJsonDocument document = QJsonDocument::fromJson( jsonArray, &jsonError );
     if ( document.isNull( ) || jsonError.error != QJsonParseError::NoError )
     {
         return;
-    }    
-    jsonObject = document.object( );
-
-    if ( !jsonObject.contains( "scheme" ) )
-    {
-        return;
     }
-    QJsonValue schemeValue = jsonObject.value( "scheme" );
+    QJsonObject scheme = document.object( );
+    QJsonObject schemeValue = scheme[m_schemeKey].toObject();
+    QString schemeName = schemeValue[m_keyword].toString();
 
-    if ( !schemeValue.toObject( ).contains( "test_type" ) )
-    {
-        return;
-    }
-    QJsonValue testTypeValue = schemeValue.toObject( ).value( "test_type" );
-
-    if ( !testTypeValue.toObject( ).contains( "subtype" ) )
-    {
-        return;
-    }
-    QJsonValue subTypeValue = testTypeValue.toObject( ).value( "subtype" );
-
-    if ( !subTypeValue.isArray( ) )
-    {
-        return;
-    }
-
-    QJsonArray array = subTypeValue.toArray( );
-    int nSize = array.size( );
-
-    for ( int i = 0; i < nSize; i++ )
-    {
-        QJsonObject object = array.at( i ).toObject( );
-        if ( !( object.contains( "name" ) ) )
-        {
-            return;
-        }
-
-        QString itemText = object.value( "name" ).toString( );
-        QJsonArray itemChild = object.value( "item" ).toArray( );
-
-        QTreeWidgetItem* itemRoot = new QTreeWidgetItem( treeWidget, QStringList( itemText ) );
-        treeWidget->addTopLevelItem( itemRoot );
-
-        if ( itemChild.size( ) != 0 )
-        {
-            parseArray( itemChild, itemRoot );
-        }
-    }
+    QTreeWidgetItem* itemRoot = new QTreeWidgetItem( treeWidget,QStringList(schemeName));
+    itemRoot->setData(0,Qt::UserRole,schemeValue);
+    treeWidget->addTopLevelItem( itemRoot );
+    parseObject(scheme,itemRoot);
 }
 
-void SchemeTreeWidget::parseObject( const QJsonObject& obj, QTreeWidgetItem* itemNode )
+void SchemeTreeWidget::parseObject(const QJsonObject& obj, QTreeWidgetItem* parentNode )
 {
-    if ( obj.contains( "name" ) )
+    QTreeWidgetItem* child;
+    if (obj.contains(m_keyword)&&obj[m_keyword].toString()!=parentNode->text(0))
     {
-        QString itemText = obj.value( "name" ).toString( );
-        QJsonArray itemChild = obj.value( "item" ).toArray( );
+        QString value = obj[m_keyword].toString();
+        child = new QTreeWidgetItem( parentNode,QStringList(value));
+        child->setCheckState(0,Qt::Checked);
+        child->setData(0,Qt::UserRole,obj);
+    }
+    else
+    {
+        child = parentNode;
+    }
 
-        QTreeWidgetItem* item = new QTreeWidgetItem( itemNode, QStringList( itemText ) );
-        itemNode->addChild( item );
-        item->setCheckState(0,Qt::Checked);
-
-        if ( itemChild.size( ) != 0 )
+    QStringList keys = obj.keys();
+    for (int i = 0; i < keys.size(); ++i)
+    {
+        QJsonValue value = obj[keys[i]];
+        if (value.isObject())
         {
-            parseArray( itemChild, item );
+            parseObject(value.toObject(),child);
+        }
+        else if (value.isArray())
+        {
+            parseArray(value.toArray(),child);
         }
     }
 }
 
-void SchemeTreeWidget::parseArray( const QJsonArray& arr, QTreeWidgetItem* itemNode )
+void SchemeTreeWidget::parseArray(const QJsonArray& arr, QTreeWidgetItem* parentNode )
 {
     int size = arr.size( );
     for ( int i = 0; i < size; i++ )
     {
         QJsonObject obj = arr.at( i ).toObject( );
-        parseObject( obj, itemNode );
+        parseObject( obj, parentNode );
     }
 }
 
@@ -255,6 +229,11 @@ void SchemeTreeWidget::updateParentItem(QTreeWidgetItem *item)
         //选中状态
         parent->setCheckState(0, Qt::Checked);
     }
+}
+
+void SchemeTreeWidget::onItemClicked(QTreeWidgetItem *item, int column)
+{
+    emit sigItemClicked(item,column);
 }
 
 

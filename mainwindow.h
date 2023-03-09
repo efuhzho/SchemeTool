@@ -24,22 +24,29 @@ public:
     ~MainWindow();
 
 signals:
-    void sigFileUpdated(QString filePath);
+    void sigFileChanged(QString filePath);
 
 private slots:
-    void onFileUpdated(QString filePath);
+    void onFileChanged(QString filePath);
 
+    //when receive scheme convertor signals
     void onReturnScheme(Scheme scheme);
     void onReturnJsonData(QByteArray jsonData);
+
+    //when customer clicked buttons
     void onActionLoad();
     void onActionDump();
     void onActionNew();
+
+    //when treewidget item selected
+    void onTreeItemClicked(QTreeWidgetItem *item, int column);
 
     //members
 private:
     Ui::MainWindow *ui;
 
     Scheme m_scheme;
+    SchemeValue* m_schemeValue{&m_scheme.value};
     SchemeConvertor* m_schemeConvertor{new SchemeConvertor(this)} ;
     SchemeTreeWidget* m_schemeTree{new SchemeTreeWidget};
 
@@ -49,7 +56,7 @@ private:
     QAction* m_actionLoad{new QAction(tr("Load"))};
     QAction* m_actionDump {new QAction(tr("Dump"))};
     QLabel* m_lableFilePath{new QLabel(tr("Haven't load any scheme file."))};
-
+    QLineEdit* test{new QLineEdit};
     //inits
 private:
     void initWindow();

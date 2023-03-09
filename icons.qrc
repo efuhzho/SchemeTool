@@ -1,3 +1,7 @@
 <RCC>
-    <qresource prefix="/"/>
+    <qresource prefix="/">
+        <file>icons/icons8_add_file.ico</file>
+        <file>icons/icons8_download.ico</file>
+        <file>icons/icons8_Json4_Download.ico</file>
+    </qresource>
 </RCC>

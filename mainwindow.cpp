@@ -37,14 +37,14 @@ MainWindow::~MainWindow( )
 	delete ui;
 }
 
-void MainWindow::onFileUpdated( QString filePath )
+void MainWindow::onFileChanged( QString filePath )
 {
 	m_lableFilePath->setText( filePath );
 }
 
 void MainWindow::onReturnScheme( Scheme scheme )
 {
-	m_scheme = scheme;
+    m_scheme = scheme;
 }
 
 void MainWindow::onReturnJsonData( QByteArray jsonData )
@@ -61,7 +61,7 @@ void MainWindow::onActionLoad( )
 		return;
 	}
 	m_schemeConvertor->readFromJsonFile( filePath );
-	emit sigFileUpdated( filePath );
+    emit sigFileChanged( filePath );
 }
 
 void MainWindow::onActionDump( )
@@ -73,12 +73,20 @@ void MainWindow::onActionDump( )
 		return;
 	}
 	m_schemeConvertor->writeToJsonFile( m_scheme, filePath );
-	emit sigFileUpdated( filePath );
+    emit sigFileChanged( filePath );
 }
 
 void MainWindow::onActionNew( )
 {
 
+}
+
+void MainWindow::onTreeItemClicked(QTreeWidgetItem *item, int column)
+{
+    QJsonObject data = item->data(column,Qt::UserRole).toJsonObject();
+
+    QString value = data["unit"].toString();
+    test->setText(value);
 }
 
 void MainWindow::initWindow( )
@@ -89,13 +97,13 @@ void MainWindow::initWindow( )
 	this->setContentsMargins( 4, 0, 4, 0 );
 
 	//set window background color
-	QPalette p;
-	p.setColor( QPalette::Background, QColor( 240, 248, 255 ) );
-	this->setPalette( p );
+    QPalette background;
+    background.setColor( QPalette::Background, QColor( 240, 248, 255) );
+    this->setPalette( background );
 
-	//main window layout
+    //main window layout
 	QHBoxLayout* mainLayout = new QHBoxLayout( ui->centralwidget );
-	mainLayout->addWidget( new QPushButton );
+    mainLayout->addWidget( test );
 	mainLayout->setMargin( 0 );
 
 	//treewidget dock
@@ -127,7 +135,7 @@ void MainWindow::createStatusBar( )
 void MainWindow::initConnections( )
 {
 	//when file changed
-	connect( this, &MainWindow::sigFileUpdated, this, &MainWindow::onFileUpdated );
+    connect( this, &MainWindow::sigFileChanged, this, &MainWindow::onFileChanged );
 
 	//connect to Actions
 	connect( m_actionLoad, &QAction::triggered, this, &MainWindow::onActionLoad );
@@ -137,5 +145,9 @@ void MainWindow::initConnections( )
 	//connect to SchemeConvertor signals
 	connect( m_schemeConvertor, &SchemeConvertor::sigReturnJsonData, this, &MainWindow::onReturnJsonData );
 	connect( m_schemeConvertor, &SchemeConvertor::sigReturnScheme, this, &MainWindow::onReturnScheme );
+
+    //connect to treeWidget signals
+    connect(m_schemeTree,&SchemeTreeWidget::sigItemClicked,this,&MainWindow::onTreeItemClicked);
+
 }
 
