@@ -56,6 +56,12 @@
     <ClCompile Include="src\schemeConvertor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\schemeinfowidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\schemepresetwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\schemetreewidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,6 +76,12 @@
     <ClInclude Include="src\schemeDefine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="src\schemeinfowidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\schemepresetwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="src\schemetreewidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -83,6 +95,10 @@
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
+    
+    
+    
+    
     
     
     
