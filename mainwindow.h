@@ -6,10 +6,14 @@
 #include <QAction>
 #include <QCoreApplication>
 #include <QLabel>
+#include <QStackedWidget>
 
 #include "src/schemeDefine.h"
 #include "src/schemeConvertor.h"
 #include "src/schemetreewidget.h"
+#include "src/schemeinfowidget.h"
+#include "src/schemepresetwidget.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +29,7 @@ public:
 
 signals:
     void sigFileChanged(QString filePath);
+    void sigSchemeDataChanged();
 
 private slots:
     void onFileChanged(QString filePath);
@@ -47,22 +52,34 @@ private://members
 
     Scheme m_scheme;
     SchemeValue* m_schemeValue{&m_scheme.value};
+    Preset* m_presetValue{&m_schemeValue->preset};
     SchemeConvertor* m_schemeConvertor{new SchemeConvertor(this)} ;
-    SchemeTreeWidget* m_schemeTree{new SchemeTreeWidget};
-
+    //QMap stackWidgetMap;
 
 private://ui elements
+    //actions
     QAction* m_actionNew {new QAction(tr("New Scheme"))};
     QAction* m_actionLoad{new QAction(tr("Load"))};
     QAction* m_actionDump {new QAction(tr("Dump"))};
+
+    //strings
     QLabel* m_lableFilePath{new QLabel(tr("Haven't load any scheme file."))};
-    QLineEdit* test{new QLineEdit};
+
+    //stackwidget
+    QStackedWidget* m_stackWidget{new QStackedWidget};
+
+    //customer widgets
+    SchemeTreeWidget* m_schemeTree{new SchemeTreeWidget};
+    SchemeInfoWidget* m_schemeInfoWidget{new SchemeInfoWidget(m_schemeValue)};
+    SchemePresetWidget* m_presetWidget{new SchemePresetWidget(m_presetValue)};
+
 
 private://inits
     void initWindow();
-    void createToolbars();
-    void createStatusBar();
+    void initToolbars();
+    void initStatusBar();
     void initConnections();
+    void initStackWidget();
 
 };
 #endif // MAINWINDOW_H

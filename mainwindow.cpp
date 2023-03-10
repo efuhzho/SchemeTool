@@ -8,6 +8,7 @@
 #include <QLayout>
 #include <QDockWidget>
 
+
 MainWindow::MainWindow( QWidget* parent )
     : QMainWindow( parent )
     , ui( new Ui::MainWindow )
@@ -15,9 +16,8 @@ MainWindow::MainWindow( QWidget* parent )
     ui->setupUi( this );
     initWindow( );
     initConnections( );
-    createToolbars( );
-    createStatusBar( );
-
+    initToolbars( );
+    initStatusBar( );
 }
 
 MainWindow::~MainWindow( )
@@ -26,13 +26,18 @@ MainWindow::~MainWindow( )
 }
 
 void MainWindow::onFileChanged( QString filePath )
-{        
+{
     m_lableFilePath->setText( filePath );
+
+    //init widgets data
+    m_schemeInfoWidget->initData();
+    m_presetWidget->initData();
+    initStackWidget();
 }
 
 void MainWindow::onReturnScheme( Scheme scheme )
 {
-    m_scheme = scheme;
+    m_scheme = scheme;    
 }
 
 void MainWindow::onReturnJsonData(QJsonObject jsonObject )
@@ -71,12 +76,14 @@ void MainWindow::onActionNew( )
 
 void MainWindow::onTreeItemClicked(QTreeWidgetItem *item, int column)
 {
-#if 1
-    QJsonObject data = item->data(column,Qt::UserRole).toJsonObject();
-
-    QString value = data["unit"].toString();
-    test->setText(value);
-#endif
+    if(item->text(column)==m_schemeInfoWidget->name())
+    {
+        m_stackWidget->setCurrentWidget(m_schemeInfoWidget);
+    }
+    else if (item->text(column)==m_presetWidget->name())
+    {
+        m_stackWidget->setCurrentWidget(m_presetWidget);
+    }
 }
 
 void MainWindow::initWindow( )
@@ -92,8 +99,8 @@ void MainWindow::initWindow( )
     this->setPalette( background );
 
     //main window layout
-    QHBoxLayout* mainLayout = new QHBoxLayout( ui->centralwidget );
-    mainLayout->addWidget( test );
+    QVBoxLayout* mainLayout = new QVBoxLayout( ui->centralwidget );
+    mainLayout->addWidget( m_stackWidget );
     mainLayout->setMargin( 0 );
 
     //treewidget dock
@@ -104,7 +111,7 @@ void MainWindow::initWindow( )
     this->addDockWidget( Qt::LeftDockWidgetArea, treeDock );
 }
 
-void MainWindow::createToolbars( )
+void MainWindow::initToolbars( )
 {
     QToolBar* toolbar = new QToolBar;
     toolbar->layout( )->setSpacing( 4 );
@@ -117,7 +124,7 @@ void MainWindow::createToolbars( )
     this->addToolBar( toolbar );
 }
 
-void MainWindow::createStatusBar( )
+void MainWindow::initStatusBar( )
 {
     this->statusBar( )->addWidget( m_lableFilePath );
 }
@@ -139,5 +146,11 @@ void MainWindow::initConnections( )
     //connect to treeWidget signals
     connect(m_schemeTree,&SchemeTreeWidget::sigItemClicked,this,&MainWindow::onTreeItemClicked);
 
+}
+
+void MainWindow::initStackWidget()
+{
+    m_stackWidget->addWidget(m_schemeInfoWidget);
+    m_stackWidget->addWidget(m_presetWidget);
 }
 

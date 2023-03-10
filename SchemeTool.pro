@@ -11,13 +11,17 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    src/schemeinfowidget.cpp \
     src/schemeConvertor.cpp \
+    src/schemepresetwidget.cpp \
     src/schemetreewidget.cpp
 
 HEADERS += \
     mainwindow.h \
+    src/schemeinfowidget.h \
     src/schemeConvertor.h \
     src/schemeDefine.h \
+    src/schemepresetwidget.h \
     src/schemetreewidget.h
 
 FORMS += \
