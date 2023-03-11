@@ -37,7 +37,7 @@ void MainWindow::onFileChanged( QString filePath )
 
 void MainWindow::onReturnScheme( Scheme scheme )
 {
-    m_scheme = scheme;    
+    m_scheme = scheme;
 }
 
 void MainWindow::onReturnJsonData(QJsonObject jsonObject )
@@ -92,6 +92,7 @@ void MainWindow::initWindow( )
     this->setFont( QFont( "Microsoft Yahei" ) );
     this->setWindowTitle( tr( "Scheme Editor" ) );
     this->setContentsMargins( 4, 0, 4, 0 );
+    this->setMinimumSize(1280,800);
 
     //set window background color
     QPalette background;
@@ -105,6 +106,7 @@ void MainWindow::initWindow( )
 
     //treewidget dock
     QDockWidget* treeDock = new QDockWidget( tr( "Scheme" ) );
+    treeDock->setMinimumWidth(250);
     treeDock->setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
     treeDock->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
     treeDock->setWidget( m_schemeTree );

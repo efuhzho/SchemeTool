@@ -2,10 +2,10 @@
 
 #include <QFormLayout>
 
-SchemeInfoWidget::SchemeInfoWidget(SchemeValue *schemeValue, QWidget *parent)
+SchemeInfoWidget::SchemeInfoWidget(SchemeValue& schemeValue, QWidget *parent)
     : QWidget{parent}
 {
-    m_schemeValue = schemeValue;
+    m_schemeValue = &schemeValue;
     initUi();
     initConnections();
 }

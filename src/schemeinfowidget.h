@@ -12,7 +12,7 @@ class SchemeInfoWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SchemeInfoWidget(SchemeValue* schemeValue, QWidget *parent = nullptr);
+    explicit SchemeInfoWidget(SchemeValue& schemeValue, QWidget *parent = nullptr);
     void initData();
     QString name();
 

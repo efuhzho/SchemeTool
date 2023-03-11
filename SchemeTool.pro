@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    src/modeldatawidget.cpp \
     src/schemeinfowidget.cpp \
     src/schemeConvertor.cpp \
     src/schemepresetwidget.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
+    src/modeldatawidget.h \
     src/schemeinfowidget.h \
     src/schemeConvertor.h \
     src/schemeDefine.h \
@@ -34,3 +36,29 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     icons.qrc
+
+DISTFILES += \
+    icons/icons8_Json4_Download.ico \
+    icons/icons8_Json4_Download_16.png \
+    icons/icons8_Json4_Download_32.png \
+    icons/icons8_Json4_Download_48.png \
+    icons/icons8_Json4_Download_64.png \
+    icons/icons8_add_file.ico \
+    icons/icons8_add_file_16.png \
+    icons/icons8_add_file_32.png \
+    icons/icons8_download.ico \
+    icons/icons8_download_16.png \
+    icons/icons8_download_32.png \
+    icons/icons8_json2_download.ico \
+    icons/icons8_json2_download_16.png \
+    icons/icons8_json2_download_32.png \
+    icons/icons8_json2_download_48.png \
+    icons/icons8_json2_download_64.png \
+    icons/icons8_json3_download_16.png \
+    icons/icons8_json3_download_32.png \
+    icons/icons8_json3_download_48.png \
+    icons/icons8_json3_download_64.png \
+    icons/icons8_json_download.ico \
+    icons/icons8_json_download_16.png \
+    icons/icons8_json_download_32.png \
+    schemes/schemeModel.json
