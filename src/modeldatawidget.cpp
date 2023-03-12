@@ -13,10 +13,10 @@ ModelDataWidget::ModelDataWidget(QWidget *parent)
 void ModelDataWidget::setModel(ModelData& modeldata)
 {
     m_modelData = &modeldata;
-    emit sigModelUpdated(modeldata);
+    emit sigModelUpdated();
 }
 
-void ModelDataWidget::slotUpdateLoopsList(ModelData& modelData)
+void ModelDataWidget::slotUpdateLoopsList()
 {
     QList<QAbstractButton*> btnsInGroup = groupLoops->buttons();
     foreach (QAbstractButton *btn, btnsInGroup)
@@ -24,24 +24,24 @@ void ModelDataWidget::slotUpdateLoopsList(ModelData& modelData)
         delete btn;
     }
 
-    int size = modelData.loops.size();
+    int size = m_modelData->loops.size();
     for (int i = 0; i < size; ++i)
     {
-        QString key = modelData.loops[i].key;
+        QString key = m_modelData->loops[i].key;
         QRadioButton* radbtn = new QRadioButton(key);
 
         groupLoops->addButton(radbtn,i);
         loopsLayout->addWidget(radbtn);
     }
+
     if(groupLoops->buttons().count()>0)
     {
         groupLoops->buttons().at(0)->setChecked(true);
-        Loop loop = modelData.loops.at(0).loopValue;
-        emit sigLoopChecked(loop);
+        emit sigLoopChecked(0);
     }
 }
 
-void ModelDataWidget::slotUpdateStatesList(Loop& loop)
+void ModelDataWidget::slotUpdateStatesList(int loopIndex)
 {
     QList<QAbstractButton*> btnsInGroup = groupStates->buttons();
     foreach (QAbstractButton *btn, btnsInGroup)
@@ -49,10 +49,10 @@ void ModelDataWidget::slotUpdateStatesList(Loop& loop)
         delete btn;
     }
 
-    int count = loop.states.size();
+    int count = m_modelData->loops[loopIndex].loopValue.states.size();
     for (int i = 0; i < count; ++i)
     {
-        QString key = loop.states.at(i).key;
+        QString key = m_modelData->loops[loopIndex].loopValue.states.at(i).key;
         QRadioButton* radioState = new QRadioButton(key);
 
         groupStates->addButton(radioState,i);
@@ -61,18 +61,151 @@ void ModelDataWidget::slotUpdateStatesList(Loop& loop)
     if(groupStates->buttons().count()>0)
     {
         groupStates->buttons().at(0)->setChecked(true);
-        State state = loop.states.at(0).stateValue;
-        emit sigStateChecked(state);
+        emit sigStateChecked(loopIndex,0);
     }
 }
 
-void ModelDataWidget::slotUpdateDataGrid(State &state)
+void ModelDataWidget::slotUpdateDataGrid(int loopIndex,int stateIndex)
 {
+    State state =m_modelData->loops[loopIndex].loopValue.states[stateIndex].stateValue;
     int cout = state.parameters.size();
     for (int i = 0; i < cout; ++i)
     {
         Parameter para = state.parameters.at(i);
+        if(para.phaseName.toLower()=="ua")
+        {
+            boxUa->setValue(para.phaseData.mag);
+            boxPhUa->setValue(para.phaseData.ang);
+            boxFa->setValue(para.phaseData.freq);
+        }
+        else if (para.phaseName.toLower()=="ub")
+        {
+            boxUb->setValue(para.phaseData.mag);
+            boxPhUb->setValue(para.phaseData.ang);
+            boxFb->setValue(para.phaseData.freq);
+        }
+        else if (para.phaseName.toLower()=="uc")
+        {
+            boxUc->setValue(para.phaseData.mag);
+            boxPhUc->setValue(para.phaseData.ang);
+            boxFc->setValue(para.phaseData.freq);
+        }
+        else if (para.phaseName.toLower()=="ux")
+        {
+            boxUx->setValue(para.phaseData.mag);
+            boxPhUx->setValue(para.phaseData.ang);
+            boxFx->setValue(para.phaseData.freq);
+        }
+        else if (para.phaseName.toLower()=="ia")
+        {
+            boxIa->setValue(para.phaseData.mag);
+            boxPhIa->setValue(para.phaseData.ang);
+        }
+        else if (para.phaseName.toLower()=="ib")
+        {
+            boxIb->setValue(para.phaseData.mag);
+            boxPhIb->setValue(para.phaseData.ang);
+        }
+        else if (para.phaseName.toLower()=="ic")
+        {
+            boxIc->setValue(para.phaseData.mag);
+            boxPhIc->setValue(para.phaseData.ang);
+        }
+        else if (para.phaseName.toLower()=="ix")
+        {
+            boxIx->setValue(para.phaseData.mag);
+            boxPhIx->setValue(para.phaseData.ang);
+        }
+    }
+}
 
+void ModelDataWidget::slotAddLoop()
+{
+    if(m_modelData->loops.size()<0)
+    {
+        qDebug()<<"No loop template.From:ModelDataWidget::slotAddLoop()";
+        return;
+    }
+    m_modelData->addLoop(m_modelData->loops.last());
+    emit sigModelUpdated();
+
+    //select the last loop button
+    int count = groupLoops->buttons().count();
+    if (count>0)
+    {
+        groupLoops->buttons().at(count-1)->setChecked(true);
+        emit sigLoopChecked(count-1);
+    }
+#ifdef DEBUG
+    qDebug()<<"m_modelData"<<m_modelData->loops.size();
+    qDebug()<<"groupLoops"<<groupLoops->buttons().count();
+#endif
+}
+
+void ModelDataWidget::slotDeleteLoop()
+{
+    bool result = m_modelData->deleteLoop();
+    if(!result)
+    {
+        return;
+    }
+    emit sigModelUpdated();
+
+    int count = groupLoops->buttons().count();
+    groupLoops->buttons().at(count-1)->setChecked(true);
+    emit sigLoopChecked(count-1);
+
+#ifdef DEBUG
+    qDebug()<<"m_modelData"<<m_modelData->loops.size();
+    qDebug()<<"groupLoops"<<groupLoops->buttons().count();
+#endif
+}
+
+void ModelDataWidget::slotAddState()
+{
+    int loopIndex = groupLoops->checkedId();
+    int statesCount = m_modelData->loops.at(loopIndex).loopValue.states.size();
+    if(statesCount<0)
+    {
+        qDebug()<<"No state template.From:ModelDataWidget::slotAddState()";
+        return;
+    }
+    LoopValue item = m_modelData->loops[loopIndex].loopValue.states.last();
+    m_modelData->loops[loopIndex].loopValue.addState(item);
+
+    //update state list
+    emit sigLoopChecked(loopIndex);
+
+    int count = groupStates->buttons().count();
+    if(count>0)
+    {
+        groupStates->buttons().at(count-1)->setChecked(true);
+        emit sigStateChecked(loopIndex,count-1);
+    }
+}
+
+void ModelDataWidget::slotDeleteState()
+{
+    int loopIndex = groupLoops->checkedId();
+    if(loopIndex<0)
+    {
+        qDebug()<<"no loop button is checked!From:ModelDataWidget::slotDeleteState()";
+        return;
+    }
+    bool result = m_modelData->loops[loopIndex].loopValue.deleteState();
+    if(!result)
+    {
+        return;
+    }
+
+    //update state list
+    emit sigLoopChecked(loopIndex);
+
+    int count = groupStates->buttons().count();
+    if(count>0)
+    {
+        groupStates->buttons().at(count-1)->setChecked(true);
+        emit sigStateChecked(loopIndex,count-1);
     }
 }
 
@@ -360,7 +493,7 @@ QGridLayout* ModelDataWidget::createDataGrid()
 
 QSplitter *ModelDataWidget::createOptionsWidget()
 {
-    QSplitter* splitterMain = new QSplitter(Qt::Vertical);
+    QSplitter* splitterMain = new QSplitter(Qt::Horizontal);
     QPalette background ;
     background.setColor( QPalette::Background, QColor( 240, 248, 255) );
 
@@ -401,14 +534,36 @@ QSplitter *ModelDataWidget::createOptionsWidget()
 
 void ModelDataWidget::initConnections()
 {
+    //when model data updated,update loop list
     connect(this,&ModelDataWidget::sigModelUpdated,this,&ModelDataWidget::slotUpdateLoopsList);
+
+    //when a loop button checked,update state list
     connect(this,&ModelDataWidget::sigLoopChecked,this,&ModelDataWidget::slotUpdateStatesList);
-    connect(groupLoops,&QButtonGroup::idClicked,this,[=](int id)
-    {
-        Loop loop = m_modelData->loops.at(id).loopValue;
-        emit sigLoopChecked(loop);
-    });
+
+    //when a state button checked,update grid data
     connect(this,&ModelDataWidget::sigStateChecked,this,&ModelDataWidget::slotUpdateDataGrid);
+
+    //a loop checked by user
+    connect(groupLoops,&QButtonGroup::idClicked,this,&ModelDataWidget::slotUpdateStatesList);
+
+    //a state checked by user
+    connect(groupStates,&QButtonGroup::idClicked,this,[=](int stateIndex)
+    {
+        int loopIndex = groupLoops->checkedId();
+        emit sigStateChecked(loopIndex,stateIndex);
+    });
+
+    //add a loop
+    connect(btnAddLoop,&QPushButton::clicked,this,&ModelDataWidget::slotAddLoop);
+
+    //add a state
+    connect(btnAddState,&QPushButton::clicked,this,&ModelDataWidget::slotAddState);
+
+    //delete a loop
+    connect(btnDeleteLoop,&QPushButton::clicked,this,&ModelDataWidget::slotDeleteLoop);
+
+    //delete a state
+    connect(btnDeleteState,&QPushButton::clicked,this,&ModelDataWidget::slotDeleteState);
 }
 
 

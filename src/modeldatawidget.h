@@ -1,6 +1,8 @@
 #ifndef MODELDATAWIDGET_H
 #define MODELDATAWIDGET_H
 
+#define DEBUG
+
 #include <QWidget>
 #include <QLayout>
 #include <QLabel>
@@ -22,14 +24,18 @@ public:
     void setModel(ModelData& modeldata);
 
 signals:
-    void sigModelUpdated(ModelData& modelData);
-    void sigLoopChecked(Loop& loop);
-    void sigStateChecked(State& state);
+    void sigModelUpdated();
+    void sigLoopChecked(int index);
+    void sigStateChecked(int loopIndex,int stateIndex);
 
 private slots:
-    void slotUpdateLoopsList(ModelData& modelData);
-    void slotUpdateStatesList(Loop& loop);
-    void slotUpdateDataGrid(State& state);
+    void slotUpdateLoopsList();
+    void slotUpdateStatesList(int loopIndex);
+    void slotUpdateDataGrid(int loopIndex,int stateIndex);
+    void slotAddLoop();
+    void slotDeleteLoop();
+    void slotAddState();
+    void slotDeleteState();
 
 private://inits
     void initUi();
@@ -40,7 +46,8 @@ private://inits
 
 private://members
     ModelData* m_modelData {nullptr};
-    //QVector<ModelDataValue>* m_loops {&m_modelData->loops};
+   // QVector<ModelDataValue>* m_loops {&m_modelData->loops};
+
 
     QString unitU = "%";
     QString unitI = "%";

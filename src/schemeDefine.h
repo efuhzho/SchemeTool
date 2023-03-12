@@ -111,6 +111,24 @@ typedef struct loop
         }
         return loopValue;
     }
+
+    void addState(LoopValue item)
+    {
+        int count = states.size();
+        item.key = "state"+QString::number(count);
+        states.append(item);
+    }
+
+    bool deleteState()
+    {
+        int count = states.size();
+        if(count>1)
+        {
+            states.removeLast();
+            return true;
+        }
+        return false;
+    }
 }Loop;
 
 typedef struct modelDataValue
@@ -149,6 +167,24 @@ typedef struct modelData
             modelDataValue.insert(loops[i].key, loops[i].loopValue.toJson() );
         }
         return modelDataValue;
+    }
+
+    void addLoop(ModelDataValue item)
+    {
+        int count = loops.size();
+        item.key = "loop"+QString::number(count);
+        loops.append(item);
+    }
+
+    bool deleteLoop()
+    {
+        int count = loops.size();
+        if(count>1)
+        {
+            loops.removeLast();
+            return true;
+        }
+        return false;
     }
 }ModelData;
 

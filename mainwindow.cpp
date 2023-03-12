@@ -92,7 +92,7 @@ void MainWindow::initWindow( )
     this->setFont( QFont( "Microsoft Yahei" ) );
     this->setWindowTitle( tr( "Scheme Editor" ) );
     this->setContentsMargins( 4, 0, 4, 0 );
-    //this->setMinimumSize(1280,800);
+    this->setMinimumSize(1096,720);//1096,616
 
     //set window background color
     QPalette background;
