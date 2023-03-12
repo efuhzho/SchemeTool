@@ -4,25 +4,24 @@
 #include <QFormLayout>
 //#include <>
 
-SchemePresetWidget::SchemePresetWidget(Preset& presetValue,QWidget *parent)
+SchemePresetWidget::SchemePresetWidget(QWidget *parent)
     : QWidget{parent}
 {
-    m_presetValue = &presetValue;
+
     initUi();
     initSpinBox();
     initConnections();
 }
 
-void SchemePresetWidget::initData()
+void SchemePresetWidget::setModel(Preset& presetValue)
 {
-    dataWidget=new ModelDataWidget(m_presetValue->modelData);
-    lableName->setText(m_presetValue->name);
+    m_presetValue = &presetValue;
+    modelDataWidget->setModel(m_presetValue->modelData);
 
+    lableName->setText(m_presetValue->name);
     spinboxVolt->setValue(m_presetValue->ratedVoltage);
     spinboxCurr->setValue(m_presetValue->ratedCurrent);
     qDebug()<<m_presetValue->modelData.loops.size()<<" ---"<<&(m_presetValue->modelData);
-
-    dataWidget->initData();
 }
 
 QString SchemePresetWidget::name()
@@ -47,7 +46,7 @@ void SchemePresetWidget::initUi()
     QVBoxLayout* vLayout = new QVBoxLayout(this);
     vLayout->addWidget(lableName);
     vLayout->addLayout(ratedValueLayout);
-    vLayout->addWidget(dataWidget);
+    vLayout->addWidget(modelDataWidget);
     vLayout->addStretch();
 }
 

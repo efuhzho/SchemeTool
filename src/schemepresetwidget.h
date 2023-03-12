@@ -8,15 +8,15 @@
 #include <QDebug>
 
 #include "schemeDefine.h"
-#include "modeldatawidget.h"
+#include "src/modeldatawidget.h"
 
 
 class SchemePresetWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SchemePresetWidget(Preset& presetValue,QWidget *parent = nullptr);
-    void initData();
+    explicit SchemePresetWidget(QWidget *parent = nullptr);
+    void setModel(Preset& presetValue);
     QString name();
 signals:
 
@@ -24,7 +24,7 @@ private://elements
     QLabel* lableName{new QLabel};
     QDoubleSpinBox* spinboxVolt{new QDoubleSpinBox};
     QDoubleSpinBox* spinboxCurr{new QDoubleSpinBox};
-    ModelDataWidget* dataWidget{new ModelDataWidget(m_presetValue->modelData)};
+    ModelDataWidget* modelDataWidget{new ModelDataWidget};
 
 private://members
     Preset* m_presetValue{nullptr};

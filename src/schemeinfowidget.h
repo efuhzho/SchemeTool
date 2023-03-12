@@ -12,8 +12,8 @@ class SchemeInfoWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SchemeInfoWidget(SchemeValue& schemeValue, QWidget *parent = nullptr);
-    void initData();
+    explicit SchemeInfoWidget(QWidget *parent = nullptr);
+    void setModel(SchemeValue& schemeValue);
     QString name();
 
 private://inits

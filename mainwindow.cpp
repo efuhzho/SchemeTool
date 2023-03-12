@@ -30,8 +30,8 @@ void MainWindow::onFileChanged( QString filePath )
     m_lableFilePath->setText( filePath );
 
     //init widgets data
-    m_schemeInfoWidget->initData();
-    m_presetWidget->initData();
+    m_schemeInfoWidget->setModel(m_scheme.value);
+    m_presetWidget->setModel(m_scheme.value.preset);
     initStackWidget();
 }
 
@@ -92,7 +92,7 @@ void MainWindow::initWindow( )
     this->setFont( QFont( "Microsoft Yahei" ) );
     this->setWindowTitle( tr( "Scheme Editor" ) );
     this->setContentsMargins( 4, 0, 4, 0 );
-    this->setMinimumSize(1280,800);
+    //this->setMinimumSize(1280,800);
 
     //set window background color
     QPalette background;

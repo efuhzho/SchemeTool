@@ -45,12 +45,25 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Distribution Files">
+      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
+      <Extensions>*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Distribution Files">
+      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
+      <Extensions>*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modeldatawidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\schemeConvertor.cpp">
@@ -70,6 +83,9 @@
     <QtMoc Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\modeldatawidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="src\schemeConvertor.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -87,6 +103,8 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
+    
+    
     
     
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -116,5 +134,79 @@
     <QtRcc Include="icons.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\icons8_Json4_Download.ico">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_Json4_Download_16.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_Json4_Download_32.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_Json4_Download_48.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_Json4_Download_64.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_add_file.ico">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_add_file_16.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_add_file_32.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_download.ico">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_download_16.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_download_32.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json2_download.ico">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json2_download_16.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json2_download_32.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json2_download_48.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json2_download_64.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json3_download_16.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json3_download_32.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json3_download_48.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json3_download_64.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json_download.ico">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json_download_16.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8_json_download_32.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="schemes\schemeModel.json">
+      <Filter>Distribution Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -2,10 +2,9 @@
 
 #include <QFormLayout>
 
-SchemeInfoWidget::SchemeInfoWidget(SchemeValue& schemeValue, QWidget *parent)
+SchemeInfoWidget::SchemeInfoWidget(QWidget *parent)
     : QWidget{parent}
-{
-    m_schemeValue = &schemeValue;
+{   
     initUi();
     initConnections();
 }
@@ -63,8 +62,9 @@ void SchemeInfoWidget::initConnections()
     });
 }
 
-void SchemeInfoWidget::initData()
+void SchemeInfoWidget::setModel(SchemeValue& schemeValue)
 {
+    m_schemeValue = &schemeValue;
     lineEditSchemeName->setText(m_schemeValue->name);
     lineEditVersion->setText(m_schemeValue->version);
     lineEditCreateDate->setText(m_schemeValue->createDate);

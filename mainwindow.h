@@ -51,8 +51,6 @@ private://members
     Ui::MainWindow *ui;
 
     Scheme m_scheme;
-    //SchemeValue* m_schemeValue{&m_scheme.value};
-    //Preset m_presetValue{m_schemeValue->preset};
     SchemeConvertor* m_schemeConvertor{new SchemeConvertor(this)} ;
     //QMap stackWidgetMap;
 
@@ -70,8 +68,8 @@ private://ui elements
 
     //customer widgets
     SchemeTreeWidget* m_schemeTree{new SchemeTreeWidget};
-    SchemeInfoWidget* m_schemeInfoWidget{new SchemeInfoWidget(m_scheme.value)};
-    SchemePresetWidget* m_presetWidget{new SchemePresetWidget(m_scheme.value.preset)};
+    SchemeInfoWidget* m_schemeInfoWidget{new SchemeInfoWidget};
+    SchemePresetWidget* m_presetWidget{new SchemePresetWidget};
 
 
 private://inits
