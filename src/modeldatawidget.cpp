@@ -508,9 +508,9 @@ QSplitter *ModelDataWidget::createOptionsWidget()
         loopscommandLayout->addWidget(btnAddLoop);
         loopscommandLayout->addWidget(btnDeleteLoop);
 
-        mainLayout->addLayout(loopscommandLayout);
         mainLayout->addLayout(loopsLayout);
         mainLayout->addStretch();
+        mainLayout->addLayout(loopscommandLayout);
     }
 
     //states widget
@@ -524,9 +524,9 @@ QSplitter *ModelDataWidget::createOptionsWidget()
         statesscommandLayout->addWidget(btnAddState);
         statesscommandLayout->addWidget(btnDeleteState);
 
-        stateMainLayout->addLayout(statesscommandLayout);
         stateMainLayout->addLayout(statesLayout);
         stateMainLayout->addStretch();
+        stateMainLayout->addLayout(statesscommandLayout);
     }
 
     return splitterMain;
@@ -544,13 +544,17 @@ void ModelDataWidget::initConnections()
     connect(this,&ModelDataWidget::sigStateChecked,this,&ModelDataWidget::slotUpdateDataGrid);
 
     //a loop checked by user
-    connect(groupLoops,&QButtonGroup::idClicked,this,&ModelDataWidget::slotUpdateStatesList);
+    connect(groupLoops,&QButtonGroup::idClicked,this,[=](int loopIndex)
+    {
+        m_loopIndex = loopIndex;
+        slotUpdateStatesList(m_loopIndex);
+    });
 
     //a state checked by user
     connect(groupStates,&QButtonGroup::idClicked,this,[=](int stateIndex)
     {
-        int loopIndex = groupLoops->checkedId();
-        emit sigStateChecked(loopIndex,stateIndex);
+        m_stateIndex = stateIndex;
+        emit sigStateChecked(m_loopIndex,m_stateIndex);
     });
 
     //add a loop
@@ -564,6 +568,11 @@ void ModelDataWidget::initConnections()
 
     //delete a state
     connect(btnDeleteState,&QPushButton::clicked,this,&ModelDataWidget::slotDeleteState);
+
+    connect(boxUa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+    {
+
+    });
 }
 
 

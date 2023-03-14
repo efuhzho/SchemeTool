@@ -19,7 +19,6 @@ typedef struct phaseData
         ang = phaseDataValue["ang"].toDouble();
         freq = phaseDataValue["freq"].toDouble();
         dc = phaseDataValue["dc"].toDouble();
-
     }
 
     QJsonObject toJson()
@@ -31,7 +30,6 @@ typedef struct phaseData
         phaseDataValue.insert("dc",dc);
         return phaseDataValue;
     }
-
 }PhaseData;
 
 typedef struct parameter

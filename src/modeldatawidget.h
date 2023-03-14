@@ -44,8 +44,12 @@ private://inits
     QSplitter* createOptionsWidget();
     void initConnections();
 
+
+
 private://members
     ModelData* m_modelData {nullptr};
+    int m_loopIndex = 0;
+    int m_stateIndex = 0;
    // QVector<ModelDataValue>* m_loops {&m_modelData->loops};
 
 
