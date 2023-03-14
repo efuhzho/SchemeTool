@@ -1,4 +1,4 @@
-#ifndef MODELDATAWIDGET_H
+﻿#ifndef MODELDATAWIDGET_H
 #define MODELDATAWIDGET_H
 
 #define DEBUG

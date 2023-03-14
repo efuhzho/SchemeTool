@@ -1,4 +1,4 @@
-#include "modeldatawidget.h"
+﻿#include "modeldatawidget.h"
 #include <QPushButton>
 #include <QDebug>
 
@@ -251,15 +251,15 @@ void ModelDataWidget::initSpinBox()
         boxIc->setSuffix(unitI);
         boxIx->setSuffix(unitI);
 
-        boxPhUa->setSuffix("°");
-        boxPhUb->setSuffix("°");
-        boxPhUc->setSuffix("°");
-        boxPhUx->setSuffix("°");
+        boxPhUa->setSuffix(QString::fromLocal8Bit("°"));
+        boxPhUb->setSuffix(QString::fromLocal8Bit("°"));
+        boxPhUc->setSuffix(QString::fromLocal8Bit("°"));
+        boxPhUx->setSuffix(QString::fromLocal8Bit("°"));
 
-        boxPhIa->setSuffix("°");
-        boxPhIb->setSuffix("°");
-        boxPhIc->setSuffix("°");
-        boxPhIx->setSuffix("°");
+        boxPhIa->setSuffix(QString::fromLocal8Bit("°"));
+        boxPhIb->setSuffix(QString::fromLocal8Bit("°"));
+        boxPhIc->setSuffix(QString::fromLocal8Bit("°"));
+        boxPhIx->setSuffix(QString::fromLocal8Bit("°"));
 
         boxPa->setSuffix(unitP);
         boxPb->setSuffix(unitP);
@@ -368,13 +368,13 @@ QGridLayout* ModelDataWidget::createDataGrid()
     dataGrid->addWidget(new QLabel("B"),0,3,Qt::AlignCenter);
     dataGrid->addWidget(new QLabel("C"),0,4,Qt::AlignCenter);
     dataGrid->addWidget(new QLabel("X"),0,5,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("Σ"),0,6,Qt::AlignCenter);
+    dataGrid->addWidget(new QLabel(QString::fromLocal8Bit("Σ")),0,6,Qt::AlignCenter);
 
     //colum 0 header
     dataGrid->addWidget(new QLabel("U"),1,0,Qt::AlignCenter);
     dataGrid->addWidget(new QLabel("I"),2,0,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("ΦU"),3,0,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("ΦI"),4,0,Qt::AlignCenter);
+    dataGrid->addWidget(new QLabel(QString::fromLocal8Bit("ΦU")),3,0,Qt::AlignCenter);
+    dataGrid->addWidget(new QLabel(QString::fromLocal8Bit("ΦI")),4,0,Qt::AlignCenter);
     dataGrid->addWidget(new QLabel("P"),5,0,Qt::AlignCenter);
     dataGrid->addWidget(new QLabel("Q"),6,0,Qt::AlignCenter);
     dataGrid->addWidget(new QLabel("PF"),7,0,Qt::AlignCenter);
