@@ -1,63 +1,42 @@
-﻿#ifndef MODELDATAWIDGET_H
-#define MODELDATAWIDGET_H
-
-#define DEBUG
+﻿#ifndef STATEWIDGET_H
+#define STATEWIDGET_H
 
 #include <QWidget>
+#include <QDoubleSpinBox>
 #include <QLayout>
 #include <QLabel>
-#include <QDoubleSpinBox>
-#include <QRadioButton>
-#include <QSplitter>
-#include <QToolBar>
-#include <QPushButton>
-#include <QListWidget>
-#include <QButtonGroup>
+#include <QJsonObject>
+#include <QByteArray>
 
-#include "schemeDefine.h"
-
-class ModelDataWidget : public QWidget
+class StateWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ModelDataWidget(QWidget *parent = nullptr);
-    void setModel(ModelData& modeldata);
+    explicit StateWidget(QWidget *parent = nullptr);
+    void  setModel(QJsonObject& state);
 
 signals:
     void sigModelUpdated();
-    void sigLoopChecked(int index);
-    void sigStateChecked(int loopIndex,int stateIndex);
 
 private slots:
-    void slotUpdateLoopsList();
-    void slotUpdateStatesList(int loopIndex);
-    void slotUpdateDataGrid(int loopIndex,int stateIndex);
-    void slotAddLoop();
-    void slotDeleteLoop();
-    void slotAddState();
-    void slotDeleteState();
+    void onModelUpdated();
 
-private://inits
-    void initUi();
-    void initSpinBox();
+private ://inits
+    void initUI();
     QGridLayout* createDataGrid();
-    QSplitter* createOptionsWidget();
-    void initConnections();
-
-
+    void initSpinBox();
+    void initConnects();
 
 private://members
-    ModelData* m_modelData {nullptr};
-   // QVector<ModelDataValue>* m_loops {&m_modelData->loops};
+    QJsonObject m_stateModel;
 
+private://elements
 
     QString unitU = "%";
     QString unitI = "%";
     QString unitP = "%";
     QString unitQ = "%";
 
-
-private://elements
     //电压
     QDoubleSpinBox* boxUa = new QDoubleSpinBox;
     QDoubleSpinBox* boxUb = new QDoubleSpinBox;
@@ -102,15 +81,6 @@ private://elements
     QDoubleSpinBox* boxFc = new QDoubleSpinBox;
     QDoubleSpinBox* boxFx = new QDoubleSpinBox;
 
-    QPushButton* btnAddLoop {new QPushButton(tr("Add loop"))};
-    QPushButton* btnDeleteLoop {new QPushButton(tr("Delete loop"))};
-    QPushButton* btnAddState {new QPushButton(tr("Add state"))};
-    QPushButton* btnDeleteState {new QPushButton(tr("Delete state"))};
-
-    QVBoxLayout* loopsLayout {new QVBoxLayout};
-    QVBoxLayout* statesLayout{new QVBoxLayout};
-    QButtonGroup* groupLoops {new QButtonGroup(this)};
-    QButtonGroup* groupStates {new QButtonGroup(this)};
 };
 
-#endif // MODELDATAWIDGET_H
+#endif // STATEWIDGET_H

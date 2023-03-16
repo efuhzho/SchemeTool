@@ -13,7 +13,7 @@ class SchemeInfoWidget : public QWidget
     Q_OBJECT
 public:
     explicit SchemeInfoWidget(QWidget *parent = nullptr);
-    void setModel(SchemeValue& schemeValue);
+    void setModel(Scheme& schemeValue);
     QString name();
 
 private://inits
@@ -29,7 +29,7 @@ private://elements
     QTextEdit* textEditDescription {new QTextEdit};
 
 private://members
-    SchemeValue* m_schemeValue{nullptr};
+    Scheme* m_schemeValue{nullptr};
 };
 
 #endif // SCHEMEINFOWIDGET_H

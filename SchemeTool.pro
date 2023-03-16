@@ -15,7 +15,8 @@ SOURCES += \
     src/schemeinfowidget.cpp \
     src/schemeConvertor.cpp \
     src/schemepresetwidget.cpp \
-    src/schemetreewidget.cpp
+    src/schemetreewidget.cpp \
+    src/statewidget.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -23,8 +24,10 @@ HEADERS += \
     src/schemeinfowidget.h \
     src/schemeConvertor.h \
     src/schemeDefine.h \
+    src/schememodeldefine.h \
     src/schemepresetwidget.h \
-    src/schemetreewidget.h
+    src/schemetreewidget.h \
+    src/statewidget.h
 
 FORMS += \
     mainwindow.ui

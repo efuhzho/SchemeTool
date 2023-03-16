@@ -78,6 +78,9 @@
     <ClCompile Include="src\schemetreewidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\statewidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwindow.h">
@@ -95,10 +98,16 @@
     <QtMoc Include="src\schemeinfowidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="src\schememodeldefine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <QtMoc Include="src\schemepresetwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\schemetreewidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\statewidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -113,6 +122,8 @@
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
+    
+    
     
     
     

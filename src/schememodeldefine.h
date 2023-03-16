@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef SCHEMEMODELDEFINE_H
+#define SCHEMEMODELDEFINE_H
 
 #include <QString>
 #include <QDate>
@@ -6,195 +7,189 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-typedef struct phaseData
+typedef struct parameter
 {
-    double mag ;
-    double ang ;
-    double freq ;
-    double dc ;
+    double mag = 0;
+    double ang =0;
+    double freq = 50;
+    double dc =0;
 
-    void fromJson(QJsonObject phaseDataValue)
+    void fromJson(const QJsonObject paraJson)
     {
-        mag = phaseDataValue["mag"].toDouble();
-        ang = phaseDataValue["ang"].toDouble();
-        freq = phaseDataValue["freq"].toDouble();
-        dc = phaseDataValue["dc"].toDouble();
+        mag = paraJson["mag"].toDouble();
+        ang = paraJson["ang"].toDouble();
+        freq = paraJson["freq"].toDouble();
+        dc = paraJson["dc"].toDouble();
     }
 
     QJsonObject toJson()
     {
-        QJsonObject phaseDataValue;
-        phaseDataValue.insert("mag",mag);
-        phaseDataValue.insert("ang",ang);
-        phaseDataValue.insert("freq",freq);
-        phaseDataValue.insert("dc",dc);
-        return phaseDataValue;
+        QJsonObject paraJson;
+        paraJson.insert("mag",mag);
+        paraJson.insert("ang",ang);
+        paraJson.insert("freq",freq);
+        paraJson.insert("dc",dc);
+        return paraJson;
     }
-}PhaseData;
-
-typedef struct parameter
-{
-    QString phaseName;
-    PhaseData phaseData;
 }Parameter;
 
 typedef struct state
 {
-    QVector<Parameter> parameters;
+    QMap<QString,Parameter> parameters;
 
-    void fromJson(QJsonObject stateValue)
+    void fromJson(const QJsonObject stateJson)
     {
-        QStringList stateKeys = stateValue.keys();
-        Parameter para;
+        QStringList paranames = stateJson.keys();
 
-        for (int i = 0; i < stateKeys.size(); ++i)
+        for (int i = 0; i < paranames.size(); ++i)
         {
-            QString key = stateKeys[i];
-            QJsonValue value = stateValue[key];
-
-            if(value.isObject())
+            QString paraName = paranames[i];
+            if(!stateJson[paraName].isObject())
             {
-                QJsonObject phasedata = value.toObject();
-                para.phaseName = key;
-                para.phaseData.fromJson(phasedata);
-                parameters.append(para);
+                return;
             }
+
+            QJsonObject paraObj = stateJson[paraName].toObject();
+            Parameter para;
+            para.fromJson(paraObj);
+            parameters.insert(paraName,para);
         }
     }
 
     QJsonObject toJson()
     {
-        QJsonObject stateValue;
+        QJsonObject stateJson;
         for (int i = 0; i < parameters.size(); ++i)
         {
-            stateValue.insert(parameters[i].phaseName,parameters[i].phaseData.toJson());
+            QString paraName = parameters[i];
+            auto value = parameters[paraName];
+            stateJson.insert(paraName,value.toJson());
         }
-        return stateValue;
+        return stateJson;
     }
 
-    void addParameter(QString key,PhaseData data)
+    void  addParameter(QString paraname)
     {
         Parameter para;
-        para.phaseName = key;
-        para.phaseData = data;
-        parameters.append(para);
+        parameters.insert(paraname,para);
     }
-}State;
 
-typedef struct loopValue
-{
-    QString stateKey;
-    State stateValue;
-}LoopValue;
+    bool deleteParameter(QString paraname)
+    {
+        return parameters.remove(paraname);
+    }
+
+}State;
 
 typedef struct loop
 {
-    QVector<LoopValue> states;
+    QMap<QString,State> states;
 
-    void fromJson(QJsonObject loopValue)
+    void fromJson(const QJsonObject loopObj)
     {
-        QStringList stateKeys = loopValue.keys();
-        LoopValue state;
-        for (int i = 0; i < stateKeys.size(); ++i)
+        QStringList statenames = loopObj.keys();
+
+        for (int i = 0; i < statenames.size(); ++i)
         {
-            QString key = stateKeys[i];
-            QJsonValue value = loopValue[key];
-            if(value.isObject())
+            QString statename = statenames[i];
+            QJsonValue value = loopObj[statename];
+            if(!value.isObject())
             {
-                state.stateKey = key;
-                state.stateValue.fromJson( value.toObject( ) );
-                states.append(state);
+                return;
             }
+            QJsonObject stateObj = value.toObject();
+            State state;
+            state.fromJson(stateObj);
+            states.insert(statename,state);
         }
     }
 
     QJsonObject toJson()
     {
-        QJsonObject loopValue;
+        QJsonObject loopObj;
         for (int i = 0; i < states.size(); ++i)
         {
-            loopValue.insert(states[i].stateKey, states[i].stateValue.toJson() );
+            QString statename = states[i];
+            State state = states[statename];
+            loopObj.insert(statename,state.toJson());
         }
-        return loopValue;
+        return loopObj;
     }
 
-    void addState(/*LoopValue item*/)
+    void addState()
     {
-        LoopValue item;
-        int count = states.size();
-        item.stateKey = "state"+QString::number(count);
-        states.append(item);
+        int stateCount = states.size();
+        QString stateName = "state"+QString::number(stateCount);
+        State state;
+        states.insert(stateName,state);
     }
 
     bool deleteState()
     {
-        int count = states.size();
-        if(count>1)
+        if(states.isEmpty())
         {
-            states.removeLast();
-            return true;
+            return false;
         }
-        return false;
+        return  states.remove(states.lastKey());
     }
 }Loop;
 
-typedef struct modelDataValue
-{
-    QString key;
-    Loop loopValue;
-}ModelDataValue;
-
 typedef struct modelData
 {
-    QVector<ModelDataValue> loops;
+    QMap<QString,Loop> loops;
 
-    void fromJson(QJsonObject modelDataValue)
+    void fromJson(const QJsonObject loopObj)
     {
-        QStringList loopKeys = modelDataValue.keys();
+        QStringList loopnames = loopObj.keys();
 
-        for (int i = 0; i < loopKeys.size(); ++i)
-        {            
-            ModelDataValue loop;
-            QString key = loopKeys[i];
-            QJsonValue value = modelDataValue[key];
-            if(value.isObject())
+        for (int i = 0; i < loopnames.size(); ++i)
+        {
+            QString loopname = loopnames[i];
+            QJsonValue value = loopObj[loopname];
+
+            if(!value.isObject())
             {
-                loop.key = key;
-                loop.loopValue.fromJson(value.toObject());
-                loops.append(loop);
+                return;
             }
+
+            QJsonObject loopobj = value.toObject();
+            Loop loop;
+            loop.fromJson(loopobj);
+            loops.insert(loopname,loop);
         }
     }
 
     QJsonObject toJson()
     {
-        QJsonObject modelDataValue;
+        QJsonObject modeldataObj;
+
         for (int i = 0; i < loops.size(); ++i)
         {
-            modelDataValue.insert(loops[i].key, loops[i].loopValue.toJson() );
+            QString loopname = loops[i];
+            Loop loop = loops[loopname];
+            modeldataObj.insert(loopname,loop.toJson());
         }
-        return modelDataValue;
+
+        return modeldataObj;
     }
 
-    void addLoop(/*ModelDataValue item*/)
+    void addLoop()
     {
-        ModelDataValue item;
-        int count = loops.size();
-        item.key = "loop"+QString::number(count);
-        loops.append(item);
-        this->loops[count].loopValue.addState();
+        int loopCount = loops.size();
+        QString loopName = "loop"+QString::number(loopCount);
+        Loop loop;
+        loops.insert(loopName,loop);
     }
 
     bool deleteLoop()
     {
-        int count = loops.size();
-        if(count>1)
+        if(loops.isEmpty())
         {
-            loops.removeLast();
-            return true;
+            return false;
         }
-        return false;
+        return loops.remove(loops.lastKey());
     }
+
 }ModelData;
 
 typedef struct testPoint
@@ -207,7 +202,6 @@ typedef struct testPoint
 
     void fromJson(QJsonObject itemValue)
     {
-        //TODO if(itemValue.contains("name"))
         name = itemValue["name"].toString();
         id = itemValue["id"].toString();
         unit = itemValue["unit"].toString();
@@ -300,6 +294,11 @@ typedef struct subTpye
         return subtypeData;
     }
 
+    void addTestPoint()
+    {
+
+    }
+
 }SubType;
 
 typedef struct testType
@@ -320,7 +319,7 @@ typedef struct testType
 
         QJsonArray subTypeValues = testTypeValue["subtype"].toArray();
         for (int i = 0; i < subTypeValues.size(); ++i)
-        {            
+        {
             SubType item;
             if(!subTypeValues[i].isObject())
             {
@@ -353,8 +352,8 @@ typedef struct preset
     QString name;
     QString unit;
     QString switchMode;
-    double ratedVoltage;
-    double ratedCurrent;
+    double edCurr;
+    double edVolt;
     ModelData modelData;
 
     void fromJson(QJsonObject presetValue)
@@ -363,9 +362,9 @@ typedef struct preset
         name = presetValue["name"].toString();
         unit = presetValue["unit"].toString();
         switchMode = presetValue["auto_switch"].toString();
-        ratedVoltage = presetValue["ed_volt"].toDouble();
-        ratedVoltage = round(ratedVoltage*100)/100;
-        ratedCurrent = presetValue["ed_curr"].toDouble();
+        edVolt = presetValue["ed_volt"].toDouble();
+        //edVolt = round(edVolt*100)/100;
+        edCurr = presetValue["ed_curr"].toDouble();
         modelData.fromJson(presetValue["model_data"].toObject());
     }
 
@@ -420,7 +419,7 @@ typedef struct scheme
     }
 }Scheme;
 
-typedef struct scheme
+typedef struct schemeModel
 {
     QString schemeKey{"scheme"};
     Scheme schemeValue;
@@ -440,7 +439,6 @@ typedef struct scheme
         scheme.insert(schemeKey,schemeValue.toJson());
         return scheme;
     }
-}Scheme;
+}SchemeModel;
 
-
-
+#endif // SCHEMEMODELDEFINE_H

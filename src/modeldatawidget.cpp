@@ -52,7 +52,7 @@ void ModelDataWidget::slotUpdateStatesList(int loopIndex)
     int count = m_modelData->loops[loopIndex].loopValue.states.size();
     for (int i = 0; i < count; ++i)
     {
-        QString key = m_modelData->loops[loopIndex].loopValue.states.at(i).key;
+        QString key = m_modelData->loops[loopIndex].loopValue.states.at(i).stateKey;
         QRadioButton* radioState = new QRadioButton(key);
 
         groupStates->addButton(radioState,i);
@@ -121,12 +121,12 @@ void ModelDataWidget::slotUpdateDataGrid(int loopIndex,int stateIndex)
 
 void ModelDataWidget::slotAddLoop()
 {
-    if(m_modelData->loops.size()<0)
-    {
-        qDebug()<<"No loop template.From:ModelDataWidget::slotAddLoop()";
-        return;
-    }
-    m_modelData->addLoop(m_modelData->loops.last());
+//    if(m_modelData->loops.size()<0)
+//    {
+//        qDebug()<<"No loop template.From:ModelDataWidget::slotAddLoop()";
+//        return;
+//    }
+    m_modelData->addLoop();
     emit sigModelUpdated();
 
     //select the last loop button
@@ -164,14 +164,13 @@ void ModelDataWidget::slotDeleteLoop()
 void ModelDataWidget::slotAddState()
 {
     int loopIndex = groupLoops->checkedId();
-    int statesCount = m_modelData->loops.at(loopIndex).loopValue.states.size();
-    if(statesCount<0)
-    {
-        qDebug()<<"No state template.From:ModelDataWidget::slotAddState()";
-        return;
-    }
-    LoopValue item = m_modelData->loops[loopIndex].loopValue.states.last();
-    m_modelData->loops[loopIndex].loopValue.addState(item);
+    //int statesCount = m_modelData->loops.at(loopIndex).loopValue.states.size();
+//    if(statesCount<0)
+//    {
+//        qDebug()<<"No state template.From:ModelDataWidget::slotAddState()";
+//        return;
+//    }
+    m_modelData->loops[loopIndex].loopValue.addState();
 
     //update state list
     emit sigLoopChecked(loopIndex);
@@ -242,6 +241,7 @@ void ModelDataWidget::initSpinBox()
     //SetSuffix
     {
         boxUa->setSuffix(unitU);
+        boxUa->setKeyboardTracking(false);
         boxUb->setSuffix(unitU);
         boxUc->setSuffix(unitU);
         boxUx->setSuffix(unitU);
@@ -508,9 +508,9 @@ QSplitter *ModelDataWidget::createOptionsWidget()
         loopscommandLayout->addWidget(btnAddLoop);
         loopscommandLayout->addWidget(btnDeleteLoop);
 
+        mainLayout->addLayout(loopscommandLayout);
         mainLayout->addLayout(loopsLayout);
         mainLayout->addStretch();
-        mainLayout->addLayout(loopscommandLayout);
     }
 
     //states widget
@@ -524,9 +524,9 @@ QSplitter *ModelDataWidget::createOptionsWidget()
         statesscommandLayout->addWidget(btnAddState);
         statesscommandLayout->addWidget(btnDeleteState);
 
+        stateMainLayout->addLayout(statesscommandLayout);
         stateMainLayout->addLayout(statesLayout);
         stateMainLayout->addStretch();
-        stateMainLayout->addLayout(statesscommandLayout);
     }
 
     return splitterMain;
@@ -544,17 +544,13 @@ void ModelDataWidget::initConnections()
     connect(this,&ModelDataWidget::sigStateChecked,this,&ModelDataWidget::slotUpdateDataGrid);
 
     //a loop checked by user
-    connect(groupLoops,&QButtonGroup::idClicked,this,[=](int loopIndex)
-    {
-        m_loopIndex = loopIndex;
-        slotUpdateStatesList(m_loopIndex);
-    });
+    connect(groupLoops,&QButtonGroup::idClicked,this,&ModelDataWidget::slotUpdateStatesList);
 
     //a state checked by user
     connect(groupStates,&QButtonGroup::idClicked,this,[=](int stateIndex)
     {
-        m_stateIndex = stateIndex;
-        emit sigStateChecked(m_loopIndex,m_stateIndex);
+        int loopIndex = groupLoops->checkedId();
+        emit sigStateChecked(loopIndex,stateIndex);
     });
 
     //add a loop
@@ -569,9 +565,21 @@ void ModelDataWidget::initConnections()
     //delete a state
     connect(btnDeleteState,&QPushButton::clicked,this,&ModelDataWidget::slotDeleteState);
 
-    connect(boxUa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+    connect(boxUa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](float value)
     {
-
+        int loopIndex = groupLoops->checkedId();
+        int stateIndex = groupStates->checkedId();
+        qDebug()<<loopIndex<<"---"<<stateIndex;
+        QVector<Parameter>& paras = m_modelData->loops[loopIndex].loopValue.states[stateIndex].stateValue.parameters;
+        for (int i = 0; i < paras.size(); ++i)
+        {
+            Parameter& data =const_cast<Parameter&>( paras.at(i));
+            if(data.phaseName.toLower()=="ua")
+            {
+                data.phaseData.mag=value;
+                slotUpdateDataGrid(loopIndex,stateIndex);
+            }
+        }
     });
 }
 

@@ -62,7 +62,7 @@ void SchemeInfoWidget::initConnections()
     });
 }
 
-void SchemeInfoWidget::setModel(SchemeValue& schemeValue)
+void SchemeInfoWidget::setModel(Scheme& schemeValue)
 {
     m_schemeValue = &schemeValue;
     lineEditSchemeName->setText(m_schemeValue->name);

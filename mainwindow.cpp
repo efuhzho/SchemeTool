@@ -30,8 +30,8 @@ void MainWindow::onFileChanged( QString filePath )
     m_lableFilePath->setText( filePath );
 
     //init widgets data
-    m_schemeInfoWidget->setModel(m_scheme.value);
-    m_presetWidget->setModel(m_scheme.value.preset);
+    m_schemeInfoWidget->setModel(m_scheme.schemeValue);
+    m_presetWidget->setModel(m_scheme.schemeValue.preset);
     initStackWidget();
 }
 
