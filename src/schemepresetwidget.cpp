@@ -13,20 +13,20 @@ SchemePresetWidget::SchemePresetWidget(QWidget *parent)
     initConnections();
 }
 
-void SchemePresetWidget::setModel(Preset& presetValue)
+void SchemePresetWidget::setModel(Preset& preset)
 {
-    m_presetValue = &presetValue;
-    modelDataWidget->setModel(m_presetValue->modelData);
+    m_preset = preset;
+    modelDataWidget->setModel(m_preset.modelData);
 
-    lableName->setText(m_presetValue->name);
-    spinboxVolt->setValue(m_presetValue->ratedVoltage);
-    spinboxCurr->setValue(m_presetValue->ratedCurrent);
-    qDebug()<<m_presetValue->modelData.loops.size()<<" ---"<<&(m_presetValue->modelData);
+    lableName->setText(m_preset.name);
+    spinboxVolt->setValue(m_preset.ratedVoltage);
+    spinboxCurr->setValue(m_preset.ratedCurrent);
+    qDebug()<<m_preset.modelData.loops.size()<<" ---"<<&(m_presetValue->modelData);
 }
 
 QString SchemePresetWidget::name()
 {
-    return m_presetValue->name;
+    return m_preset.name;
 }
 
 void SchemePresetWidget::initUi()

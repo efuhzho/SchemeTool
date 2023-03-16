@@ -14,7 +14,7 @@
 #include <QListWidget>
 #include <QButtonGroup>
 
-#include "schemeDefine.h"
+#include "schemeModelDefine.h"
 
 class ModelDataWidget : public QWidget
 {
@@ -25,13 +25,13 @@ public:
 
 signals:
     void sigModelUpdated();
-    void sigLoopChecked(int index);
-    void sigStateChecked(int loopIndex,int stateIndex);
+    void sigLoopChecked(Loop& loop);
+    void sigStateChecked(State& state);
 
 private slots:
-    void slotUpdateLoopsList();
-    void slotUpdateStatesList(int loopIndex);
-    void slotUpdateDataGrid(int loopIndex,int stateIndex);
+    void onModelUpdated();
+    void onLoopChecked(Loop& loop);
+    void onStateChecked(State& state);
     void slotAddLoop();
     void slotDeleteLoop();
     void slotAddState();
@@ -47,60 +47,9 @@ private://inits
 
 
 private://members
-    ModelData* m_modelData {nullptr};
-   // QVector<ModelDataValue>* m_loops {&m_modelData->loops};
+    ModelData m_modelData ;
 
-
-    QString unitU = "%";
-    QString unitI = "%";
-    QString unitP = "%";
-    QString unitQ = "%";
-
-
-private://elements
-    //电压
-    QDoubleSpinBox* boxUa = new QDoubleSpinBox;
-    QDoubleSpinBox* boxUb = new QDoubleSpinBox;
-    QDoubleSpinBox* boxUc = new QDoubleSpinBox;
-    QDoubleSpinBox* boxUx = new QDoubleSpinBox;
-    //电流
-    QDoubleSpinBox* boxIa = new QDoubleSpinBox;
-    QDoubleSpinBox* boxIb = new QDoubleSpinBox;
-    QDoubleSpinBox* boxIc = new QDoubleSpinBox;
-    QDoubleSpinBox* boxIx = new QDoubleSpinBox;
-    //电压相位
-    QDoubleSpinBox* boxPhUa = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPhUb = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPhUc = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPhUx = new QDoubleSpinBox;
-    //电流相位
-    QDoubleSpinBox* boxPhIa = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPhIb = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPhIc = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPhIx = new QDoubleSpinBox;
-    //有功功率
-    QDoubleSpinBox* boxPa = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPb = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPc = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPx = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPsum = new QDoubleSpinBox;
-    //无功功率
-    QDoubleSpinBox* boxQa = new QDoubleSpinBox;
-    QDoubleSpinBox* boxQb = new QDoubleSpinBox;
-    QDoubleSpinBox* boxQc = new QDoubleSpinBox;
-    QDoubleSpinBox* boxQx = new QDoubleSpinBox;
-    QDoubleSpinBox* boxQsum = new QDoubleSpinBox;
-    //功率因数
-    QDoubleSpinBox* boxPFa = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPFb = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPFc = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPFx = new QDoubleSpinBox;
-    QDoubleSpinBox* boxPFsum = new QDoubleSpinBox;
-    //频率
-    QDoubleSpinBox* boxFa = new QDoubleSpinBox;
-    QDoubleSpinBox* boxFb = new QDoubleSpinBox;
-    QDoubleSpinBox* boxFc = new QDoubleSpinBox;
-    QDoubleSpinBox* boxFx = new QDoubleSpinBox;
+private://elements   
 
     QPushButton* btnAddLoop {new QPushButton(tr("Add loop"))};
     QPushButton* btnDeleteLoop {new QPushButton(tr("Delete loop"))};

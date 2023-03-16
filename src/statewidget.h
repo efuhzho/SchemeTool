@@ -8,12 +8,14 @@
 #include <QJsonObject>
 #include <QByteArray>
 
+#include "schememodeldefine.h"
+
 class StateWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit StateWidget(QWidget *parent = nullptr);
-    void  setModel(QJsonObject& state);
+    void  setModel(State& state);
 
 signals:
     void sigModelUpdated();
@@ -28,7 +30,7 @@ private ://inits
     void initConnects();
 
 private://members
-    QJsonObject m_stateModel;
+    State m_stateModel;
 
 private://elements
 

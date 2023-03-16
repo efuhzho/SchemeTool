@@ -8,7 +8,7 @@
 #include <QLabel>
 #include <QStackedWidget>
 
-#include "src/schemeDefine.h"
+#include "src/schememodeldefine.h"
 #include "src/schemeConvertor.h"
 #include "src/schemetreewidget.h"
 #include "src/schemeinfowidget.h"
@@ -35,7 +35,7 @@ private slots:
     void onFileChanged(QString filePath);
 
     //when received SchemeConvertor's signals
-    void onReturnScheme(Scheme scheme);
+    void onReturnScheme(SchemeModel scheme);
     void onReturnJsonData(QJsonObject jsonObject);
 
     //when customer clicked buttons
@@ -50,7 +50,7 @@ private slots:
 private://members
     Ui::MainWindow *ui;
 
-    Scheme m_scheme;
+    SchemeModel m_schemeModel;
     SchemeConvertor* m_schemeConvertor{new SchemeConvertor(this)} ;
     //QMap stackWidgetMap;
 

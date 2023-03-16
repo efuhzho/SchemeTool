@@ -10,7 +10,7 @@ StateWidget::StateWidget(QWidget *parent)
     initConnects();
 }
 
-void StateWidget::setModel(QJsonObject& state)
+void StateWidget::setModel(State &state)
 {
     m_stateModel = state;
     emit sigModelUpdated();
@@ -18,107 +18,107 @@ void StateWidget::setModel(QJsonObject& state)
 
 void StateWidget::onModelUpdated()
 {
-    if(m_stateModel.contains("Ua"))
+    if(m_stateModel.parameters.contains("Ua"))
     {
-        QJsonObject para = m_stateModel["Ua"].toObject();
-        boxUa->setValue(para["mag"].toDouble());
+        Parameter para = m_stateModel.parameters["Ua"];
+        boxUa->setValue(para.mag);
         boxUa->setEnabled(true);
 
-        boxPhUa->setValue(para["ang"].toDouble());
+        boxPhUa->setValue(para.ang);
         boxPhUa->setEnabled(true);
 
-        boxFa->setValue(para["freq"].toDouble());
+        boxFa->setValue(para.freq);
         boxFa->setEnabled(true);
     }
 
-    if(m_stateModel.contains("Ub"))
+    if(m_stateModel.parameters.contains("Ub"))
     {
-        QJsonObject para = m_stateModel["Ub"].toObject();
-        boxUb->setValue(para["mag"].toDouble());
+        auto para = m_stateModel.parameters["Ub"];
+        boxUb->setValue(para.mag);
         boxUb->setEnabled(true);
 
-        boxPhUb->setValue(para["ang"].toDouble());
+        boxPhUb->setValue(para.ang);
         boxPhUb->setEnabled(true);
 
-        boxFb->setValue(para["freq"].toDouble());
+        boxFb->setValue(para.freq);
         boxFb->setEnabled(true);
     }
 
-    if(m_stateModel.contains("Uc"))
+    if(m_stateModel.parameters.contains("Uc"))
     {
-        QJsonObject para = m_stateModel["Uc"].toObject();
-        boxUc->setValue(para["mag"].toDouble());
+        auto para = m_stateModel.parameters["Uc"];
+        boxUc->setValue(para.mag);
         boxUc->setEnabled(true);
 
-        boxPhUc->setValue(para["ang"].toDouble());
+        boxPhUc->setValue(para.ang);
         boxPhUc->setEnabled(true);
 
-        boxFc->setValue(para["freq"].toDouble());
+        boxFc->setValue(para.freq);
         boxFc->setEnabled(true);
     }
 
-    if(m_stateModel.contains("Ux"))
+    if(m_stateModel.parameters.contains("Ux"))
     {
-        QJsonObject para = m_stateModel["Ux"].toObject();
-        boxUx->setValue(para["mag"].toDouble());
+        auto para = m_stateModel.parameters["Ux"];
+        boxUx->setValue(para.mag);
         boxUx->setEnabled(true);
 
-        boxPhUx->setValue(para["ang"].toDouble());
+        boxPhUx->setValue(para.ang);
         boxPhUx->setEnabled(true);
 
-        boxFx->setValue(para["freq"].toDouble());
+        boxFx->setValue(para.freq);
         boxFx->setEnabled(true);
     }
 
-    if(m_stateModel.contains("Ia"))
+    if(m_stateModel.parameters.contains("Ia"))
     {
-        QJsonObject para = m_stateModel["Ia"].toObject();
-        boxIa->setValue(para["mag"].toDouble());
+        auto para = m_stateModel.parameters["Ia"];
+        boxIa->setValue(para.mag);
         boxIa->setEnabled(true);
 
-        boxPhIa->setValue(para["ang"].toDouble());
+        boxPhIa->setValue(para.ang);
         boxPhIa->setEnabled(true);
 
-        boxFa->setValue(para["freq"].toDouble());
+        boxFa->setValue(para.freq);
         boxFa->setEnabled(true);
     }
 
-    if(m_stateModel.contains("Ib"))
+    if(m_stateModel.parameters.contains("Ib"))
     {
-        QJsonObject para = m_stateModel["Ib"].toObject();
-        boxIb->setValue(para["mag"].toDouble());
+        auto para = m_stateModel.parameters["Ib"];
+        boxIb->setValue(para.mag);
         boxIb->setEnabled(true);
 
-        boxPhIb->setValue(para["ang"].toDouble());
+        boxPhIb->setValue(para.ang);
         boxPhIb->setEnabled(true);
 
-        boxFb->setValue(para["freq"].toDouble());
+        boxFb->setValue(para.freq);
         boxFb->setEnabled(true);
     }
 
-    if(m_stateModel.contains("Ic"))
+    if(m_stateModel.parameters.contains("Ic"))
     {
-        QJsonObject para = m_stateModel["Ic"].toObject();
-        boxIc->setValue(para["mag"].toDouble());
+        auto para = m_stateModel.parameters["Ic"];
+        boxIc->setValue(para.mag);
         boxIc->setEnabled(true);
 
-        boxPhIc->setValue(para["ang"].toDouble());
+        boxPhIc->setValue(para.ang);
         boxPhIc->setEnabled(true);
 
-        boxFc->setValue(para["freq"].toDouble());
+        boxFc->setValue(para.freq);
         boxFc->setEnabled(true);
     }
 
-    if(m_stateModel.contains("Ix"))
+    if(m_stateModel.parameters.contains("Ix"))
     {
-        QJsonObject para = m_stateModel["Ix"].toObject();
-        boxIx->setValue(para["mag"].toDouble());
+        auto para = m_stateModel.parameters["Ix"];
+        boxIx->setValue(para.mag);
         boxIx->setEnabled(true);
 
-        boxPhIx->setValue(para["ang"].toDouble());
+        boxPhIx->setValue(para.ang);
         boxPhIx->setEnabled(true);
 
-        boxFx->setValue(para["freq"].toDouble());
+        boxFx->setValue(para.freq);
         boxFx->setEnabled(true);
     }
 }
@@ -430,6 +430,34 @@ void StateWidget::initConnects()
     connect(this,&StateWidget::sigModelUpdated,this,&StateWidget::onModelUpdated);
     connect(boxUa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
     {
-        m_stateModel["Ua"].toObject()["mag"]= value;
+        m_stateModel.parameters["Ua"].mag = value;
+    });
+    connect(boxUb,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+    {
+        m_stateModel.parameters["Ub"].mag = value;
+    });
+    connect(boxUc,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+    {
+        m_stateModel.parameters["Uc"].mag = value;
+    });
+    connect(boxUx,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+    {
+        m_stateModel.parameters["Ux"].mag = value;
+    });
+    connect(boxIa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+    {
+        m_stateModel.parameters["Ia"].mag = value;
+    });
+    connect(boxIb,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+    {
+        m_stateModel.parameters["Ib"].mag = value;
+    });
+    connect(boxIc,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+    {
+        m_stateModel.parameters["Ic"].mag = value;
+    });
+    connect(boxIx,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+    {
+        m_stateModel.parameters["Ix"].mag = value;
     });
 }

@@ -12,11 +12,11 @@ ModelDataWidget::ModelDataWidget(QWidget *parent)
 
 void ModelDataWidget::setModel(ModelData& modeldata)
 {
-    m_modelData = &modeldata;
+    m_modelData = modeldata;
     emit sigModelUpdated();
 }
 
-void ModelDataWidget::slotUpdateLoopsList()
+void ModelDataWidget::onModelUpdated()
 {
     QList<QAbstractButton*> btnsInGroup = groupLoops->buttons();
     foreach (QAbstractButton *btn, btnsInGroup)
@@ -24,12 +24,10 @@ void ModelDataWidget::slotUpdateLoopsList()
         delete btn;
     }
 
-    int size = m_modelData->loops.size();
-    for (int i = 0; i < size; ++i)
+    QStringList loopnames = m_modelData.loops.keys();
+    for (int i = 0; i < loopnames.size(); ++i)
     {
-        QString key = m_modelData->loops[i].key;
-        QRadioButton* radbtn = new QRadioButton(key);
-
+        QRadioButton* radbtn = new QRadioButton(loopnames[i]);
         groupLoops->addButton(radbtn,i);
         loopsLayout->addWidget(radbtn);
     }
@@ -37,11 +35,14 @@ void ModelDataWidget::slotUpdateLoopsList()
     if(groupLoops->buttons().count()>0)
     {
         groupLoops->buttons().at(0)->setChecked(true);
-        emit sigLoopChecked(0);
+        QString btnText = groupLoops->checkedButton()->text();
+
+        Loop loop = m_modelData.loops[btnText];
+        emit sigLoopChecked(loop);
     }
 }
 
-void ModelDataWidget::slotUpdateStatesList(int loopIndex)
+void ModelDataWidget::onLoopChecked(Loop &loop)
 {
     QList<QAbstractButton*> btnsInGroup = groupStates->buttons();
     foreach (QAbstractButton *btn, btnsInGroup)
@@ -49,83 +50,84 @@ void ModelDataWidget::slotUpdateStatesList(int loopIndex)
         delete btn;
     }
 
-    int count = m_modelData->loops[loopIndex].loopValue.states.size();
-    for (int i = 0; i < count; ++i)
+    QStringList statenames = loop.states.keys();
+
+    for (int i = 0; i < statenames.size(); ++i)
     {
-        QString key = m_modelData->loops[loopIndex].loopValue.states.at(i).stateKey;
-        QRadioButton* radioState = new QRadioButton(key);
+        QRadioButton* radioState = new QRadioButton(statenames[i]);
 
         groupStates->addButton(radioState,i);
         statesLayout->addWidget(radioState);
     }
+
     if(groupStates->buttons().count()>0)
     {
         groupStates->buttons().at(0)->setChecked(true);
-        emit sigStateChecked(loopIndex,0);
+        QString btnText = groupStates->checkedButton()->text();
+        State state = loop.states[btnText];
+        emit sigStateChecked(state);
     }
 }
 
-void ModelDataWidget::slotUpdateDataGrid(int loopIndex,int stateIndex)
-{
-    State state =m_modelData->loops[loopIndex].loopValue.states[stateIndex].stateValue;
-    int cout = state.parameters.size();
-    for (int i = 0; i < cout; ++i)
-    {
-        Parameter para = state.parameters.at(i);
-        if(para.phaseName.toLower()=="ua")
-        {
-            boxUa->setValue(para.phaseData.mag);
-            boxPhUa->setValue(para.phaseData.ang);
-            boxFa->setValue(para.phaseData.freq);
-        }
-        else if (para.phaseName.toLower()=="ub")
-        {
-            boxUb->setValue(para.phaseData.mag);
-            boxPhUb->setValue(para.phaseData.ang);
-            boxFb->setValue(para.phaseData.freq);
-        }
-        else if (para.phaseName.toLower()=="uc")
-        {
-            boxUc->setValue(para.phaseData.mag);
-            boxPhUc->setValue(para.phaseData.ang);
-            boxFc->setValue(para.phaseData.freq);
-        }
-        else if (para.phaseName.toLower()=="ux")
-        {
-            boxUx->setValue(para.phaseData.mag);
-            boxPhUx->setValue(para.phaseData.ang);
-            boxFx->setValue(para.phaseData.freq);
-        }
-        else if (para.phaseName.toLower()=="ia")
-        {
-            boxIa->setValue(para.phaseData.mag);
-            boxPhIa->setValue(para.phaseData.ang);
-        }
-        else if (para.phaseName.toLower()=="ib")
-        {
-            boxIb->setValue(para.phaseData.mag);
-            boxPhIb->setValue(para.phaseData.ang);
-        }
-        else if (para.phaseName.toLower()=="ic")
-        {
-            boxIc->setValue(para.phaseData.mag);
-            boxPhIc->setValue(para.phaseData.ang);
-        }
-        else if (para.phaseName.toLower()=="ix")
-        {
-            boxIx->setValue(para.phaseData.mag);
-            boxPhIx->setValue(para.phaseData.ang);
-        }
-    }
+void ModelDataWidget::onStateChecked(State& state)
+{        
+//    for (int i = 0; i < parameters.size(); ++i)
+//    {
+//        Parameter para = state.parameters.at(i);
+//        if(para.phaseName.toLower()=="ua")
+//        {
+//            boxUa->setValue(para.phaseData.mag);
+//            boxPhUa->setValue(para.phaseData.ang);
+//            boxFa->setValue(para.phaseData.freq);
+//        }
+//        else if (para.phaseName.toLower()=="ub")
+//        {
+//            boxUb->setValue(para.phaseData.mag);
+//            boxPhUb->setValue(para.phaseData.ang);
+//            boxFb->setValue(para.phaseData.freq);
+//        }
+//        else if (para.phaseName.toLower()=="uc")
+//        {
+//            boxUc->setValue(para.phaseData.mag);
+//            boxPhUc->setValue(para.phaseData.ang);
+//            boxFc->setValue(para.phaseData.freq);
+//        }
+//        else if (para.phaseName.toLower()=="ux")
+//        {
+//            boxUx->setValue(para.phaseData.mag);
+//            boxPhUx->setValue(para.phaseData.ang);
+//            boxFx->setValue(para.phaseData.freq);
+//        }
+//        else if (para.phaseName.toLower()=="ia")
+//        {
+//            boxIa->setValue(para.phaseData.mag);
+//            boxPhIa->setValue(para.phaseData.ang);
+//        }
+//        else if (para.phaseName.toLower()=="ib")
+//        {
+//            boxIb->setValue(para.phaseData.mag);
+//            boxPhIb->setValue(para.phaseData.ang);
+//        }
+//        else if (para.phaseName.toLower()=="ic")
+//        {
+//            boxIc->setValue(para.phaseData.mag);
+//            boxPhIc->setValue(para.phaseData.ang);
+//        }
+//        else if (para.phaseName.toLower()=="ix")
+//        {
+//            boxIx->setValue(para.phaseData.mag);
+//            boxPhIx->setValue(para.phaseData.ang);
+//        }
+//    }
 }
 
 void ModelDataWidget::slotAddLoop()
 {
-//    if(m_modelData->loops.size()<0)
-//    {
-//        qDebug()<<"No loop template.From:ModelDataWidget::slotAddLoop()";
-//        return;
-//    }
+    //    if(m_modelData->loops.size()<0)
+    //    {
+    //        qDebug()<<"No loop template.From:ModelDataWidget::slotAddLoop()";
+    //        return;
+    //    }
     m_modelData->addLoop();
     emit sigModelUpdated();
 
@@ -165,11 +167,11 @@ void ModelDataWidget::slotAddState()
 {
     int loopIndex = groupLoops->checkedId();
     //int statesCount = m_modelData->loops.at(loopIndex).loopValue.states.size();
-//    if(statesCount<0)
-//    {
-//        qDebug()<<"No state template.From:ModelDataWidget::slotAddState()";
-//        return;
-//    }
+    //    if(statesCount<0)
+    //    {
+    //        qDebug()<<"No state template.From:ModelDataWidget::slotAddState()";
+    //        return;
+    //    }
     m_modelData->loops[loopIndex].loopValue.addState();
 
     //update state list
@@ -535,16 +537,16 @@ QSplitter *ModelDataWidget::createOptionsWidget()
 void ModelDataWidget::initConnections()
 {
     //when model data updated,update loop list
-    connect(this,&ModelDataWidget::sigModelUpdated,this,&ModelDataWidget::slotUpdateLoopsList);
+    connect(this,&ModelDataWidget::sigModelUpdated,this,&ModelDataWidget::onModelUpdated);
 
     //when a loop button checked,update state list
-    connect(this,&ModelDataWidget::sigLoopChecked,this,&ModelDataWidget::slotUpdateStatesList);
+    connect(this,&ModelDataWidget::sigLoopChecked,this,&ModelDataWidget::onLoopChecked);
 
     //when a state button checked,update grid data
-    connect(this,&ModelDataWidget::sigStateChecked,this,&ModelDataWidget::slotUpdateDataGrid);
+    connect(this,&ModelDataWidget::sigStateChecked,this,&ModelDataWidget::onStateChecked);
 
     //a loop checked by user
-    connect(groupLoops,&QButtonGroup::idClicked,this,&ModelDataWidget::slotUpdateStatesList);
+    connect(groupLoops,&QButtonGroup::idClicked,this,&ModelDataWidget::onLoopChecked);
 
     //a state checked by user
     connect(groupStates,&QButtonGroup::idClicked,this,[=](int stateIndex)
@@ -577,7 +579,7 @@ void ModelDataWidget::initConnections()
             if(data.phaseName.toLower()=="ua")
             {
                 data.phaseData.mag=value;
-                slotUpdateDataGrid(loopIndex,stateIndex);
+                onStateChecked(loopIndex,stateIndex);
             }
         }
     });

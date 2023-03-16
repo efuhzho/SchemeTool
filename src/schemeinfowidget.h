@@ -6,14 +6,14 @@
 #include <QTextEdit>
 #include <QString>
 
-#include "src/schemeDefine.h"
+#include "src/schemeModelDefine.h"
 
 class SchemeInfoWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit SchemeInfoWidget(QWidget *parent = nullptr);
-    void setModel(Scheme& schemeValue);
+    void setModel(Scheme& scheme);
     QString name();
 
 private://inits
@@ -29,7 +29,7 @@ private://elements
     QTextEdit* textEditDescription {new QTextEdit};
 
 private://members
-    Scheme* m_schemeValue{nullptr};
+    Scheme m_scheme{nullptr};
 };
 
 #endif // SCHEMEINFOWIDGET_H

@@ -59,12 +59,15 @@ typedef struct state
     QJsonObject toJson()
     {
         QJsonObject stateJson;
-        for (int i = 0; i < parameters.size(); ++i)
+
+        QMap<QString,Parameter>::const_iterator iter;
+        while (iter!=parameters.cend())
         {
-            QString paraName = parameters[i];
-            auto value = parameters[paraName];
+            QString paraName = iter.key();
+            auto value = iter.value();
             stateJson.insert(paraName,value.toJson());
         }
+
         return stateJson;
     }
 
@@ -107,12 +110,15 @@ typedef struct loop
     QJsonObject toJson()
     {
         QJsonObject loopObj;
-        for (int i = 0; i < states.size(); ++i)
+
+        QMap<QString,State>::const_iterator iter;
+        while (iter!=states.cend())
         {
-            QString statename = states[i];
-            State state = states[statename];
-            loopObj.insert(statename,state.toJson());
+            QString statename = iter.key();
+            auto value = iter.value();
+            loopObj.insert(statename,value.toJson());
         }
+
         return loopObj;
     }
 
@@ -163,11 +169,12 @@ typedef struct modelData
     {
         QJsonObject modeldataObj;
 
-        for (int i = 0; i < loops.size(); ++i)
+        QMap<QString,Loop>::const_iterator iter;
+        while (iter!=loops.cend())
         {
-            QString loopname = loops[i];
-            Loop loop = loops[loopname];
-            modeldataObj.insert(loopname,loop.toJson());
+            QString loopname = iter.key();
+            auto value = iter.value();
+            modeldataObj.insert(loopname,value.toJson());
         }
 
         return modeldataObj;
@@ -225,7 +232,6 @@ typedef struct testPoint
 
     QJsonObject toJson()
     {
-
         QJsonObject itemValue;
         itemValue.insert("name",name);
         itemValue.insert("id",id);
@@ -294,11 +300,55 @@ typedef struct subTpye
         return subtypeData;
     }
 
-    void addTestPoint()
+    void addTestPoint(QVariant var,QString unit)
     {
+        TestPoint point;
+        point.unit = unit;
 
+        bool ok;
+        var.toDouble(&ok);
+        QString strVar;
+        if(ok)
+        {
+            strVar = QString::number(var.toDouble());
+        }
+        else
+        {
+            strVar = var.toString();
+        }
+
+        point.var = strVar;
+
+        point.id = id +"_"+ strVar;
+
+        if(id == "volt")
+        {
+            point.name = strVar+unit+"Un";
+        }
+        else if (id == "curr") {
+            point.name = strVar+unit+"In";
+        }
+        else if (id == "freq") {
+            point.name = strVar+unit;
+        }
+        else if (id == "pf") {
+            point.name = "PF="+strVar;
+        }
+        else if (id == "pq") {
+            point.name = strVar+unit+"电流";
+        }
+        else {
+            point.name = strVar+unit;
+        }
+
+        testPoints.append(point);
+        //TODO NAME? ID?
     }
 
+    void deleteTestPoint(int index)
+    {
+        testPoints.remove(index);
+    }
 }SubType;
 
 typedef struct testType
@@ -374,8 +424,8 @@ typedef struct preset
         presetValue.insert("name",name);
         presetValue.insert("unit",unit);
         presetValue.insert("auto_switch",switchMode);
-        presetValue.insert("ed_volt",ratedVoltage);
-        presetValue.insert("ed_curr",ratedCurrent);
+        presetValue.insert("ed_volt",edCurr);
+        presetValue.insert("ed_curr",edVolt);
         presetValue.insert("model_data",modelData.toJson());
         return presetValue;
     }
@@ -392,52 +442,52 @@ typedef struct scheme
     Preset preset;
     TestType testType;
 
-    void fromJson(QJsonObject schemeValue)
+    void fromJson(QJsonObject schemeObj)
     {
-        name = schemeValue["name"].toString();
-        user = schemeValue["user"].toString();
-        createDate =schemeValue["create_date"].toString();
-        updateDate =schemeValue["update_date"].toString();
-        description = schemeValue["description"].toString();
-        version = schemeValue["version"].toString();
-        preset.fromJson(schemeValue["pre_set"].toObject());
-        testType.fromJson(schemeValue["test_type"].toObject());
+        name = schemeObj["name"].toString();
+        user = schemeObj["user"].toString();
+        createDate =schemeObj["create_date"].toString();
+        updateDate =schemeObj["update_date"].toString();
+        description = schemeObj["description"].toString();
+        version = schemeObj["version"].toString();
+        preset.fromJson(schemeObj["pre_set"].toObject());
+        testType.fromJson(schemeObj["test_type"].toObject());
     }
 
     QJsonObject toJson()
     {
-        QJsonObject schemeValue;
-        schemeValue.insert("name",name);
-        schemeValue.insert("user",user);
-        schemeValue.insert("create_date",createDate);
-        schemeValue.insert("update_date",updateDate);
-        schemeValue.insert("description",description);
-        schemeValue.insert("version",version);
-        schemeValue.insert("pre_set",preset.toJson());
-        schemeValue.insert("test_type",testType.toJson());
-        return schemeValue;
+        QJsonObject schemeObj;
+        schemeObj.insert("name",name);
+        schemeObj.insert("user",user);
+        schemeObj.insert("create_date",createDate);
+        schemeObj.insert("update_date",updateDate);
+        schemeObj.insert("description",description);
+        schemeObj.insert("version",version);
+        schemeObj.insert("pre_set",preset.toJson());
+        schemeObj.insert("test_type",testType.toJson());
+        return schemeObj;
     }
 }Scheme;
 
 typedef struct schemeModel
 {
     QString schemeKey{"scheme"};
-    Scheme schemeValue;
+    Scheme scheme;
 
-    void fromJson(QJsonObject scheme)
+    void fromJson(QJsonObject schemeModelObj)
     {
-        if(!scheme.contains(schemeKey))
+        if(!schemeModelObj.contains(schemeKey))
         {
             return;
         }
-        schemeValue.fromJson(scheme[schemeKey].toObject());
+        scheme.fromJson(schemeModelObj[schemeKey].toObject());
     }
 
     QJsonObject toJson()
     {
-        QJsonObject scheme;
-        scheme.insert(schemeKey,schemeValue.toJson());
-        return scheme;
+        QJsonObject schemeModelObj;
+        schemeModelObj.insert(schemeKey,scheme.toJson());
+        return schemeModelObj;
     }
 }SchemeModel;
 

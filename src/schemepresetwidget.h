@@ -7,7 +7,7 @@
 #include <QLabel>
 #include <QDebug>
 
-#include "schemeDefine.h"
+#include "schemeModelDefine.h"
 #include "src/modeldatawidget.h"
 
 
@@ -16,7 +16,7 @@ class SchemePresetWidget : public QWidget
     Q_OBJECT
 public:
     explicit SchemePresetWidget(QWidget *parent = nullptr);
-    void setModel(Preset& presetValue);
+    void setModel(Preset& preset);
     QString name();
 signals:
 
@@ -27,8 +27,7 @@ private://elements
     ModelDataWidget* modelDataWidget{new ModelDataWidget};
 
 private://members
-    Preset* m_presetValue{nullptr};
-    //ModelData m_data{m_presetValue->modelData};
+    Preset m_preset{nullptr};
 
 private://inits
     void initUi();

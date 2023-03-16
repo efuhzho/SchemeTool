@@ -12,14 +12,14 @@ SchemeConvertor::SchemeConvertor( QObject* parent )
 
 }
 
-void SchemeConvertor::writeToJsonFile( Scheme scheme, QString filePath )
+void SchemeConvertor::writeToJsonFile(SchemeModel schememodel, QString filePath )
 {
 	if ( filePath.isEmpty( ) )
 	{
 		return;
 	}
-    QJsonObject schemeObject = scheme.toJson( );
-	QJsonDocument schemeDoc( schemeObject );
+    QJsonObject schememodelObject = schememodel.toJson( );
+    QJsonDocument schemeDoc( schememodelObject );
 	QByteArray jsonData = schemeDoc.toJson( );
 
 	QFile file( filePath );
@@ -30,7 +30,7 @@ void SchemeConvertor::writeToJsonFile( Scheme scheme, QString filePath )
 	}
 	file.write( jsonData );
 	file.close( );
-    emit sigReturnJsonData( schemeObject );
+    emit sigReturnJsonData( schememodelObject );
 }
 
 void SchemeConvertor::readFromJsonFile( QString filePath )
@@ -52,12 +52,12 @@ void SchemeConvertor::readFromJsonFile( QString filePath )
 		return;
 	}
 
-	Scheme scheme;
+    SchemeModel schememodel;
 	if ( jsonDoc.isObject( ) )
 	{
-		scheme.fromJson( jsonDoc.object( ) );
+        schememodel.fromJson( jsonDoc.object( ) );
 	}
-	emit sigReturnScheme( scheme );
+    emit sigReturnScheme( schememodel );
     emit sigReturnJsonData( jsonDoc.object() );
 }
 

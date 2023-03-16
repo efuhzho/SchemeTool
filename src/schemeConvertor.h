@@ -2,7 +2,7 @@
 #define SCHEMECONVERTOR_H
 
 #include <QObject>
-#include "schemeDefine.h"
+#include "schemeModelDefine.h"
 
 class SchemeConvertor : public QObject
 {
@@ -11,11 +11,11 @@ public:
     explicit SchemeConvertor(QObject *parent = nullptr);
 
 signals:
-    void sigReturnScheme(Scheme scheme);
+    void sigReturnScheme(SchemeModel schememodel);
     void sigReturnJsonData(QJsonObject jsonObject);
 
 public slots:
-    void writeToJsonFile(Scheme scheme,QString filePath);
+    void writeToJsonFile(SchemeModel schememodel,QString filePath);
     void readFromJsonFile(QString filePath);
 };
 

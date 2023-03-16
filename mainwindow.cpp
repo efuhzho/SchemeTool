@@ -30,14 +30,14 @@ void MainWindow::onFileChanged( QString filePath )
     m_lableFilePath->setText( filePath );
 
     //init widgets data
-    m_schemeInfoWidget->setModel(m_scheme.schemeValue);
-    m_presetWidget->setModel(m_scheme.schemeValue.preset);
+    m_schemeInfoWidget->setModel(m_schemeModel.scheme);
+    m_presetWidget->setModel(m_schemeModel.scheme.preset);
     initStackWidget();
 }
 
-void MainWindow::onReturnScheme( Scheme scheme )
+void MainWindow::onReturnScheme( SchemeModel scheme )
 {
-    m_scheme = scheme;
+    m_schemeModel = scheme;
 }
 
 void MainWindow::onReturnJsonData(QJsonObject jsonObject )
@@ -65,7 +65,7 @@ void MainWindow::onActionDump( )
     {
         return;
     }
-    m_schemeConvertor->writeToJsonFile( m_scheme, filePath );
+    m_schemeConvertor->writeToJsonFile( m_schemeModel, filePath );
     emit sigFileChanged( filePath );
 }
 

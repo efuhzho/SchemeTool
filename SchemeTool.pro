@@ -23,7 +23,6 @@ HEADERS += \
     src/modeldatawidget.h \
     src/schemeinfowidget.h \
     src/schemeConvertor.h \
-    src/schemeDefine.h \
     src/schememodeldefine.h \
     src/schemepresetwidget.h \
     src/schemetreewidget.h \

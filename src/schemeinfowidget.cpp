@@ -28,52 +28,52 @@ void SchemeInfoWidget::initConnections()
     //when scheme naem was edited
     connect(lineEditSchemeName,&QLineEdit::textEdited,this,[=](QString text)
     {
-        m_schemeValue->name = text;
+        m_scheme.name = text;
     });
 
     //when scheme version was edited
     connect(lineEditVersion,&QLineEdit::textEdited,this,[=](QString text)
     {
-        m_schemeValue->version = text;
+        m_scheme.version = text;
     });
 
     //when scheme create date was edited
     connect(lineEditCreateDate,&QLineEdit::textEdited,this,[=](QString text)
     {
-        m_schemeValue->createDate = text;
+        m_scheme.createDate = text;
     });
 
     //when scheme update date was edited
     connect(lineEditUpdateDate,&QLineEdit::textEdited,this,[=](QString text)
     {
-        m_schemeValue->updateDate = text;
+        m_scheme.updateDate = text;
     });
 
     //when scheme user was edited
     connect(lineEditUser,&QLineEdit::textEdited,this,[=](QString text)
     {
-        m_schemeValue->user = text;
+        m_scheme.user = text;
     });
 
     //when scheme description was edited
     connect(textEditDescription,&QTextEdit::textChanged,this,[=]
     {
-        m_schemeValue->description = textEditDescription->toPlainText();
+        m_scheme.description = textEditDescription->toPlainText();
     });
 }
 
-void SchemeInfoWidget::setModel(Scheme& schemeValue)
+void SchemeInfoWidget::setModel(Scheme &scheme)
 {
-    m_schemeValue = &schemeValue;
-    lineEditSchemeName->setText(m_schemeValue->name);
-    lineEditVersion->setText(m_schemeValue->version);
-    lineEditCreateDate->setText(m_schemeValue->createDate);
-    lineEditUpdateDate->setText(m_schemeValue->updateDate);
-    lineEditUser->setText(m_schemeValue->user);
-    textEditDescription->setText(m_schemeValue->description);
+    m_scheme = scheme;
+    lineEditSchemeName->setText(m_scheme.name);
+    lineEditVersion->setText(m_scheme.version);
+    lineEditCreateDate->setText(m_scheme.createDate);
+    lineEditUpdateDate->setText(m_scheme.updateDate);
+    lineEditUser->setText(m_scheme.user);
+    textEditDescription->setText(m_scheme.description);
 }
 
 QString SchemeInfoWidget::name()
 {
-    return m_schemeValue->name;
+    return m_scheme.name;
 }
