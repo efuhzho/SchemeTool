@@ -6,7 +6,6 @@ ModelDataWidget::ModelDataWidget(QWidget *parent)
     : QWidget{parent}
 {
     initUi();
-    initSpinBox();
     initConnections();
 }
 
@@ -21,7 +20,10 @@ void ModelDataWidget::onModelUpdated()
     QList<QAbstractButton*> btnsInGroup = groupLoops->buttons();
     foreach (QAbstractButton *btn, btnsInGroup)
     {
-        delete btn;
+        if(btn)
+        {
+            delete btn;
+        }
     }
 
     QStringList loopnames = m_modelData.loops.keys();
@@ -32,14 +34,16 @@ void ModelDataWidget::onModelUpdated()
         loopsLayout->addWidget(radbtn);
     }
 
+    QString btnText;
+    Loop loop;
     if(groupLoops->buttons().count()>0)
     {
         groupLoops->buttons().at(0)->setChecked(true);
-        QString btnText = groupLoops->checkedButton()->text();
-
-        Loop loop = m_modelData.loops[btnText];
-        emit sigLoopChecked(loop);
+        btnText = groupLoops->checkedButton()->text();
+        loop = m_modelData.loops[btnText];
     }
+
+    emit sigLoopChecked(loop);
 }
 
 void ModelDataWidget::onLoopChecked(Loop &loop)
@@ -47,10 +51,17 @@ void ModelDataWidget::onLoopChecked(Loop &loop)
     QList<QAbstractButton*> btnsInGroup = groupStates->buttons();
     foreach (QAbstractButton *btn, btnsInGroup)
     {
-        delete btn;
+        if(btn)
+        {
+            delete btn;
+        }
     }
 
     QStringList statenames = loop.states.keys();
+    if(statenames.isEmpty())
+    {
+        return;
+    }
 
     for (int i = 0; i < statenames.size(); ++i)
     {
@@ -60,154 +71,92 @@ void ModelDataWidget::onLoopChecked(Loop &loop)
         statesLayout->addWidget(radioState);
     }
 
+    QString btnText;
+    State state;
     if(groupStates->buttons().count()>0)
     {
         groupStates->buttons().at(0)->setChecked(true);
-        QString btnText = groupStates->checkedButton()->text();
-        State state = loop.states[btnText];
-        emit sigStateChecked(state);
+        btnText = groupStates->checkedButton()->text();
+        state = loop.states[btnText];
     }
+    emit sigStateChecked(state);
 }
 
 void ModelDataWidget::onStateChecked(State& state)
 {        
-//    for (int i = 0; i < parameters.size(); ++i)
-//    {
-//        Parameter para = state.parameters.at(i);
-//        if(para.phaseName.toLower()=="ua")
-//        {
-//            boxUa->setValue(para.phaseData.mag);
-//            boxPhUa->setValue(para.phaseData.ang);
-//            boxFa->setValue(para.phaseData.freq);
-//        }
-//        else if (para.phaseName.toLower()=="ub")
-//        {
-//            boxUb->setValue(para.phaseData.mag);
-//            boxPhUb->setValue(para.phaseData.ang);
-//            boxFb->setValue(para.phaseData.freq);
-//        }
-//        else if (para.phaseName.toLower()=="uc")
-//        {
-//            boxUc->setValue(para.phaseData.mag);
-//            boxPhUc->setValue(para.phaseData.ang);
-//            boxFc->setValue(para.phaseData.freq);
-//        }
-//        else if (para.phaseName.toLower()=="ux")
-//        {
-//            boxUx->setValue(para.phaseData.mag);
-//            boxPhUx->setValue(para.phaseData.ang);
-//            boxFx->setValue(para.phaseData.freq);
-//        }
-//        else if (para.phaseName.toLower()=="ia")
-//        {
-//            boxIa->setValue(para.phaseData.mag);
-//            boxPhIa->setValue(para.phaseData.ang);
-//        }
-//        else if (para.phaseName.toLower()=="ib")
-//        {
-//            boxIb->setValue(para.phaseData.mag);
-//            boxPhIb->setValue(para.phaseData.ang);
-//        }
-//        else if (para.phaseName.toLower()=="ic")
-//        {
-//            boxIc->setValue(para.phaseData.mag);
-//            boxPhIc->setValue(para.phaseData.ang);
-//        }
-//        else if (para.phaseName.toLower()=="ix")
-//        {
-//            boxIx->setValue(para.phaseData.mag);
-//            boxPhIx->setValue(para.phaseData.ang);
-//        }
-//    }
+    m_stateWidget->setModel(state);
 }
 
 void ModelDataWidget::slotAddLoop()
 {
-    //    if(m_modelData->loops.size()<0)
-    //    {
-    //        qDebug()<<"No loop template.From:ModelDataWidget::slotAddLoop()";
-    //        return;
-    //    }
-    m_modelData->addLoop();
+    m_modelData.addLoop();
     emit sigModelUpdated();
 
-    //select the last loop button
-    int count = groupLoops->buttons().count();
-    if (count>0)
-    {
-        groupLoops->buttons().at(count-1)->setChecked(true);
-        emit sigLoopChecked(count-1);
-    }
-#ifdef DEBUG
-    qDebug()<<"m_modelData"<<m_modelData->loops.size();
-    qDebug()<<"groupLoops"<<groupLoops->buttons().count();
-#endif
+    groupLoops->buttons().at(0)->setChecked(true);
+    QString btnText = groupLoops->checkedButton()->text();
+
+    Loop loop = m_modelData.loops[btnText];
+    emit sigLoopChecked(loop);
 }
 
 void ModelDataWidget::slotDeleteLoop()
 {
-    bool result = m_modelData->deleteLoop();
+    bool result = m_modelData.deleteLoop();
     if(!result)
     {
         return;
     }
     emit sigModelUpdated();
-
     int count = groupLoops->buttons().count();
+    if(count==0)
+    {
+        return;
+    }
     groupLoops->buttons().at(count-1)->setChecked(true);
-    emit sigLoopChecked(count-1);
+    QString btnText = groupLoops->checkedButton()->text();
 
-#ifdef DEBUG
-    qDebug()<<"m_modelData"<<m_modelData->loops.size();
-    qDebug()<<"groupLoops"<<groupLoops->buttons().count();
-#endif
+    Loop loop = m_modelData.loops[btnText];
+    emit sigLoopChecked(loop);
 }
 
 void ModelDataWidget::slotAddState()
 {
-    int loopIndex = groupLoops->checkedId();
-    //int statesCount = m_modelData->loops.at(loopIndex).loopValue.states.size();
-    //    if(statesCount<0)
-    //    {
-    //        qDebug()<<"No state template.From:ModelDataWidget::slotAddState()";
-    //        return;
-    //    }
-    m_modelData->loops[loopIndex].loopValue.addState();
+    QString loopname= groupLoops->checkedButton()->text();
+
+    m_modelData.loops[loopname].addState();
 
     //update state list
-    emit sigLoopChecked(loopIndex);
+    emit sigLoopChecked(m_modelData.loops[loopname]);
 
     int count = groupStates->buttons().count();
     if(count>0)
     {
         groupStates->buttons().at(count-1)->setChecked(true);
-        emit sigStateChecked(loopIndex,count-1);
+        QString statename = groupStates->checkedButton()->text();
+        State state = m_modelData.loops[loopname].states[statename];
+        emit sigStateChecked(state);
     }
 }
 
 void ModelDataWidget::slotDeleteState()
 {
-    int loopIndex = groupLoops->checkedId();
-    if(loopIndex<0)
-    {
-        qDebug()<<"no loop button is checked!From:ModelDataWidget::slotDeleteState()";
-        return;
-    }
-    bool result = m_modelData->loops[loopIndex].loopValue.deleteState();
+    QString loopname = groupLoops->checkedButton()->text();
+
+    bool result =m_modelData.loops[loopname].deleteState();
+
     if(!result)
     {
         return;
     }
 
     //update state list
-    emit sigLoopChecked(loopIndex);
+    emit sigLoopChecked(m_modelData.loops[loopname]);
 
     int count = groupStates->buttons().count();
-    if(count>0)
-    {
-        groupStates->buttons().at(count-1)->setChecked(true);
-        emit sigStateChecked(loopIndex,count-1);
-    }
+    groupStates->buttons().at(count)->setChecked(true);
+    QString statename = groupStates->checkedButton()->text();
+    emit sigStateChecked(m_modelData.loops[loopname].states[statename]);
+
 }
 
 void ModelDataWidget::initUi()
@@ -224,274 +173,19 @@ void ModelDataWidget::initUi()
     sizepolicy.setVerticalPolicy(QSizePolicy::Fixed);
     this->setSizePolicy(sizepolicy);
 
-    QVBoxLayout* gridLayout {new QVBoxLayout};
-    gridLayout->addLayout(createDataGrid());
-    gridLayout->addStretch();
-
     QVBoxLayout* optionsLayout {new QVBoxLayout};
     optionsLayout->addWidget(createOptionsWidget());
 
     QHBoxLayout* mainLayout { new QHBoxLayout(this)};
-    mainLayout->addLayout(gridLayout);
+    mainLayout->addWidget(m_stateWidget);
     mainLayout->addLayout(optionsLayout);
     mainLayout->addStretch();
     //mainLayout->setSizeConstraint(QLayout::SetFixedSize);
 }
 
-void ModelDataWidget::initSpinBox()
-{
-    //SetSuffix
-    {
-        boxUa->setSuffix(unitU);
-        boxUa->setKeyboardTracking(false);
-        boxUb->setSuffix(unitU);
-        boxUc->setSuffix(unitU);
-        boxUx->setSuffix(unitU);
 
-        boxIa->setSuffix(unitI);
-        boxIb->setSuffix(unitI);
-        boxIc->setSuffix(unitI);
-        boxIx->setSuffix(unitI);
 
-        boxPhUa->setSuffix(QString::fromLocal8Bit("°"));
-        boxPhUb->setSuffix(QString::fromLocal8Bit("°"));
-        boxPhUc->setSuffix(QString::fromLocal8Bit("°"));
-        boxPhUx->setSuffix(QString::fromLocal8Bit("°"));
 
-        boxPhIa->setSuffix(QString::fromLocal8Bit("°"));
-        boxPhIb->setSuffix(QString::fromLocal8Bit("°"));
-        boxPhIc->setSuffix(QString::fromLocal8Bit("°"));
-        boxPhIx->setSuffix(QString::fromLocal8Bit("°"));
-
-        boxPa->setSuffix(unitP);
-        boxPb->setSuffix(unitP);
-        boxPc->setSuffix(unitP);
-        boxPx->setSuffix(unitP);
-        boxPsum->setSuffix(unitP);
-
-        boxQa->setSuffix(unitQ);
-        boxQb->setSuffix(unitQ);
-        boxQc->setSuffix(unitQ);
-        boxQx->setSuffix(unitQ);
-        boxQsum->setSuffix(unitQ);
-
-        boxFa->setSuffix("Hz");
-        boxFb->setSuffix("Hz");
-        boxFc->setSuffix("Hz");
-        boxFx->setSuffix("Hz");
-    }
-
-    //SetRange
-    {
-        boxUa->setRange(0,100);
-        boxUb->setRange(0,100);
-        boxUc->setRange(0,100);
-        boxUx->setRange(0,100);
-
-        boxIa->setRange(0,100);
-        boxIb->setRange(0,100);
-        boxIc->setRange(0,100);
-        boxIx->setRange(0,100);
-
-        boxPhUa->setRange(0,359.99);
-        boxPhUb->setRange(0,359.99);
-        boxPhUc->setRange(0,359.99);
-        boxPhUx->setRange(0,359.99);
-
-        boxPhIa->setRange(0,359.99);
-        boxPhIb->setRange(0,359.99);
-        boxPhIc->setRange(0,359.99);
-        boxPhIx->setRange(0,359.99);
-
-        boxPa->setRange(0,100);
-        boxPb->setRange(0,100);
-        boxPc->setRange(0,100);
-        boxPx->setRange(0,100);
-        boxPsum->setRange(0,100);
-
-        boxQa->setRange(0,100);
-        boxQb->setRange(0,100);
-        boxQc->setRange(0,100);
-        boxQx->setRange(0,100);
-        boxQsum->setRange(0,100);
-
-        boxFa->setRange(0,125);
-        boxFb->setRange(0,125);
-        boxFc->setRange(0,125);
-        boxFx->setRange(0,125);
-    }
-
-    //setSingleStep
-    {
-        boxUa->setSingleStep(10);
-        boxUb->setSingleStep(10);
-        boxUc->setSingleStep(10);
-        boxUx->setSingleStep(10);
-
-        boxIa->setSingleStep(10);
-        boxIb->setSingleStep(10);
-        boxIc->setSingleStep(10);
-        boxIx->setSingleStep(10);
-
-        boxPhUa->setSingleStep(30);
-        boxPhUb->setSingleStep(30);
-        boxPhUc->setSingleStep(30);
-        boxPhUx->setSingleStep(30);
-
-        boxPhIa->setSingleStep(30);
-        boxPhIb->setSingleStep(30);
-        boxPhIc->setSingleStep(30);
-        boxPhIx->setSingleStep(30);
-
-        boxPa->setSingleStep(10);
-        boxPb->setSingleStep(10);
-        boxPc->setSingleStep(10);
-        boxPx->setSingleStep(10);
-        boxPsum->setSingleStep(10);
-
-        boxQa->setSingleStep(10);
-        boxQb->setSingleStep(10);
-        boxQc->setSingleStep(10);
-        boxQx->setSingleStep(10);
-        boxQsum->setSingleStep(10);
-
-        boxFa->setSingleStep(1);
-        boxFb->setSingleStep(1);
-        boxFc->setSingleStep(1);
-        boxFx->setSingleStep(1);
-    }
-}
-
-QGridLayout* ModelDataWidget::createDataGrid()
-{
-    QGridLayout* dataGrid = new QGridLayout;
-    //row 0 header
-    dataGrid->addWidget(new QLabel("A"),0,2,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("B"),0,3,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("C"),0,4,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("X"),0,5,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel(QString::fromLocal8Bit("Σ")),0,6,Qt::AlignCenter);
-
-    //colum 0 header
-    dataGrid->addWidget(new QLabel("U"),1,0,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("I"),2,0,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel(QString::fromLocal8Bit("ΦU")),3,0,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel(QString::fromLocal8Bit("ΦI")),4,0,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("P"),5,0,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("Q"),6,0,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("PF"),7,0,Qt::AlignCenter);
-    dataGrid->addWidget(new QLabel("Freq"),8,0,Qt::AlignCenter);
-
-    //colum 1 header
-    {
-        //        QLabel* unitU = new QLabel("%");
-        //        QLabel* unitI = new QLabel("%");
-        //        QLabel* unitFaiU = new QLabel("°");
-        //        QLabel* unitFaiI = new QLabel("°");
-        //        QLabel* unitP = new QLabel("W");
-        //        QLabel* unitQ = new QLabel("Var");
-        //        QLabel* unitFreq = new QLabel("Hz");
-
-        //        dataGrid->addWidget(unitU,1,1,Qt::AlignCenter);
-        //        dataGrid->addWidget(unitI,2,1,Qt::AlignCenter);
-        //        dataGrid->addWidget(unitFaiU,3,1,Qt::AlignCenter);
-        //        dataGrid->addWidget(unitFaiI,4,1,Qt::AlignCenter);
-        //        dataGrid->addWidget(unitP,5,1,Qt::AlignCenter);
-        //        dataGrid->addWidget(unitQ,6,1,Qt::AlignCenter);
-        //        dataGrid->addWidget(unitFreq,8,1,Qt::AlignCenter);
-
-        //        QPalette unitColor;
-        //        unitColor.setColor(QPalette::WindowText, Qt::darkGray);
-        //        unitU->setPalette(unitColor);
-        //        unitI->setPalette(unitColor);
-        //        unitFaiU->setPalette(unitColor);
-        //        unitFaiI->setPalette(unitColor);
-        //        unitP->setPalette(unitColor);
-        //        unitQ->setPalette(unitColor);
-        //        unitFreq->setPalette(unitColor);
-    }
-
-    //添加数值控件
-    {
-        //电压值
-        dataGrid->addWidget( boxUa, 1, 2 );
-        dataGrid->addWidget( boxUb, 1, 3 );
-        dataGrid->addWidget( boxUc, 1, 4 );
-        dataGrid->addWidget( boxUx, 1, 5 );
-
-        //电流值
-        dataGrid->addWidget( boxIa, 2, 2 );
-        dataGrid->addWidget( boxIb, 2, 3 );
-        dataGrid->addWidget( boxIc, 2, 4 );
-        dataGrid->addWidget( boxIx, 2, 5 );
-
-        //电压相位值
-        dataGrid->addWidget( boxPhUa, 3, 2 );
-        dataGrid->addWidget( boxPhUb, 3, 3 );
-        dataGrid->addWidget( boxPhUc, 3, 4 );
-        dataGrid->addWidget( boxPhUx, 3, 5 );
-
-        //电流相位值
-        dataGrid->addWidget( boxPhIa, 4, 2 );
-        dataGrid->addWidget( boxPhIb, 4, 3 );
-        dataGrid->addWidget( boxPhIc, 4, 4 );
-        dataGrid->addWidget( boxPhIx, 4, 5 );
-
-        //有功功率值
-        dataGrid->addWidget( boxPa, 5, 2 );
-        dataGrid->addWidget( boxPb, 5, 3 );
-        dataGrid->addWidget( boxPc, 5, 4 );
-        dataGrid->addWidget( boxPx, 5, 5 );
-        dataGrid->addWidget( boxPsum, 5, 6 );
-
-        //无功功率值
-        dataGrid->addWidget( boxQa, 6, 2 );
-        dataGrid->addWidget( boxQb, 6, 3 );
-        dataGrid->addWidget( boxQc, 6, 4 );
-        dataGrid->addWidget( boxQx, 6, 5 );
-        dataGrid->addWidget( boxQsum, 6, 6 );
-
-        //功率因数
-        dataGrid->addWidget( boxPFa, 7, 2 );
-        dataGrid->addWidget( boxPFb, 7, 3 );
-        dataGrid->addWidget( boxPFc, 7, 4 );
-        dataGrid->addWidget( boxPFx, 7, 5 );
-        dataGrid->addWidget( boxPFsum, 7, 6 );
-
-        //频率
-        dataGrid->addWidget( boxFa, 8, 2 );
-        dataGrid->addWidget( boxFb, 8, 3 );
-        dataGrid->addWidget( boxFc, 8, 4 );
-        dataGrid->addWidget( boxFx, 8, 5 );
-    }
-
-    //set grid stretch rule
-    dataGrid->setColumnStretch( 2, 1 );
-    dataGrid->setColumnStretch( 3, 1 );
-    dataGrid->setColumnStretch( 4, 1 );
-    dataGrid->setColumnStretch( 5, 1 );
-    dataGrid->setColumnStretch( 6, 1 );
-
-    //Colum width
-    dataGrid->setColumnMinimumWidth( 2, 80 );
-    dataGrid->setColumnMinimumWidth( 3, 80 );
-    dataGrid->setColumnMinimumWidth( 4, 80 );
-    dataGrid->setColumnMinimumWidth( 5, 80 );
-    dataGrid->setColumnMinimumWidth( 6, 80 );
-
-    //row height
-    dataGrid->setRowMinimumHeight( 0, 25);
-    dataGrid->setRowMinimumHeight( 1, 25);
-    dataGrid->setRowMinimumHeight( 2, 25);
-    dataGrid->setRowMinimumHeight( 3, 25);
-    dataGrid->setRowMinimumHeight( 4, 25);
-    dataGrid->setRowMinimumHeight( 5, 25);
-    dataGrid->setRowMinimumHeight( 6, 25);
-    dataGrid->setRowMinimumHeight( 7, 25);
-    dataGrid->setRowMinimumHeight( 8, 25);
-
-    return dataGrid;
-}
 
 QSplitter *ModelDataWidget::createOptionsWidget()
 {
@@ -546,13 +240,16 @@ void ModelDataWidget::initConnections()
     connect(this,&ModelDataWidget::sigStateChecked,this,&ModelDataWidget::onStateChecked);
 
     //a loop checked by user
-    connect(groupLoops,&QButtonGroup::idClicked,this,&ModelDataWidget::onLoopChecked);
+    connect(groupLoops,qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked),this,[=](QAbstractButton *button)
+    {
+        emit sigLoopChecked(m_modelData.loops[button->text()]);
+    });
 
     //a state checked by user
-    connect(groupStates,&QButtonGroup::idClicked,this,[=](int stateIndex)
+    connect(groupStates,QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked),this,[=](QAbstractButton *button)
     {
-        int loopIndex = groupLoops->checkedId();
-        emit sigStateChecked(loopIndex,stateIndex);
+        QString loopname = groupLoops->checkedButton()->text();
+        emit sigStateChecked(m_modelData.loops[loopname].states[button->text()]);
     });
 
     //add a loop
@@ -567,23 +264,9 @@ void ModelDataWidget::initConnections()
     //delete a state
     connect(btnDeleteState,&QPushButton::clicked,this,&ModelDataWidget::slotDeleteState);
 
-    connect(boxUa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](float value)
-    {
-        int loopIndex = groupLoops->checkedId();
-        int stateIndex = groupStates->checkedId();
-        qDebug()<<loopIndex<<"---"<<stateIndex;
-        QVector<Parameter>& paras = m_modelData->loops[loopIndex].loopValue.states[stateIndex].stateValue.parameters;
-        for (int i = 0; i < paras.size(); ++i)
-        {
-            Parameter& data =const_cast<Parameter&>( paras.at(i));
-            if(data.phaseName.toLower()=="ua")
-            {
-                data.phaseData.mag=value;
-                onStateChecked(loopIndex,stateIndex);
-            }
-        }
-    });
 }
+
+
 
 
 

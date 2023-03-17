@@ -27,7 +27,7 @@ private://elements
     ModelDataWidget* modelDataWidget{new ModelDataWidget};
 
 private://members
-    Preset m_preset{nullptr};
+    Preset* m_preset;
 
 private://inits
     void initUi();

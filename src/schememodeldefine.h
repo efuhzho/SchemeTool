@@ -60,12 +60,13 @@ typedef struct state
     {
         QJsonObject stateJson;
 
-        QMap<QString,Parameter>::const_iterator iter;
-        while (iter!=parameters.cend())
+        QMap<QString,Parameter>::const_iterator iter = parameters.begin();
+        while (iter!=parameters.end())
         {
             QString paraName = iter.key();
-            auto value = iter.value();
+            Parameter value = iter.value();
             stateJson.insert(paraName,value.toJson());
+            ++iter;
         }
 
         return stateJson;
@@ -111,12 +112,13 @@ typedef struct loop
     {
         QJsonObject loopObj;
 
-        QMap<QString,State>::const_iterator iter;
-        while (iter!=states.cend())
+        QMap<QString,State>::const_iterator iter = states.begin();
+        while (iter!=states.end())
         {
             QString statename = iter.key();
-            auto value = iter.value();
+            State value = iter.value();
             loopObj.insert(statename,value.toJson());
+            ++iter;
         }
 
         return loopObj;
@@ -169,12 +171,13 @@ typedef struct modelData
     {
         QJsonObject modeldataObj;
 
-        QMap<QString,Loop>::const_iterator iter;
-        while (iter!=loops.cend())
+        QMap<QString,Loop>::const_iterator iter = loops.begin();
+        while (iter!=loops.end())
         {
             QString loopname = iter.key();
-            auto value = iter.value();
-            modeldataObj.insert(loopname,value.toJson());
+            Loop value = iter.value( );
+            modeldataObj.insert(loopname, value.toJson());
+            ++iter;
         }
 
         return modeldataObj;
@@ -424,8 +427,8 @@ typedef struct preset
         presetValue.insert("name",name);
         presetValue.insert("unit",unit);
         presetValue.insert("auto_switch",switchMode);
-        presetValue.insert("ed_volt",edCurr);
-        presetValue.insert("ed_curr",edVolt);
+        presetValue.insert("ed_volt", edVolt );
+        presetValue.insert("ed_curr", edCurr );
         presetValue.insert("model_data",modelData.toJson());
         return presetValue;
     }

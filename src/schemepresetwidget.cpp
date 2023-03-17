@@ -15,18 +15,18 @@ SchemePresetWidget::SchemePresetWidget(QWidget *parent)
 
 void SchemePresetWidget::setModel(Preset& preset)
 {
-    m_preset = preset;
-    modelDataWidget->setModel(m_preset.modelData);
+    m_preset = &preset;
+    modelDataWidget->setModel(m_preset->modelData);
 
-    lableName->setText(m_preset.name);
-    spinboxVolt->setValue(m_preset.ratedVoltage);
-    spinboxCurr->setValue(m_preset.ratedCurrent);
-    qDebug()<<m_preset.modelData.loops.size()<<" ---"<<&(m_presetValue->modelData);
+    lableName->setText(m_preset->name);
+    spinboxVolt->setValue(m_preset->edVolt);
+    spinboxCurr->setValue(m_preset->edCurr);
+    qDebug()<<m_preset->modelData.loops.size()<<" ---"<<&(m_preset->modelData);
 }
 
 QString SchemePresetWidget::name()
 {
-    return m_preset.name;
+    return m_preset->name;
 }
 
 void SchemePresetWidget::initUi()
@@ -67,10 +67,10 @@ void SchemePresetWidget::initConnections()
 {
     connect(spinboxVolt,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
     {
-        m_presetValue->ratedVoltage = value;
+        m_preset->edVolt = value;
     });
     connect(spinboxCurr,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
     {
-        m_presetValue->ratedCurrent = value;
+        m_preset->edCurr = value;
     });
 }

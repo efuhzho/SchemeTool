@@ -170,7 +170,6 @@
       
       
     </QtMoc>
-    <ClInclude Include="src\schemeDefine.h" />
     <QtMoc Include="src\schemeinfowidget.h">
       
       

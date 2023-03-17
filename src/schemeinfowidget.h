@@ -10,26 +10,26 @@
 
 class SchemeInfoWidget : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit SchemeInfoWidget(QWidget *parent = nullptr);
-    void setModel(Scheme& scheme);
-    QString name();
+	explicit SchemeInfoWidget( QWidget* parent = nullptr );
+	void setModel( Scheme& scheme );
+	QString name( );
 
 private://inits
-    void initUi();
-    void initConnections();
+	void initUi( );
+	void initConnections( );
 
 private://elements
-    QLineEdit* lineEditSchemeName {new QLineEdit};
-    QLineEdit* lineEditVersion {new QLineEdit};
-    QLineEdit* lineEditCreateDate {new QLineEdit};
-    QLineEdit* lineEditUpdateDate {new QLineEdit};
-    QLineEdit* lineEditUser {new QLineEdit};
-    QTextEdit* textEditDescription {new QTextEdit};
+	QLineEdit* lineEditSchemeName { new QLineEdit };
+	QLineEdit* lineEditVersion { new QLineEdit };
+	QLineEdit* lineEditCreateDate { new QLineEdit };
+	QLineEdit* lineEditUpdateDate { new QLineEdit };
+	QLineEdit* lineEditUser { new QLineEdit };
+	QTextEdit* textEditDescription { new QTextEdit };
 
 private://members
-    Scheme m_scheme{nullptr};
+	Scheme* m_scheme { nullptr };
 };
 
 #endif // SCHEMEINFOWIDGET_H

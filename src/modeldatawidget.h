@@ -15,6 +15,7 @@
 #include <QButtonGroup>
 
 #include "schemeModelDefine.h"
+#include "statewidget.h"
 
 class ModelDataWidget : public QWidget
 {
@@ -39,15 +40,14 @@ private slots:
 
 private://inits
     void initUi();
-    void initSpinBox();
-    QGridLayout* createDataGrid();
     QSplitter* createOptionsWidget();
     void initConnections();
+    //void selectLastChild(QButtonGroup& group);
 
 
 
 private://members
-    ModelData m_modelData ;
+    ModelData m_modelData ;    
 
 private://elements   
 
@@ -60,6 +60,8 @@ private://elements
     QVBoxLayout* statesLayout{new QVBoxLayout};
     QButtonGroup* groupLoops {new QButtonGroup(this)};
     QButtonGroup* groupStates {new QButtonGroup(this)};
+
+    StateWidget* m_stateWidget {new StateWidget};
 };
 
 #endif // MODELDATAWIDGET_H

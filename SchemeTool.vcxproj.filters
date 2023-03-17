@@ -92,9 +92,6 @@
     <QtMoc Include="src\schemeConvertor.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <ClInclude Include="src\schemeDefine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <QtMoc Include="src\schemeinfowidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
