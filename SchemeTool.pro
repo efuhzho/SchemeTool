@@ -40,6 +40,8 @@ RESOURCES += \
     icons.qrc
 
 DISTFILES += \
+    icons/icons8-minus-48.png \
+    icons/icons8-plus-48.png \
     icons/icons8_Json4_Download.ico \
     icons/icons8_Json4_Download_16.png \
     icons/icons8_Json4_Download_32.png \

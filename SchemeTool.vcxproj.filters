@@ -142,8 +142,20 @@
     <QtRcc Include="icons.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+    <None Include="icons\icons8-minus-48.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="icons\icons8-plus-48.png">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="icons\icons8-minus-48.png">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="icons\icons8-plus-48.png">
+      <Filter>Distribution Files</Filter>
+    </None>
     <None Include="icons\icons8_Json4_Download.ico">
       <Filter>Distribution Files</Filter>
     </None>

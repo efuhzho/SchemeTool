@@ -13,6 +13,7 @@
 #include <QPushButton>
 #include <QListWidget>
 #include <QButtonGroup>
+#include <QTabWidget>
 
 #include "schemeModelDefine.h"
 #include "statewidget.h"
@@ -26,42 +27,29 @@ public:
 
 signals:
     void sigModelUpdated();
-    void sigLoopChecked(Loop& loop);
-    void sigStateChecked(State& state);
 
 private slots:
-    void onModelUpdated();
-    void onLoopChecked(Loop& loop);
-    void onStateChecked(State& state);
-    void slotAddLoop();
-    void slotDeleteLoop();
-    void slotAddState();
-    void slotDeleteState();
+    void updateLoopsListWidget();
+    void updateStatesListWidget(QListWidgetItem *item);
+    void updateStateWidget(QListWidgetItem *item);
 
 private://inits
     void initUi();
-    QSplitter* createOptionsWidget();
     void initConnections();
-    //void selectLastChild(QButtonGroup& group);
-
-
 
 private://members
-    ModelData m_modelData ;    
+    ModelData* m_modelData ;
 
-private://elements   
+private://elements
 
-    QPushButton* btnAddLoop {new QPushButton(tr("Add loop"))};
-    QPushButton* btnDeleteLoop {new QPushButton(tr("Delete loop"))};
-    QPushButton* btnAddState {new QPushButton(tr("Add state"))};
-    QPushButton* btnDeleteState {new QPushButton(tr("Delete state"))};
+    QListWidget* loopsListWidget{new QListWidget};
+    QListWidget* statesListWidget{new QListWidget};
+    StateWidget* stateWidget {new StateWidget};
 
-    QVBoxLayout* loopsLayout {new QVBoxLayout};
-    QVBoxLayout* statesLayout{new QVBoxLayout};
-    QButtonGroup* groupLoops {new QButtonGroup(this)};
-    QButtonGroup* groupStates {new QButtonGroup(this)};
-
-    StateWidget* m_stateWidget {new StateWidget};
+    QPushButton* btnAddLoop {new QPushButton};
+    QPushButton* btnDeleteLoop {new QPushButton};
+    QPushButton* btnAddState {new QPushButton};
+    QPushButton* btnDeleteState {new QPushButton};
 };
 
 #endif // MODELDATAWIDGET_H

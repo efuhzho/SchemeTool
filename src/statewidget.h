@@ -27,10 +27,11 @@ private ://inits
     void initUI();
     QGridLayout* createDataGrid();
     void initSpinBox();
-    void initConnects();
+    void initSpinboxData(double value);
+    void initConnects();    
 
 private://members
-    State m_stateModel;
+    State* m_stateModel;
 
 private://elements
 

@@ -2,274 +2,180 @@
 #include <QPushButton>
 #include <QDebug>
 
-ModelDataWidget::ModelDataWidget(QWidget *parent)
-    : QWidget{parent}
+ModelDataWidget::ModelDataWidget( QWidget* parent )
+    : QWidget { parent }
 {
-    initUi();
-    initConnections();
+    initUi( );
+    initConnections( );
 }
 
-void ModelDataWidget::setModel(ModelData& modeldata)
+void ModelDataWidget::setModel( ModelData& modeldata )
 {
-    m_modelData = modeldata;
-    emit sigModelUpdated();
+    m_modelData = &modeldata;
+    emit sigModelUpdated( );
 }
 
-void ModelDataWidget::onModelUpdated()
+void ModelDataWidget::updateLoopsListWidget( )
 {
-    QList<QAbstractButton*> btnsInGroup = groupLoops->buttons();
-    foreach (QAbstractButton *btn, btnsInGroup)
-    {
-        if(btn)
-        {
-            delete btn;
-        }
-    }
+    loopsListWidget->clear();
+    statesListWidget->clear();
+    btnAddState->setEnabled(false);
+    btnDeleteState->setEnabled(false);
 
-    QStringList loopnames = m_modelData.loops.keys();
-    for (int i = 0; i < loopnames.size(); ++i)
+    QStringList loopNames = m_modelData->loops.keys();
+    if(loopNames.isEmpty())
     {
-        QRadioButton* radbtn = new QRadioButton(loopnames[i]);
-        groupLoops->addButton(radbtn,i);
-        loopsLayout->addWidget(radbtn);
+        qDebug()<<"loopNames is empty." <<"from :ModelDataWidget::updateLoopsListWidget( )";
+        return;
     }
-
-    QString btnText;
-    Loop loop;
-    if(groupLoops->buttons().count()>0)
-    {
-        groupLoops->buttons().at(0)->setChecked(true);
-        btnText = groupLoops->checkedButton()->text();
-        loop = m_modelData.loops[btnText];
-    }
-
-    emit sigLoopChecked(loop);
+    loopsListWidget->addItems(loopNames);
+    loopsListWidget->setCurrentItem(loopsListWidget->item(0));
 }
 
-void ModelDataWidget::onLoopChecked(Loop &loop)
+void ModelDataWidget::updateStatesListWidget(QListWidgetItem *item)
 {
-    QList<QAbstractButton*> btnsInGroup = groupStates->buttons();
-    foreach (QAbstractButton *btn, btnsInGroup)
-    {
-        if(btn)
-        {
-            delete btn;
-        }
-    }
-
-    QStringList statenames = loop.states.keys();
-    if(statenames.isEmpty())
+    if(!item)
     {
         return;
     }
+    statesListWidget->clear();
+    btnAddState->setEnabled(true);
+    btnDeleteState->setEnabled(true);
 
-    for (int i = 0; i < statenames.size(); ++i)
+    QStringList stateNames = m_modelData->loops[item->text()].states.keys();
+    if(stateNames.isEmpty())
     {
-        QRadioButton* radioState = new QRadioButton(statenames[i]);
-
-        groupStates->addButton(radioState,i);
-        statesLayout->addWidget(radioState);
-    }
-
-    QString btnText;
-    State state;
-    if(groupStates->buttons().count()>0)
-    {
-        groupStates->buttons().at(0)->setChecked(true);
-        btnText = groupStates->checkedButton()->text();
-        state = loop.states[btnText];
-    }
-    emit sigStateChecked(state);
-}
-
-void ModelDataWidget::onStateChecked(State& state)
-{        
-    m_stateWidget->setModel(state);
-}
-
-void ModelDataWidget::slotAddLoop()
-{
-    m_modelData.addLoop();
-    emit sigModelUpdated();
-
-    groupLoops->buttons().at(0)->setChecked(true);
-    QString btnText = groupLoops->checkedButton()->text();
-
-    Loop loop = m_modelData.loops[btnText];
-    emit sigLoopChecked(loop);
-}
-
-void ModelDataWidget::slotDeleteLoop()
-{
-    bool result = m_modelData.deleteLoop();
-    if(!result)
-    {
-        return;
-    }
-    emit sigModelUpdated();
-    int count = groupLoops->buttons().count();
-    if(count==0)
-    {
-        return;
-    }
-    groupLoops->buttons().at(count-1)->setChecked(true);
-    QString btnText = groupLoops->checkedButton()->text();
-
-    Loop loop = m_modelData.loops[btnText];
-    emit sigLoopChecked(loop);
-}
-
-void ModelDataWidget::slotAddState()
-{
-    QString loopname= groupLoops->checkedButton()->text();
-
-    m_modelData.loops[loopname].addState();
-
-    //update state list
-    emit sigLoopChecked(m_modelData.loops[loopname]);
-
-    int count = groupStates->buttons().count();
-    if(count>0)
-    {
-        groupStates->buttons().at(count-1)->setChecked(true);
-        QString statename = groupStates->checkedButton()->text();
-        State state = m_modelData.loops[loopname].states[statename];
-        emit sigStateChecked(state);
-    }
-}
-
-void ModelDataWidget::slotDeleteState()
-{
-    QString loopname = groupLoops->checkedButton()->text();
-
-    bool result =m_modelData.loops[loopname].deleteState();
-
-    if(!result)
-    {
+        qDebug()<<"stateNames or QListWidgetItem* is empty." <<"from :ModelDataWidget::updateStatesListWidget(QListWidgetItem *item)";
         return;
     }
 
-    //update state list
-    emit sigLoopChecked(m_modelData.loops[loopname]);
-
-    int count = groupStates->buttons().count();
-    groupStates->buttons().at(count)->setChecked(true);
-    QString statename = groupStates->checkedButton()->text();
-    emit sigStateChecked(m_modelData.loops[loopname].states[statename]);
-
+    statesListWidget->addItems(stateNames);
+    statesListWidget->setCurrentItem(statesListWidget->item(0));
 }
 
-void ModelDataWidget::initUi()
+void ModelDataWidget::updateStateWidget(QListWidgetItem *item)
 {
-    //set widget background color
-    QPalette background ;
-    background.setColor( QPalette::Background, QColor( 255, 255, 255) );
+    if(!item||!loopsListWidget->currentItem())
+    {
+        qDebug()<<"QListWidgetItem *item is empty." <<"from :updateStateWidget(QListWidgetItem *item)";
+        return;
+    }
+    QString loopName = loopsListWidget->currentItem()->text();
+    QString stateName =item->text();
+    stateWidget->setModel(m_modelData->loops[loopName].states[stateName]);
+}
+
+void ModelDataWidget::initUi( )
+{
+    //设置窗口背景色
+    QPalette background;
+    background.setColor( QPalette::Background, QColor( 255, 255, 255 ) );
     this->setPalette( background );
-    this->setAutoFillBackground(true);
+    this->setAutoFillBackground( true );
 
     //设置禁止垂直缩放
-    QSizePolicy sizepolicy = this->sizePolicy();
-    sizepolicy.setHorizontalPolicy(QSizePolicy::Fixed);
-    sizepolicy.setVerticalPolicy(QSizePolicy::Fixed);
-    this->setSizePolicy(sizepolicy);
+    QSizePolicy sizepolicy = this->sizePolicy( );
+    sizepolicy.setHorizontalPolicy( QSizePolicy::Fixed );
+    sizepolicy.setVerticalPolicy( QSizePolicy::Fixed );
+    this->setSizePolicy( sizepolicy );
 
-    QVBoxLayout* optionsLayout {new QVBoxLayout};
-    optionsLayout->addWidget(createOptionsWidget());
+    //创建主窗口布局控件
+    QHBoxLayout* mainLayout { new QHBoxLayout( this ) };
 
-    QHBoxLayout* mainLayout { new QHBoxLayout(this)};
-    mainLayout->addWidget(m_stateWidget);
-    mainLayout->addLayout(optionsLayout);
-    mainLayout->addStretch();
-    //mainLayout->setSizeConstraint(QLayout::SetFixedSize);
-}
-
-
-
-
-
-QSplitter *ModelDataWidget::createOptionsWidget()
-{
-    QSplitter* splitterMain = new QSplitter(Qt::Horizontal);
-    QPalette background ;
-    background.setColor( QPalette::Background, QColor( 240, 248, 255) );
-
-    //loops widget
+    //创建回路布局
     {
-        QWidget* loopOptionsWidget = new QWidget(splitterMain);
-        QVBoxLayout* mainLayout {new QVBoxLayout(loopOptionsWidget)};
-        loopOptionsWidget->setPalette(background);
-        loopOptionsWidget->setAutoFillBackground(true);
+        QVBoxLayout* loopsLayout { new QVBoxLayout };
 
-        QHBoxLayout* loopscommandLayout {new QHBoxLayout};
-        loopscommandLayout->addWidget(btnAddLoop);
-        loopscommandLayout->addWidget(btnDeleteLoop);
+        QHBoxLayout* loopButtons {new QHBoxLayout};
+        loopButtons->addWidget(btnAddLoop);
+        loopButtons->addWidget(btnDeleteLoop);
 
-        mainLayout->addLayout(loopscommandLayout);
+        loopsLayout->addWidget(loopsListWidget);
+        loopsLayout->addLayout(loopButtons);
+
         mainLayout->addLayout(loopsLayout);
-        mainLayout->addStretch();
     }
 
-    //states widget
+    //创建状态步布局
     {
-        QWidget* stateOptionsWidget = new QWidget(splitterMain);
-        QVBoxLayout* stateMainLayout {new QVBoxLayout(stateOptionsWidget)};
-        stateOptionsWidget->setPalette(background);
-        stateOptionsWidget->setAutoFillBackground(true);
+        QVBoxLayout* statesLayout { new QVBoxLayout };
 
-        QHBoxLayout* statesscommandLayout {new QHBoxLayout};
-        statesscommandLayout->addWidget(btnAddState);
-        statesscommandLayout->addWidget(btnDeleteState);
+        QHBoxLayout* statesButtons {new QHBoxLayout};
+        statesButtons->addWidget(btnAddState);
+        statesButtons->addWidget(btnDeleteState);
 
-        stateMainLayout->addLayout(statesscommandLayout);
-        stateMainLayout->addLayout(statesLayout);
-        stateMainLayout->addStretch();
+        statesLayout->addWidget(statesListWidget);
+        statesLayout->addLayout(statesButtons);
+
+        mainLayout->addLayout(statesLayout);
     }
 
-    return splitterMain;
+    //设置按钮图标
+    {
+        btnAddLoop->setIcon(QIcon("://icons/icons8-plus-48.png"));
+        btnDeleteLoop->setIcon(QIcon("://icons/icons8-minus-48.png"));
+        btnAddState->setIcon(QIcon("://icons/icons8-plus-48.png"));
+        btnDeleteState->setIcon(QIcon("://icons/icons8-minus-48.png"));
+    }
+
+    mainLayout->addWidget(stateWidget);
+    mainLayout->addStretch( );
 }
 
-void ModelDataWidget::initConnections()
+void ModelDataWidget::initConnections( )
 {
-    //when model data updated,update loop list
-    connect(this,&ModelDataWidget::sigModelUpdated,this,&ModelDataWidget::onModelUpdated);
+    //更新loops列表
+    connect( this, &ModelDataWidget::sigModelUpdated, this, &ModelDataWidget::updateLoopsListWidget );
 
-    //when a loop button checked,update state list
-    connect(this,&ModelDataWidget::sigLoopChecked,this,&ModelDataWidget::onLoopChecked);
+    //更新states列表
+    connect(loopsListWidget,&QListWidget::itemClicked,this,&ModelDataWidget::updateStatesListWidget);
 
-    //when a state button checked,update grid data
-    connect(this,&ModelDataWidget::sigStateChecked,this,&ModelDataWidget::onStateChecked);
+    //更新stateWidget数据
+    connect(statesListWidget,&QListWidget::itemClicked,this,&ModelDataWidget::updateStateWidget);
 
-    //a loop checked by user
-    connect(groupLoops,qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked),this,[=](QAbstractButton *button)
+    //追加一个回路
+    connect(btnAddLoop,&QPushButton::clicked,this,[=]
     {
-        emit sigLoopChecked(m_modelData.loops[button->text()]);
+        m_modelData->addLoop();
+        updateLoopsListWidget( );
     });
 
-    //a state checked by user
-    connect(groupStates,QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked),this,[=](QAbstractButton *button)
+    //删除一个回路
+    connect(btnDeleteLoop,&QPushButton::clicked,this,[=]
     {
-        QString loopname = groupLoops->checkedButton()->text();
-        emit sigStateChecked(m_modelData.loops[loopname].states[button->text()]);
+        bool result = m_modelData->deleteLoop();
+        if(result)
+        {
+            updateLoopsListWidget( );
+        }
     });
 
-    //add a loop
-    connect(btnAddLoop,&QPushButton::clicked,this,&ModelDataWidget::slotAddLoop);
+    //追加一个状态步
+    connect(btnAddState,&QPushButton::clicked,this,[=]
+    {
+        if(!loopsListWidget->currentItem())
+        {
+            qDebug()<<"no current loop item."<<"from :ModelDataWidget::initConnections( ).";
+            return;
+        }
+        QString loopName = loopsListWidget->currentItem()->text();
+        m_modelData->loops[loopName].addState();
+        updateStatesListWidget(loopsListWidget->currentItem());
+    });
 
-    //add a state
-    connect(btnAddState,&QPushButton::clicked,this,&ModelDataWidget::slotAddState);
+    //删除一个状态步
+    connect(btnDeleteState,&QPushButton::clicked,this,[=]
+    {
+        if(!loopsListWidget->currentItem())
+        {
+            qDebug()<<"no current loop item."<<"from :ModelDataWidget::initConnections( ).";
+            return;
+        }
+        QString loopName = loopsListWidget->currentItem()->text();
+        m_modelData->loops[loopName].deleteState();
+        updateStatesListWidget(loopsListWidget->currentItem());
+    });
 
-    //delete a loop
-    connect(btnDeleteLoop,&QPushButton::clicked,this,&ModelDataWidget::slotDeleteLoop);
-
-    //delete a state
-    connect(btnDeleteState,&QPushButton::clicked,this,&ModelDataWidget::slotDeleteState);
-
+    connect(loopsListWidget,&QListWidget::currentItemChanged,this,&ModelDataWidget::updateStatesListWidget);
+    connect(statesListWidget,&QListWidget::currentItemChanged,this,&ModelDataWidget::updateStateWidget);
 }
-
-
-
-
-
-
-
-

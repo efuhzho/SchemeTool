@@ -12,15 +12,19 @@ StateWidget::StateWidget(QWidget *parent)
 
 void StateWidget::setModel(State &state)
 {
-    m_stateModel = state;
+    m_stateModel = &state;
     emit sigModelUpdated();
 }
 
 void StateWidget::onModelUpdated()
 {
-    if(m_stateModel.parameters.contains("Ua"))
+    if(m_stateModel->parameters.isEmpty())
     {
-        Parameter para = m_stateModel.parameters["Ua"];
+        initSpinboxData(-1);
+    }
+    if(m_stateModel->parameters.contains("Ua"))
+    {
+        Parameter para = m_stateModel->parameters["Ua"];
         boxUa->setValue(para.mag);
         boxUa->setEnabled(true);
 
@@ -31,9 +35,9 @@ void StateWidget::onModelUpdated()
         boxFa->setEnabled(true);
     }
 
-    if(m_stateModel.parameters.contains("Ub"))
+    if(m_stateModel->parameters.contains("Ub"))
     {
-        auto para = m_stateModel.parameters["Ub"];
+        auto para = m_stateModel->parameters["Ub"];
         boxUb->setValue(para.mag);
         boxUb->setEnabled(true);
 
@@ -44,9 +48,9 @@ void StateWidget::onModelUpdated()
         boxFb->setEnabled(true);
     }
 
-    if(m_stateModel.parameters.contains("Uc"))
+    if(m_stateModel->parameters.contains("Uc"))
     {
-        auto para = m_stateModel.parameters["Uc"];
+        auto para = m_stateModel->parameters["Uc"];
         boxUc->setValue(para.mag);
         boxUc->setEnabled(true);
 
@@ -57,9 +61,9 @@ void StateWidget::onModelUpdated()
         boxFc->setEnabled(true);
     }
 
-    if(m_stateModel.parameters.contains("Ux"))
+    if(m_stateModel->parameters.contains("Ux"))
     {
-        auto para = m_stateModel.parameters["Ux"];
+        auto para = m_stateModel->parameters["Ux"];
         boxUx->setValue(para.mag);
         boxUx->setEnabled(true);
 
@@ -70,9 +74,9 @@ void StateWidget::onModelUpdated()
         boxFx->setEnabled(true);
     }
 
-    if(m_stateModel.parameters.contains("Ia"))
+    if(m_stateModel->parameters.contains("Ia"))
     {
-        auto para = m_stateModel.parameters["Ia"];
+        auto para = m_stateModel->parameters["Ia"];
         boxIa->setValue(para.mag);
         boxIa->setEnabled(true);
 
@@ -83,9 +87,9 @@ void StateWidget::onModelUpdated()
         boxFa->setEnabled(true);
     }
 
-    if(m_stateModel.parameters.contains("Ib"))
+    if(m_stateModel->parameters.contains("Ib"))
     {
-        auto para = m_stateModel.parameters["Ib"];
+        auto para = m_stateModel->parameters["Ib"];
         boxIb->setValue(para.mag);
         boxIb->setEnabled(true);
 
@@ -96,9 +100,9 @@ void StateWidget::onModelUpdated()
         boxFb->setEnabled(true);
     }
 
-    if(m_stateModel.parameters.contains("Ic"))
+    if(m_stateModel->parameters.contains("Ic"))
     {
-        auto para = m_stateModel.parameters["Ic"];
+        auto para = m_stateModel->parameters["Ic"];
         boxIc->setValue(para.mag);
         boxIc->setEnabled(true);
 
@@ -109,9 +113,9 @@ void StateWidget::onModelUpdated()
         boxFc->setEnabled(true);
     }
 
-    if(m_stateModel.parameters.contains("Ix"))
+    if(m_stateModel->parameters.contains("Ix"))
     {
-        auto para = m_stateModel.parameters["Ix"];
+        auto para = m_stateModel->parameters["Ix"];
         boxIx->setValue(para.mag);
         boxIx->setEnabled(true);
 
@@ -306,158 +310,358 @@ void StateWidget::initSpinBox()
 
     //SetRange
     {
-        boxUa->setRange(0,100);
-        boxUb->setRange(0,100);
-        boxUc->setRange(0,100);
-        boxUx->setRange(0,100);
+        boxUa->setRange(-1,100);
+        boxUb->setRange(-1,100);
+        boxUc->setRange(-1,100);
+        boxUx->setRange(-1,100);
 
-        boxIa->setRange(0,100);
-        boxIb->setRange(0,100);
-        boxIc->setRange(0,100);
-        boxIx->setRange(0,100);
+        boxIa->setRange(-1,100);
+        boxIb->setRange(-1,100);
+        boxIc->setRange(-1,100);
+        boxIx->setRange(-1,100);
 
-        boxPhUa->setRange(0,359.99);
-        boxPhUb->setRange(0,359.99);
-        boxPhUc->setRange(0,359.99);
-        boxPhUx->setRange(0,359.99);
+        boxPhUa->setRange(-1,359.99);
+        boxPhUb->setRange(-1,359.99);
+        boxPhUc->setRange(-1,359.99);
+        boxPhUx->setRange(-1,359.99);
 
-        boxPhIa->setRange(0,359.99);
-        boxPhIb->setRange(0,359.99);
-        boxPhIc->setRange(0,359.99);
-        boxPhIx->setRange(0,359.99);
+        boxPhIa->setRange(-1,359.99);
+        boxPhIb->setRange(-1,359.99);
+        boxPhIc->setRange(-1,359.99);
+        boxPhIx->setRange(-1,359.99);
 
-        boxPa->setRange(0,100);
-        boxPb->setRange(0,100);
-        boxPc->setRange(0,100);
-        boxPx->setRange(0,100);
-        boxPsum->setRange(0,100);
+        boxPa->setRange(-1,100);
+        boxPb->setRange(-1,100);
+        boxPc->setRange(-1,100);
+        boxPx->setRange(-1,100);
+        boxPsum->setRange(-1,100);
 
-        boxQa->setRange(0,100);
-        boxQb->setRange(0,100);
-        boxQc->setRange(0,100);
-        boxQx->setRange(0,100);
-        boxQsum->setRange(0,100);
+        boxQa->setRange(-1,100);
+        boxQb->setRange(-1,100);
+        boxQc->setRange(-1,100);
+        boxQx->setRange(-1,100);
+        boxQsum->setRange(-1,100);
 
-        boxFa->setRange(0,125);
-        boxFb->setRange(0,125);
-        boxFc->setRange(0,125);
-        boxFx->setRange(0,125);
+        boxFa->setRange(-1,125);
+        boxFb->setRange(-1,125);
+        boxFc->setRange(-1,125);
+        boxFx->setRange(-1,125);
+    }
+
+    //setSpecialValueText
+    {
+        boxUa->setSpecialValueText("NULL");
+        boxUb->setSpecialValueText("NULL");
+        boxUc->setSpecialValueText("NULL");
+        boxUx->setSpecialValueText("NULL");
     }
 
     //setSingleStep
     {
-        boxUa->setSingleStep(10);
-        boxUb->setSingleStep(10);
-        boxUc->setSingleStep(10);
-        boxUx->setSingleStep(10);
+//        boxUa->setSingleStep(10);
+//        boxUb->setSingleStep(10);
+//        boxUc->setSingleStep(10);
+//        boxUx->setSingleStep(10);
 
-        boxIa->setSingleStep(10);
-        boxIb->setSingleStep(10);
-        boxIc->setSingleStep(10);
-        boxIx->setSingleStep(10);
+//        boxIa->setSingleStep(10);
+//        boxIb->setSingleStep(10);
+//        boxIc->setSingleStep(10);
+//        boxIx->setSingleStep(10);
 
-        boxPhUa->setSingleStep(30);
-        boxPhUb->setSingleStep(30);
-        boxPhUc->setSingleStep(30);
-        boxPhUx->setSingleStep(30);
+//        boxPhUa->setSingleStep(30);
+//        boxPhUb->setSingleStep(30);
+//        boxPhUc->setSingleStep(30);
+//        boxPhUx->setSingleStep(30);
 
-        boxPhIa->setSingleStep(30);
-        boxPhIb->setSingleStep(30);
-        boxPhIc->setSingleStep(30);
-        boxPhIx->setSingleStep(30);
+//        boxPhIa->setSingleStep(30);
+//        boxPhIb->setSingleStep(30);
+//        boxPhIc->setSingleStep(30);
+//        boxPhIx->setSingleStep(30);
 
-        boxPa->setSingleStep(10);
-        boxPb->setSingleStep(10);
-        boxPc->setSingleStep(10);
-        boxPx->setSingleStep(10);
-        boxPsum->setSingleStep(10);
+//        boxPa->setSingleStep(10);
+//        boxPb->setSingleStep(10);
+//        boxPc->setSingleStep(10);
+//        boxPx->setSingleStep(10);
+//        boxPsum->setSingleStep(10);
 
-        boxQa->setSingleStep(10);
-        boxQb->setSingleStep(10);
-        boxQc->setSingleStep(10);
-        boxQx->setSingleStep(10);
-        boxQsum->setSingleStep(10);
+//        boxQa->setSingleStep(10);
+//        boxQb->setSingleStep(10);
+//        boxQc->setSingleStep(10);
+//        boxQx->setSingleStep(10);
+//        boxQsum->setSingleStep(10);
 
-        boxFa->setSingleStep(1);
-        boxFb->setSingleStep(1);
-        boxFc->setSingleStep(1);
-        boxFx->setSingleStep(1);
+//        boxFa->setSingleStep(1);
+//        boxFb->setSingleStep(1);
+//        boxFc->setSingleStep(1);
+//        boxFx->setSingleStep(1);
     }
 
     //setEnable
     {
-        boxUa->setEnabled(false);
-        boxUb->setEnabled(false);
-        boxUc->setEnabled(false);
-        boxUx->setEnabled(false);
+//        boxUa->setEnabled(false);
+//        boxUb->setEnabled(false);
+//        boxUc->setEnabled(false);
+//        boxUx->setEnabled(false);
 
-        boxIa->setEnabled(false);
-        boxIb->setEnabled(false);
-        boxIc->setEnabled(false);
-        boxIx->setEnabled(false);
+//        boxIa->setEnabled(false);
+//        boxIb->setEnabled(false);
+//        boxIc->setEnabled(false);
+//        boxIx->setEnabled(false);
 
-        boxPhUa->setEnabled(false);
-        boxPhUb->setEnabled(false);
-        boxPhUc->setEnabled(false);
-        boxPhUx->setEnabled(false);
+//        boxPhUa->setEnabled(false);
+//        boxPhUb->setEnabled(false);
+//        boxPhUc->setEnabled(false);
+//        boxPhUx->setEnabled(false);
 
-        boxPhIa->setEnabled(false);
-        boxPhIb->setEnabled(false);
-        boxPhIc->setEnabled(false);
-        boxPhIx->setEnabled(false);
+//        boxPhIa->setEnabled(false);
+//        boxPhIb->setEnabled(false);
+//        boxPhIc->setEnabled(false);
+//        boxPhIx->setEnabled(false);
 
-        boxPa->setEnabled(false);
-        boxPb->setEnabled(false);
-        boxPc->setEnabled(false);
-        boxPx->setEnabled(false);
-        boxPsum->setEnabled(false);
+//        boxPa->setEnabled(false);
+//        boxPb->setEnabled(false);
+//        boxPc->setEnabled(false);
+//        boxPx->setEnabled(false);
+//        boxPsum->setEnabled(false);
 
-        boxQa->setEnabled(false);
-        boxQb->setEnabled(false);
-        boxQc->setEnabled(false);
-        boxQx->setEnabled(false);
-        boxQsum->setEnabled(false);
+//        boxQa->setEnabled(false);
+//        boxQb->setEnabled(false);
+//        boxQc->setEnabled(false);
+//        boxQx->setEnabled(false);
+//        boxQsum->setEnabled(false);
 
-        boxFa->setEnabled(false);
-        boxFb->setEnabled(false);
-        boxFc->setEnabled(false);
-        boxFx->setEnabled(false);
+//        boxFa->setEnabled(false);
+//        boxFb->setEnabled(false);
+//        boxFc->setEnabled(false);
+//        boxFx->setEnabled(false);
+
+//        boxPFa->setEnabled(false);
+//        boxPFb->setEnabled(false);
+//        boxPFc->setEnabled(false);
+//        boxPFx->setEnabled(false);
+//        boxPFsum->setEnabled(false);
     }
+}
+
+void StateWidget::initSpinboxData(double value)
+{
+    boxUa->setValue(value);
+    boxUb->setValue(value);
+    boxUc->setValue(value);
+    boxUx->setValue(value);
+
+    boxIa->setValue(value);
+    boxIb->setValue(value);
+    boxIc->setValue(value);
+    boxIx->setValue(value);
+
+    boxPhUa->setValue(value);
+    boxPhUb->setValue(value);
+    boxPhUc->setValue(value);
+    boxPhUx->setValue(value);
+
+    boxPhIa->setValue(value);
+    boxPhIb->setValue(value);
+    boxPhIc->setValue(value);
+    boxPhIx->setValue(value);
+
+    boxPa->setValue(value);
+    boxPb->setValue(value);
+    boxPc->setValue(value);
+    boxPx->setValue(value);
+    boxPsum->setValue(value);
+
+    boxQa ->setValue(value);
+    boxQb ->setValue(value);
+    boxQc ->setValue(value);
+    boxQx->setValue(value);
+    boxQsum->setValue(value);
+
+    boxPFa ->setValue(value);
+    boxPFb ->setValue(value);
+    boxPFc ->setValue(value);
+    boxPFx->setValue(value);
+    boxPFsum->setValue(value);
+
+    boxFa->setValue(value);
+    boxFb->setValue(value);
+    boxFc->setValue(value);
+    boxFx->setValue(value);
 }
 
 void StateWidget::initConnects()
 {
     connect(this,&StateWidget::sigModelUpdated,this,&StateWidget::onModelUpdated);
-    connect(boxUa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+
+    //幅度设置
     {
-        m_stateModel.parameters["Ua"].mag = value;
-    });
-    connect(boxUb,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        connect(boxUa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ua"].mag = value;
+        });
+        connect(boxUb,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ub"].mag = value;
+        });
+        connect(boxUc,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Uc"].mag = value;
+        });
+        connect(boxUx,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ux"].mag = value;
+        });
+        connect(boxIa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ia"].mag = value;
+        });
+        connect(boxIb,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ib"].mag = value;
+        });
+        connect(boxIc,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ic"].mag = value;
+        });
+        connect(boxIx,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ix"].mag = value;
+        });
+    }
+
+    //相位设置
     {
-        m_stateModel.parameters["Ub"].mag = value;
-    });
-    connect(boxUc,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        connect(boxPhUa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ua"].ang = value;
+        });
+        connect(boxPhUb,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ub"].ang = value;
+        });
+        connect(boxPhUc,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Uc"].ang = value;
+        });
+        connect(boxPhUx,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ux"].ang = value;
+        });
+        connect(boxPhIa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ia"].ang = value;
+        });
+        connect(boxPhIb,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ib"].ang = value;
+        });
+        connect(boxPhIc,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ic"].ang = value;
+        });
+        connect(boxPhIx,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ix"].ang = value;
+        });
+    }
+
+    //相位设置
     {
-        m_stateModel.parameters["Uc"].mag = value;
-    });
-    connect(boxUx,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
-    {
-        m_stateModel.parameters["Ux"].mag = value;
-    });
-    connect(boxIa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
-    {
-        m_stateModel.parameters["Ia"].mag = value;
-    });
-    connect(boxIb,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
-    {
-        m_stateModel.parameters["Ib"].mag = value;
-    });
-    connect(boxIc,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
-    {
-        m_stateModel.parameters["Ic"].mag = value;
-    });
-    connect(boxIx,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
-    {
-        m_stateModel.parameters["Ix"].mag = value;
-    });
+        connect(boxFa,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ua"].freq = value;
+        });
+        connect(boxFb,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ub"].freq = value;
+        });
+        connect(boxFc,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Uc"].freq = value;
+        });
+        connect(boxFx,qOverload<double>(&QDoubleSpinBox::valueChanged),this,[=](double value)
+        {
+            if(value<0)
+            {
+                return;
+            }
+            m_stateModel->parameters["Ux"].freq = value;
+        });
+    }
 }
