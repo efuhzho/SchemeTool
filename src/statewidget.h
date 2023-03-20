@@ -35,10 +35,10 @@ private://members
 
 private://elements
 
-    QString unitU = "%";
-    QString unitI = "%";
-    QString unitP = "%";
-    QString unitQ = "%";
+    QString unitU = " %";
+    QString unitI = " %";
+    QString unitP = " %";
+    QString unitQ = " %";
 
     //电压
     QDoubleSpinBox* boxUa = new QDoubleSpinBox;

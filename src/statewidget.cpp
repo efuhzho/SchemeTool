@@ -56,7 +56,7 @@ void StateWidget::onModelUpdated( )
 		auto para = m_stateModel->parameters["Ia"];
 		boxIa->setValue( para.mag );
 		boxPhIa->setValue( para.ang );
-		boxFa->setValue( para.freq );
+        boxFa->setValue( para.freq );
 	}
 
 	if ( m_stateModel->parameters.contains( "Ib" ) )
@@ -64,7 +64,7 @@ void StateWidget::onModelUpdated( )
 		auto para = m_stateModel->parameters["Ib"];
 		boxIb->setValue( para.mag );
 		boxPhIb->setValue( para.ang );
-		boxFb->setValue( para.freq );
+        boxFb->setValue( para.freq );
 	}
 
 	if ( m_stateModel->parameters.contains( "Ic" ) )
@@ -72,7 +72,7 @@ void StateWidget::onModelUpdated( )
 		auto para = m_stateModel->parameters["Ic"];
 		boxIc->setValue( para.mag );
 		boxPhIc->setValue( para.ang );
-		boxFc->setValue( para.freq );
+        boxFc->setValue( para.freq );
 	}
 
 	if ( m_stateModel->parameters.contains( "Ix" ) )
@@ -80,7 +80,7 @@ void StateWidget::onModelUpdated( )
 		auto para = m_stateModel->parameters["Ix"];
 		boxIx->setValue( para.mag );
 		boxPhIx->setValue( para.ang );
-		boxFx->setValue( para.freq );
+        boxFx->setValue( para.freq );
 	}
 }
 
@@ -226,7 +226,7 @@ void StateWidget::initSpinBox( )
 {
 	//SetSuffix
 	{
-		boxUa->setSuffix( unitU );
+        boxUa->setSuffix( unitU );
 		boxUb->setSuffix( unitU );
 		boxUc->setSuffix( unitU );
 		boxUx->setSuffix( unitU );
@@ -236,15 +236,15 @@ void StateWidget::initSpinBox( )
 		boxIc->setSuffix( unitI );
 		boxIx->setSuffix( unitI );
 
-		boxPhUa->setSuffix( QString::fromLocal8Bit( "°" ) );
-		boxPhUb->setSuffix( QString::fromLocal8Bit( "°" ) );
-		boxPhUc->setSuffix( QString::fromLocal8Bit( "°" ) );
-		boxPhUx->setSuffix( QString::fromLocal8Bit( "°" ) );
+        boxPhUa->setSuffix( QString::fromLocal8Bit( " °" ) );
+        boxPhUb->setSuffix( QString::fromLocal8Bit( " °" ) );
+        boxPhUc->setSuffix( QString::fromLocal8Bit( " °" ) );
+        boxPhUx->setSuffix( QString::fromLocal8Bit( " °" ) );
 
-		boxPhIa->setSuffix( QString::fromLocal8Bit( "°" ) );
-		boxPhIb->setSuffix( QString::fromLocal8Bit( "°" ) );
-		boxPhIc->setSuffix( QString::fromLocal8Bit( "°" ) );
-		boxPhIx->setSuffix( QString::fromLocal8Bit( "°" ) );
+        boxPhIa->setSuffix( QString::fromLocal8Bit( " °" ) );
+        boxPhIb->setSuffix( QString::fromLocal8Bit( " °" ) );
+        boxPhIc->setSuffix( QString::fromLocal8Bit( " °" ) );
+        boxPhIx->setSuffix( QString::fromLocal8Bit( " °" ) );
 
 		boxPa->setSuffix( unitP );
 		boxPb->setSuffix( unitP );
@@ -258,11 +258,50 @@ void StateWidget::initSpinBox( )
 		boxQx->setSuffix( unitQ );
 		boxQsum->setSuffix( unitQ );
 
-		boxFa->setSuffix( "Hz" );
-		boxFb->setSuffix( "Hz" );
-		boxFc->setSuffix( "Hz" );
-		boxFx->setSuffix( "Hz" );
+        boxFa->setSuffix( " Hz" );
+        boxFb->setSuffix( " Hz" );
+        boxFc->setSuffix( " Hz" );
+        boxFx->setSuffix( " Hz" );
 	}
+
+    {
+        boxUa->setKeyboardTracking(false);
+        boxUb->setKeyboardTracking(false);
+        boxUc->setKeyboardTracking(false);
+        boxUx->setKeyboardTracking(false);
+
+        boxIa->setKeyboardTracking(false);
+        boxIb->setKeyboardTracking(false);
+        boxIc->setKeyboardTracking(false);
+        boxIx->setKeyboardTracking(false);
+
+        boxPhUa->setKeyboardTracking(false);
+        boxPhUb->setKeyboardTracking(false);
+        boxPhUc->setKeyboardTracking(false);
+        boxPhUx->setKeyboardTracking(false);
+
+        boxPhIa->setKeyboardTracking(false);
+        boxPhIb->setKeyboardTracking(false);
+        boxPhIc->setKeyboardTracking(false);
+        boxPhIx->setKeyboardTracking(false);
+
+        boxPa->setKeyboardTracking(false);
+        boxPb->setKeyboardTracking(false);
+        boxPc->setKeyboardTracking(false);
+        boxPx->setKeyboardTracking(false);
+        boxPsum->setKeyboardTracking(false);
+
+        boxQa->setKeyboardTracking(false);
+        boxQb->setKeyboardTracking(false);
+        boxQc->setKeyboardTracking(false);
+        boxQx->setKeyboardTracking(false);
+        boxQsum->setKeyboardTracking(false);
+
+        boxFa->setKeyboardTracking(false);
+        boxFb->setKeyboardTracking(false);
+        boxFc->setKeyboardTracking(false);
+        boxFx->setKeyboardTracking(false);
+    }
 
 	//SetRange
 	{
@@ -366,7 +405,7 @@ void StateWidget::initSpinBox( )
 
 void StateWidget::clearSpinBox( )
 {
-	boxUa->clear( );
+    boxUa->clear( );
 	boxUb->clear( );
 	boxUc->clear( );
 	boxUx->clear( );
@@ -401,35 +440,47 @@ void StateWidget::initConnects( )
 	{
 		connect( boxUa, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
-				m_stateModel->parameters["Ua"].mag = value;
+                m_stateModel->parameters["Ua"].mag = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxUb, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ub"].mag = value;
+                m_stateModel->parameters["Ub"].ang = 240;
+                emit sigModelUpdated();
 			} );
 		connect( boxUc, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Uc"].mag = value;
+                m_stateModel->parameters["Uc"].ang = 120;
+                emit sigModelUpdated();
 			} );
 		connect( boxUx, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ux"].mag = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxIa, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ia"].mag = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxIb, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ib"].mag = value;
+                m_stateModel->parameters["Ib"].ang = 240;
+                emit sigModelUpdated();
 			} );
 		connect( boxIc, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ic"].mag = value;
+                m_stateModel->parameters["Ic"].ang = 120;
+                emit sigModelUpdated();
 			} );
 		connect( boxIx, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ix"].mag = value;
+                emit sigModelUpdated();
 			} );
 	}
 
@@ -438,54 +489,70 @@ void StateWidget::initConnects( )
 		connect( boxPhUa, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ua"].ang = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxPhUb, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ub"].ang = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxPhUc, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Uc"].ang = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxPhUx, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ux"].ang = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxPhIa, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ia"].ang = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxPhIb, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ib"].ang = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxPhIc, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ic"].ang = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxPhIx, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ix"].ang = value;
+                emit sigModelUpdated();
 			} );
 	}
 
-	//相位设置
+    //频率设置
 	{
 		connect( boxFa, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ua"].freq = value;
+                m_stateModel->parameters["Ia"].freq = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxFb, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ub"].freq = value;
+                m_stateModel->parameters["Ib"].freq = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxFc, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Uc"].freq = value;
+                m_stateModel->parameters["Ic"].freq = value;
+                emit sigModelUpdated();
 			} );
 		connect( boxFx, qOverload<double>( &QDoubleSpinBox::valueChanged ), this, [=]( double value )
 			{
 				m_stateModel->parameters["Ux"].freq = value;
+                m_stateModel->parameters["Ix"].freq = value;
+                emit sigModelUpdated();
 			} );
 	}
 }
