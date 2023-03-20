@@ -27,7 +27,7 @@ private ://inits
     void initUI();
     QGridLayout* createDataGrid();
     void initSpinBox();
-    void initSpinboxData(double value);
+    void clearSpinBox();
     void initConnects();    
 
 private://members

@@ -29,7 +29,9 @@ void ModelDataWidget::updateLoopsListWidget( )
         return;
     }
     loopsListWidget->addItems(loopNames);
-    loopsListWidget->setCurrentItem(loopsListWidget->item(0));
+    int count = loopNames.count( );
+
+    loopsListWidget->setCurrentItem(loopsListWidget->item(count-1));
 }
 
 void ModelDataWidget::updateStatesListWidget(QListWidgetItem *item)
@@ -50,7 +52,8 @@ void ModelDataWidget::updateStatesListWidget(QListWidgetItem *item)
     }
 
     statesListWidget->addItems(stateNames);
-    statesListWidget->setCurrentItem(statesListWidget->item(0));
+    int count = stateNames.count( );
+    statesListWidget->setCurrentItem(statesListWidget->item(count-1));
 }
 
 void ModelDataWidget::updateStateWidget(QListWidgetItem *item)

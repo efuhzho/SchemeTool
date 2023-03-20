@@ -21,7 +21,6 @@ void SchemePresetWidget::setModel(Preset& preset)
     lableName->setText(m_preset->name);
     spinboxVolt->setValue(m_preset->edVolt);
     spinboxCurr->setValue(m_preset->edCurr);
-    qDebug()<<m_preset->modelData.loops.size()<<" ---"<<&(m_preset->modelData);
 }
 
 QString SchemePresetWidget::name()

@@ -9,10 +9,10 @@
 
 typedef struct parameter
 {
-	double mag = 0;
-	double ang = 0;
+    double mag = 0;
+    double ang =0 ;
 	double freq = 50;
-	double dc = 0;
+    double dc =0;
 
 	void fromJson( const QJsonObject paraJson )
 	{
@@ -419,8 +419,7 @@ typedef struct preset
 		name = presetValue["name"].toString( );
 		unit = presetValue["unit"].toString( );
 		switchMode = presetValue["auto_switch"].toString( );
-		edVolt = presetValue["ed_volt"].toDouble( );
-		//edVolt = round(edVolt*100)/100;
+        edVolt = presetValue["ed_volt"].toDouble( );
 		edCurr = presetValue["ed_curr"].toDouble( );
 		modelData.fromJson( presetValue["model_data"].toObject( ) );
 	}
