@@ -13,6 +13,7 @@
 #include "src/schemetreewidget.h"
 #include "src/schemeinfowidget.h"
 #include "src/schemepresetwidget.h"
+#include "src/subtypewidget.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -70,6 +71,7 @@ private://ui elements
     SchemeTreeWidget* m_schemeTree{new SchemeTreeWidget};
     SchemeInfoWidget* m_schemeInfoWidget{new SchemeInfoWidget};
     SchemePresetWidget* m_presetWidget{new SchemePresetWidget};
+    SubtypeWidget* m_subtypeWidget {new SubtypeWidget};
 
 
 private://inits

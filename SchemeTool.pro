@@ -17,6 +17,7 @@ SOURCES += \
     src/schemepresetwidget.cpp \
     src/schemetreewidget.cpp \
     src/statewidget.cpp \
+    src/subtypewidget.cpp \
     src/testpointwidget.cpp
 
 HEADERS += \
@@ -28,6 +29,7 @@ HEADERS += \
     src/schemepresetwidget.h \
     src/schemetreewidget.h \
     src/statewidget.h \
+    src/subtypewidget.h \
     src/testpointwidget.h
 
 FORMS += \

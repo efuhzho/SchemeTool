@@ -13,7 +13,10 @@ TestPointWidget::TestPointWidget(QWidget *parent)
 void TestPointWidget::setModel(TestPoint &model)
 {
     m_testPoint = &model;
-    emit sigModelUpdated();
+    if(m_testPoint)
+    {
+        emit sigModelUpdated();
+    }
 }
 
 void TestPointWidget::initUi()

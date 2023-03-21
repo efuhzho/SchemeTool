@@ -32,6 +32,7 @@ void MainWindow::onFileChanged( QString filePath )
     //init widgets data
     m_schemeInfoWidget->setModel(m_schemeModel.scheme);
     m_presetWidget->setModel(m_schemeModel.scheme.preset);
+    m_subtypeWidget->setModel(m_schemeModel.scheme.testType.subTypes[0]);
     initStackWidget();
 }
 
@@ -83,6 +84,9 @@ void MainWindow::onTreeItemClicked(QTreeWidgetItem *item, int column)
     else if (item->text(column)==m_presetWidget->name())
     {
         m_stackWidget->setCurrentWidget(m_presetWidget);
+    }
+    else if (item->text(column) == m_subtypeWidget->name()) {
+        m_stackWidget->setCurrentWidget(m_subtypeWidget);
     }
 }
 
@@ -154,5 +158,6 @@ void MainWindow::initStackWidget()
 {
     m_stackWidget->addWidget(m_schemeInfoWidget);
     m_stackWidget->addWidget(m_presetWidget);
+    m_stackWidget->addWidget(m_subtypeWidget);
 }
 

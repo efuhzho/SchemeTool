@@ -307,7 +307,7 @@ typedef struct subTpye
 		return subtypeData;
 	}
 
-	void addTestPoint( QVariant var, QString unit )
+    void addTestPoint( QVariant var, QString unit = "%" )
 	{
 		TestPoint point;
 		point.unit = unit;
