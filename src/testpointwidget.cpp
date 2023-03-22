@@ -60,7 +60,7 @@ void TestPointWidget::initUi()
         }
     }
 
-    mainLayout->addWidget(widgetModelData);
+    mainLayout->addWidget(m_widgetModelData);
     mainLayout->addStretch();
 }
 
@@ -73,7 +73,7 @@ void TestPointWidget::initConnections()
         varLineEdit->setText(m_testPoint->var);
         idLineEdit->setText(m_testPoint->id);
 
-        widgetModelData->setModel(m_testPoint->modelData);
+        m_widgetModelData->setModel(m_testPoint->modelData);
     });
 
     connect(nameLineEdit,&QLineEdit::textChanged,this,[=](QString name)

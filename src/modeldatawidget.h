@@ -23,7 +23,11 @@ class ModelDataWidget : public QWidget
     Q_OBJECT
 public:
     explicit ModelDataWidget(QWidget *parent = nullptr);
-    void setModel(ModelData& modeldata);
+    void setModel(ModelData& model);
+    ModelData* Model();
+
+    void setUnit(const QString unit);
+    QString unit();
 
 signals:
     void sigModelUpdated();
@@ -38,13 +42,14 @@ private://inits
     void initConnections();
 
 private://members
-    ModelData* m_modelData ;
+    ModelData* m_model ;
+    QString m_unit;
+    StateWidget* m_stateWidget {new StateWidget};
 
 private://elements
 
     QListWidget* loopsListWidget{new QListWidget};
     QListWidget* statesListWidget{new QListWidget};
-    StateWidget* stateWidget {new StateWidget};
 
     QPushButton* btnAddLoop {new QPushButton};
     QPushButton* btnDeleteLoop {new QPushButton};

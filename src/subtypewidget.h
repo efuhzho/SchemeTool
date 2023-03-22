@@ -23,6 +23,7 @@ signals:
 
 private:
     SubType* m_model;
+    QString currentPointName {QString()};
 
     QLabel* nameLable {new QLabel};
     QLabel* typeLable {new QLabel};

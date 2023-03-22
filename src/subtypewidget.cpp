@@ -58,13 +58,23 @@ void SubtypeWidget::initUi()
         infoWidget->setLayout(infoLayout);
     }
 
-    QHBoxLayout* pointsGroupLayout {new QHBoxLayout};
-    testpointsGroup->setLayout(pointsGroupLayout);
-    testpointsGroup->setTitle(tr("Test Points"));
+    QHBoxLayout* secondRow {new QHBoxLayout};
+    {
+        QHBoxLayout* pointsGroupLayout {new QHBoxLayout};
+        testpointsGroup->setLayout(pointsGroupLayout);
+        testpointsGroup->setTitle(tr("Test Points"));
+        secondRow->addWidget(testpointsGroup);
+
+        QHBoxLayout* btnLayout {new QHBoxLayout};
+        btnLayout->addWidget(addPointSpinbox);
+        btnLayout->addWidget(addTestpointButton);
+        btnLayout->addWidget(deleteTestpointButton);
+        secondRow->addLayout(btnLayout);
+    }
 
     QVBoxLayout* mainLayout {new QVBoxLayout(this)};
     mainLayout->addWidget(infoWidget);
-    mainLayout->addWidget(testpointsGroup);
+    mainLayout->addLayout(secondRow);
     mainLayout->addWidget(testpointWidget);
 
     //设置测试项名称字体
@@ -74,7 +84,7 @@ void SubtypeWidget::initUi()
         nameLable->setFont(nameFont);
     }
 
-    //设置按钮、增加测试点输入框尺寸策略
+    //设置:按钮、测试点输入框尺寸策略
     {
         addTestpointButton->setIcon(QIcon("://icons/icons8-plus-48.png"));
         deleteTestpointButton->setIcon(QIcon("://icons/icons8-minus-48.png"));
@@ -97,45 +107,73 @@ void SubtypeWidget::initConnections()
         nameLable->setText(m_model->name);
         typeLable->setText(m_model->type);
         idLable->setText(m_model->id);
+        currentPointName = QString();
         initTestpointsGroup();
     });
 
     connect(addTestpointButton,&QPushButton::clicked,this,[=]
     {
-//        if(!addPointSpinbox->value())
-//        {
-//            return;
-//        }
-        m_model->addTestPoint(addPointSpinbox->value());
+        QString testPointName = m_model->addTestPoint(addPointSpinbox->value());
+
+        if(testPointName.isEmpty())
+        {
+            return;
+        }
+
+        currentPointName = testPointName;
         emit sigModelUpdated();
     });
 
     connect(deleteTestpointButton,&QPushButton::clicked,this,[=]
     {
-
+        bool result =  m_model->deleteTestPoint(currentPointName);
+        if(result)
+        {
+            currentPointName = QString();
+            emit sigModelUpdated();
+        }
     });
 }
 
 void SubtypeWidget::initTestpointsGroup()
 {
+    //释放原有按钮资源
     QList<QRadioButton*> btns = testpointsGroup->findChildren<QRadioButton*>();//获取所有按钮
     foreach (QRadioButton* btn, btns)
     {
         delete btn;    //析构所有按钮
     }
 
-    for (int i = 0; i < m_model->testPoints.size(); ++i)
+    QStringList pointNames = m_model->testPoints.keys();
+    for (int i = 0; i < pointNames.size(); ++i)
     {
-        QString testPointName = m_model->testPoints.at(i).name;
+        //逐个添加按钮
+        QString testPointName = pointNames.at(i);
         QRadioButton* pointButton {new QRadioButton(testPointName)};
         connect(pointButton,&QRadioButton::clicked,this,[=]
         {
-            testpointWidget->setModel(m_model->testPoints[i]);
+            currentPointName = pointButton->text();
+            testpointWidget->setModel(m_model->testPoints[testPointName]);
         });
         testpointsGroup->layout()->addWidget(pointButton);
+
+        //设置默认选中的按钮
+        if(i==0 && currentPointName.isEmpty())
+        {
+           currentPointName = pointButton->text();
+           pointButton->setChecked(true);
+           emit pointButton->clicked(true);
+        }
     }
 
-    testpointsGroup->layout()->addWidget(addPointSpinbox);
-    testpointsGroup->layout()->addWidget(addTestpointButton);
-    testpointsGroup->layout()->addWidget(deleteTestpointButton);
+    //重新选中测试点按钮
+    QList<QRadioButton*> afterBtns = testpointsGroup->findChildren<QRadioButton*>();//获取所有按钮
+    foreach (QRadioButton* btn, afterBtns)
+    {
+        if(btn->text() == currentPointName)
+        {
+            btn->setChecked(true);
+            emit btn->clicked(true);
+        }
+    }
 }

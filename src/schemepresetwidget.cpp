@@ -16,6 +16,10 @@ SchemePresetWidget::SchemePresetWidget(QWidget *parent)
 void SchemePresetWidget::setModel(Preset& preset)
 {
     m_preset = &preset;
+    if(!m_preset)
+    {
+        return;
+    }
     modelDataWidget->setModel(m_preset->modelData);
 
     lableName->setText(m_preset->name);

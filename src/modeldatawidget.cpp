@@ -9,20 +9,36 @@ ModelDataWidget::ModelDataWidget( QWidget* parent )
     initConnections( );
 }
 
-void ModelDataWidget::setModel( ModelData& modeldata )
+void ModelDataWidget::setModel( ModelData& model)
 {
-    m_modelData = &modeldata;
+    m_model = &model;
     emit sigModelUpdated( );
+}
+
+ModelData *ModelDataWidget::Model()
+{
+    return m_model;
+}
+
+void ModelDataWidget::setUnit(const QString unit)
+{
+    m_unit = unit;
+}
+
+QString ModelDataWidget::unit()
+{
+    return m_unit;
 }
 
 void ModelDataWidget::updateLoopsListWidget( )
 {
     loopsListWidget->clear();
     statesListWidget->clear();
+    m_stateWidget->clear();
     btnAddState->setEnabled(false);
     btnDeleteState->setEnabled(false);
 
-    QStringList loopNames = m_modelData->loops.keys();
+    QStringList loopNames = m_model->loops.keys();
     if(loopNames.isEmpty())
     {
         qDebug()<<"loopNames is empty." <<"from :ModelDataWidget::updateLoopsListWidget( )";
@@ -44,7 +60,7 @@ void ModelDataWidget::updateStatesListWidget(QListWidgetItem *item)
     btnAddState->setEnabled(true);
     btnDeleteState->setEnabled(true);
 
-    QStringList stateNames = m_modelData->loops[item->text()].states.keys();
+    QStringList stateNames = m_model->loops[item->text()].states.keys();
     if(stateNames.isEmpty())
     {
         qDebug()<<"stateNames or QListWidgetItem* is empty." <<"from :ModelDataWidget::updateStatesListWidget(QListWidgetItem *item)";
@@ -65,7 +81,7 @@ void ModelDataWidget::updateStateWidget(QListWidgetItem *item)
     }
     QString loopName = loopsListWidget->currentItem()->text();
     QString stateName =item->text();
-    stateWidget->setModel(m_modelData->loops[loopName].states[stateName]);
+    m_stateWidget->setModel(m_model->loops[loopName].states[stateName]);
 }
 
 void ModelDataWidget::initUi( )
@@ -121,7 +137,7 @@ void ModelDataWidget::initUi( )
         btnDeleteState->setIcon(QIcon("://icons/icons8-minus-48.png"));
     }
 
-    mainLayout->addWidget(stateWidget);
+    mainLayout->addWidget(m_stateWidget);
     mainLayout->addStretch( );
 }
 
@@ -139,14 +155,14 @@ void ModelDataWidget::initConnections( )
     //追加一个回路
     connect(btnAddLoop,&QPushButton::clicked,this,[=]
     {
-        m_modelData->addLoop();
+        m_model->addLoop();
         updateLoopsListWidget( );
     });
 
     //删除一个回路
     connect(btnDeleteLoop,&QPushButton::clicked,this,[=]
     {
-        bool result = m_modelData->deleteLoop();
+        bool result = m_model->deleteLoop();
         if(result)
         {
             updateLoopsListWidget( );
@@ -162,7 +178,7 @@ void ModelDataWidget::initConnections( )
             return;
         }
         QString loopName = loopsListWidget->currentItem()->text();
-        m_modelData->loops[loopName].addState();
+        m_model->loops[loopName].addState();
         updateStatesListWidget(loopsListWidget->currentItem());
     });
 
@@ -175,7 +191,7 @@ void ModelDataWidget::initConnections( )
             return;
         }
         QString loopName = loopsListWidget->currentItem()->text();
-        m_modelData->loops[loopName].deleteState();
+        m_model->loops[loopName].deleteState();
         updateStatesListWidget(loopsListWidget->currentItem());
     });
 

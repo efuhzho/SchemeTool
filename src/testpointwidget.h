@@ -18,13 +18,13 @@ signals:
     void sigModelUpdated();
 
 private:
-    TestPoint* m_testPoint;
+    TestPoint* m_testPoint;    
+    ModelDataWidget* m_widgetModelData {new ModelDataWidget};
 
     QLineEdit* nameLineEdit {new QLineEdit};
     QLineEdit* unitLineEdit {new QLineEdit};
     QLineEdit* varLineEdit {new QLineEdit};
     QLineEdit* idLineEdit {new QLineEdit};
-    ModelDataWidget* widgetModelData {new ModelDataWidget};
 
 private:
     void initUi();
