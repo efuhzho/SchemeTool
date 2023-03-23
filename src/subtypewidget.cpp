@@ -144,11 +144,12 @@ void SubtypeWidget::initTestpointsGroup()
         delete btn;    //析构所有按钮
     }
 
-    QStringList pointNames = m_model->testPoints.keys();
+    QList<TestPointName> pointNames = m_model->testPoints.keys();
     for (int i = 0; i < pointNames.size(); ++i)
     {
         //逐个添加按钮
-        QString testPointName = pointNames.at(i);
+        QString testPointName =pointNames[i].toString() ;
+
         QRadioButton* pointButton {new QRadioButton(testPointName)};
         connect(pointButton,&QRadioButton::clicked,this,[=]
         {
