@@ -16,11 +16,19 @@ public:
     QString str;
     //重载操作符
     bool operator < (const TestPointName& other) const
-    {
+    {        
+        if(other.toString() == str)
+        {
+            return false;
+        }
+        if(getVar() == other.getVar())
+        {
+            return true;
+        }
         return getVar() < other.getVar();
     }
 
-    QString toString()
+    QString toString() const
     {
         return str;
     }

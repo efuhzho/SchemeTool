@@ -95,7 +95,7 @@ void SubtypeWidget::initUi()
 
         addPointSpinbox->setSizePolicy(sizePolicy);
         addPointSpinbox->setRange(0,120);
-        addPointSpinbox->setSuffix(" %");
+        //addPointSpinbox->setSuffix(" %");
         addPointSpinbox->setSingleStep(5);
     }
 }

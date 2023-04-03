@@ -56,7 +56,6 @@ void TestPointWidget::initUi()
             QFormLayout* idForm {new QFormLayout};
             idForm->addRow(tr("ID"),idLineEdit);
             lineEditsLay->addLayout(idForm);
-            lineEditsLay->addSpacing(20);
         }
     }
 

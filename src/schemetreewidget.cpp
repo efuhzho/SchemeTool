@@ -41,7 +41,7 @@ void SchemeTreeWidget::initWidget( )
 void SchemeTreeWidget::initConnection( )
 {
     connect( lineEdit, &QLineEdit::textChanged, this, &SchemeTreeWidget::findItem );
-    connect(treeWidget,&QTreeWidget::itemChanged,this,&SchemeTreeWidget::treeItemChanged);
+   // connect(treeWidget,&QTreeWidget::itemChanged,this,&SchemeTreeWidget::treeItemChanged);
     connect(treeWidget,&QTreeWidget::itemClicked,this,&SchemeTreeWidget::onItemClicked);
 }
 
@@ -93,7 +93,7 @@ void SchemeTreeWidget::parseObject(const QJsonObject& obj, QTreeWidgetItem* pare
     {
         QString value = obj[m_keyword].toString();
         child = new QTreeWidgetItem( parentNode,QStringList(value));
-        child->setCheckState(0,Qt::Checked);
+        //child->setCheckState(0,Qt::Checked);
         child->setData(0,Qt::UserRole,obj);
     }
     else
