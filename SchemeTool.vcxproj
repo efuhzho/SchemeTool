@@ -211,6 +211,7 @@
     <ClCompile Include="src\schemepresetwidget.cpp" />
     <ClCompile Include="src\schemetreewidget.cpp" />
     <ClCompile Include="src\statewidget.cpp" />
+    <ClCompile Include="src\subtypewidget.cpp" />
     <ClCompile Include="src\testpointwidget.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +229,16 @@
     <QtMoc Include="src\schemetreewidget.h">
     </QtMoc>
     <QtMoc Include="src\statewidget.h">
+    </QtMoc>
+    <QtMoc Include="src\subtypewidget.h">
+      
+      
+      
+      
+      
+      
+      
+      
     </QtMoc>
     <QtMoc Include="src\testpointwidget.h">
     </QtMoc>
@@ -249,6 +260,23 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_predefs.h;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CustomBuild>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainwindow.ui">

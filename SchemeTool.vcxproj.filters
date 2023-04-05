@@ -81,6 +81,9 @@
     <ClCompile Include="src\statewidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\subtypewidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\testpointwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -110,6 +113,9 @@
     <QtMoc Include="src\statewidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\subtypewidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="src\testpointwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -125,6 +131,8 @@
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
+    
+    
     
     
     

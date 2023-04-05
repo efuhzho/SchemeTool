@@ -10,10 +10,31 @@ StateWidget::StateWidget( QWidget* parent )
 	initConnects( );
 }
 
-void StateWidget::setModel( State& state )
+void StateWidget::setModel(State &state )
 {
 	m_stateModel = &state;
-	emit sigModelUpdated( );
+    emit sigModelUpdated( );
+}
+
+void StateWidget::setUnit(const QString unit)
+{
+    m_unit = unit;
+    initSpinBox( );
+}
+
+void StateWidget::clear()
+{
+   clearSpinBox( );
+}
+
+QString StateWidget::unit()
+{
+    return m_unit;
+}
+
+State *StateWidget::Model()
+{
+    return m_stateModel;
 }
 
 void StateWidget::onModelUpdated( )
@@ -87,8 +108,9 @@ void StateWidget::onModelUpdated( )
 void StateWidget::initUI( )
 {
 	QVBoxLayout* mainlayout { new QVBoxLayout( this ) };
-	mainlayout->addLayout( createDataGrid( ) );
-	initSpinBox( );
+    mainlayout->addLayout( createDataGrid( ) );
+
+    initSpinBox( );
 }
 
 QGridLayout* StateWidget::createDataGrid( )
@@ -226,15 +248,15 @@ void StateWidget::initSpinBox( )
 {
 	//SetSuffix
 	{
-        boxUa->setSuffix( unitU );
-		boxUb->setSuffix( unitU );
-		boxUc->setSuffix( unitU );
-		boxUx->setSuffix( unitU );
+        boxUa->setSuffix( m_unit );
+        boxUb->setSuffix( m_unit );
+        boxUc->setSuffix( m_unit );
+        boxUx->setSuffix( m_unit );
 
-		boxIa->setSuffix( unitI );
-		boxIb->setSuffix( unitI );
-		boxIc->setSuffix( unitI );
-		boxIx->setSuffix( unitI );
+        boxIa->setSuffix( m_unit );
+        boxIb->setSuffix( m_unit );
+        boxIc->setSuffix( m_unit );
+        boxIx->setSuffix( m_unit );
 
         boxPhUa->setSuffix( QString::fromLocal8Bit( " °" ) );
         boxPhUb->setSuffix( QString::fromLocal8Bit( " °" ) );
@@ -246,17 +268,17 @@ void StateWidget::initSpinBox( )
         boxPhIc->setSuffix( QString::fromLocal8Bit( " °" ) );
         boxPhIx->setSuffix( QString::fromLocal8Bit( " °" ) );
 
-		boxPa->setSuffix( unitP );
-		boxPb->setSuffix( unitP );
-		boxPc->setSuffix( unitP );
-		boxPx->setSuffix( unitP );
-		boxPsum->setSuffix( unitP );
+        boxPa->setSuffix( m_unit );
+        boxPb->setSuffix( m_unit );
+        boxPc->setSuffix( m_unit );
+        boxPx->setSuffix( m_unit );
+        boxPsum->setSuffix( m_unit );
 
-		boxQa->setSuffix( unitQ );
-		boxQb->setSuffix( unitQ );
-		boxQc->setSuffix( unitQ );
-		boxQx->setSuffix( unitQ );
-		boxQsum->setSuffix( unitQ );
+        boxQa->setSuffix( m_unit );
+        boxQb->setSuffix( m_unit );
+        boxQc->setSuffix( m_unit );
+        boxQx->setSuffix( m_unit );
+        boxQsum->setSuffix( m_unit );
 
         boxFa->setSuffix( " Hz" );
         boxFb->setSuffix( " Hz" );
@@ -305,15 +327,15 @@ void StateWidget::initSpinBox( )
 
 	//SetRange
 	{
-		boxUa->setRange( 0, 100 );
-		boxUb->setRange( 0, 100 );
-		boxUc->setRange( 0, 100 );
-		boxUx->setRange( 0, 100 );
+        boxUa->setRange( 0, 120 );
+        boxUb->setRange( 0, 120 );
+        boxUc->setRange( 0, 120 );
+        boxUx->setRange( 0, 120 );
 
-		boxIa->setRange( 0, 100 );
-		boxIb->setRange( 0, 100 );
-		boxIc->setRange( 0, 100 );
-		boxIx->setRange( 0, 100 );
+        boxIa->setRange( 0, 120 );
+        boxIb->setRange( 0, 120 );
+        boxIc->setRange( 0, 120 );
+        boxIx->setRange( 0, 120 );
 
 		boxPhUa->setRange( 0, 359.99 );
 		boxPhUb->setRange( 0, 359.99 );
@@ -325,17 +347,17 @@ void StateWidget::initSpinBox( )
 		boxPhIc->setRange( 0, 359.99 );
 		boxPhIx->setRange( 0, 359.99 );
 
-		boxPa->setRange( 0, 100 );
-		boxPb->setRange( 0, 100 );
-		boxPc->setRange( 0, 100 );
-		boxPx->setRange( 0, 100 );
-		boxPsum->setRange( 0, 100 );
+        boxPa->setRange( 0, 120 );
+        boxPb->setRange( 0, 120 );
+        boxPc->setRange( 0, 120 );
+        boxPx->setRange( 0, 120 );
+        boxPsum->setRange( 0, 120 );
 
-		boxQa->setRange( 0, 100 );
-		boxQb->setRange( 0, 100 );
-		boxQc->setRange( 0, 100 );
-		boxQx->setRange( 0, 100 );
-		boxQsum->setRange( 0, 100 );
+        boxQa->setRange( 0, 120 );
+        boxQb->setRange( 0, 120 );
+        boxQc->setRange( 0, 120 );
+        boxQx->setRange( 0, 120 );
+        boxQsum->setRange( 0, 120 );
 
 		boxFa->setRange( 0, 125 );
 		boxFb->setRange( 0, 125 );

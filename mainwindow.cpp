@@ -84,6 +84,18 @@ void MainWindow::onTreeItemClicked(QTreeWidgetItem *item, int column)
     {
         m_stackWidget->setCurrentWidget(m_presetWidget);
     }
+    else
+    {
+        int count = m_schemeModel.scheme.testType.subTypes.size();
+        for (int i = 0; i < count; ++i)
+        {
+            if(item->text(column) == m_schemeModel.scheme.testType.subTypes[i].name)
+            {
+                m_subtypeWidget->setModel(m_schemeModel.scheme.testType.subTypes[i]);
+                m_stackWidget->setCurrentWidget(m_subtypeWidget);
+            }
+        }
+    }
 }
 
 void MainWindow::initWindow( )
@@ -154,5 +166,6 @@ void MainWindow::initStackWidget()
 {
     m_stackWidget->addWidget(m_schemeInfoWidget);
     m_stackWidget->addWidget(m_presetWidget);
+    m_stackWidget->addWidget(m_subtypeWidget);
 }
 

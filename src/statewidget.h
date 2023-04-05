@@ -15,7 +15,11 @@ class StateWidget : public QWidget
     Q_OBJECT
 public:
     explicit StateWidget(QWidget *parent = nullptr);
-    void  setModel(State& state);
+    void  setModel(State &state);
+    void setUnit(const QString unit);
+    void clear();
+    QString unit();
+    State* Model();
 
 signals:
     void sigModelUpdated();
@@ -32,13 +36,9 @@ private ://inits
 
 private://members
     State* m_stateModel;
+    QString m_unit {" %"} ;
 
 private://elements
-
-    QString unitU = " %";
-    QString unitI = " %";
-    QString unitP = " %";
-    QString unitQ = " %";
 
     //电压
     QDoubleSpinBox* boxUa = new QDoubleSpinBox;

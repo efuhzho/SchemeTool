@@ -65,6 +65,10 @@ void SchemeInfoWidget::initConnections( )
 void SchemeInfoWidget::setModel( Scheme& scheme )
 {
     m_scheme = &scheme;
+    if(!m_scheme)
+    {
+        return;
+    }
     lineEditSchemeName->setText( m_scheme->name );
     lineEditVersion->setText( m_scheme->version );
     lineEditCreateDate->setText( m_scheme->createDate );

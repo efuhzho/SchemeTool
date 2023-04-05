@@ -13,7 +13,10 @@ TestPointWidget::TestPointWidget(QWidget *parent)
 void TestPointWidget::setModel(TestPoint &model)
 {
     m_testPoint = &model;
-    emit sigModelUpdated();
+    if(m_testPoint)
+    {
+        emit sigModelUpdated();
+    }
 }
 
 void TestPointWidget::initUi()
@@ -53,11 +56,10 @@ void TestPointWidget::initUi()
             QFormLayout* idForm {new QFormLayout};
             idForm->addRow(tr("ID"),idLineEdit);
             lineEditsLay->addLayout(idForm);
-            lineEditsLay->addSpacing(20);
         }
     }
 
-    mainLayout->addWidget(widgetModelData);
+    mainLayout->addWidget(m_widgetModelData);
     mainLayout->addStretch();
 }
 
@@ -70,7 +72,7 @@ void TestPointWidget::initConnections()
         varLineEdit->setText(m_testPoint->var);
         idLineEdit->setText(m_testPoint->id);
 
-        widgetModelData->setModel(m_testPoint->modelData);
+        m_widgetModelData->setModel(m_testPoint->modelData);
     });
 
     connect(nameLineEdit,&QLineEdit::textChanged,this,[=](QString name)
